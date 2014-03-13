@@ -1,0 +1,10 @@
+---
+layout: default
+description: Ben Howdle - JavaScript Developer
+---
+
+{% for post in site.posts %}
+<div class="list-item">
+	<a href="{{post.url}}">{{post.title}}</a>
+</div>
+{% endfor %}

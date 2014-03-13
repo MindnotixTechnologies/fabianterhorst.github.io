@@ -1,0 +1,17 @@
+---
+layout: default
+---
+
+<div class="item">
+    <a href="/" class="back">&larr; back</a>
+	{{ content }}
+</div>
+
+<ul>
+	{% if page.older %}
+	<li class="pagination older"><a href="{{page.older.url}}">Previous</a></li>
+	{% endif %}
+	{% if page.newer %}
+	<li class="pagination newer"><a href="{{page.newer.url}}">Next</a></li>
+	{% endif %}
+</ul>

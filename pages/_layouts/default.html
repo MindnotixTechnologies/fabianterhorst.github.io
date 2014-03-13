@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% if page.description %}
+  <meta name="description" content="{{page.description}}" />  
+  {% elsif page.content %}
+  <meta name="description" content="{{ page.content | strip_html | truncatewords: 25 }}" />
+  {% else %}
+  <meta name="description" content="{{site.description}}" />
+  {% endif %}
+  <title> {% if page.title %} {{ page.title }} | {% endif %} Portfolio</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="wrap">
+  <div class="sidebar">
+    <img src="/images/avatar.jpg" />
+    <h2>Jesse Pinkman</h2>
+    <p>Designer | Developer</p>
+  </div>
+  <div class="content">
+  {{ content }}
+  </div>
+</div>
+    
+</body>
+</html>

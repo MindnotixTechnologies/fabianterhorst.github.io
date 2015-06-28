@@ -59,6 +59,9 @@
           var newsLayout = document.querySelector('#newsLayout');
           var card = document.querySelectorAll('.news-card');
           marginLeft += -card[click].offsetWidth;
+          if(marginLeft < -1300){
+            marginLeft = -1300;
+          }
           newsLayout.style.marginLeft = marginLeft + "px"
           click++;
           checkScroll();

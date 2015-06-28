@@ -75,20 +75,13 @@
       background-position: top,left;/*left top, right bottom*/
       background-repeat: no-repeat;
       background-size: contain,cover;
-      padding-left: 130px;
+      /*padding-left: 130px;*/
       padding-top: 200px;
     }
     .description-content-fab{
       width: 200px;
     }
-    .main-section{
-      padding-left: 130px;
-      background-color: #5C6BC0;
-    }
     .shadow{
-      /*margin: 0;
-      width: inherit;
-      border: 0;*/
       -webkit-box-shadow: 0px 0px 40px 10px rgba(0,0,0,0.50);
       -moz-box-shadow: 0px 0px 40px 10px rgba(0,0,0,0.50);
       box-shadow: 0px 0px 40px 10px rgba(0,0,0,0.50);
@@ -113,15 +106,10 @@
     #navigation-tabs{
       display: block;
     }
-
-    .desktop-only{
-      display: block;
-    }
     /* mobile-large */
     @media all and (min-width: 361px) and (orientation: portrait) {
       .main-section{
         @apply(--layout-wrap);
-        padding-left: 20px;
       }
       .description-content{
         padding-left: 20px;
@@ -141,12 +129,6 @@
   @media (max-width: 1200px) {
    .main-section{
       @apply(--layout-wrap);
-    }
-  }
-
-  @media (max-width: 1226px) {
-    .desktop-only{
-      display: none !important;
     }
   }
 /*
@@ -280,93 +262,192 @@
         <!-- Main Content -->
         <div class=""><!--content-->
           <div class="everhome-background">
-            <div class="main-content horizontal layout"><!--end-justified-->
+            <div class="container">
               <everhome-house class="flex"></everhome-house>
-              <!--<img style="width: inherit;"height="500px" src="images/nexus_6.png"/>-->
             </div>
-            <div class="main-section layout horizontal">
-              <div class="flex-none">
-                <everhome-test content="Machen Sie aus Ihrem Haus ein Smart Home.
+          </div>
+          <!--<div class="everhome-background">
+            <div class="main-content horizontal layout">
+              <everhome-house class="flex"></everhome-house>
+            </div>
+          </div>-->
+          <!--<div class="main-section container layout horizontal">
+            <div class="flex-none">
+              <everhome-test content="Machen Sie aus Ihrem Haus ein Smart Home.
+                  Testen Sie die everHome Funktionen auch ohne everHome CloudBox LAN Gateway, indem Sie sich einfach kostenlos registrieren und everHome ausprobieren."></everhome-test>
+            </div>
+            <everhome-news items='[{"title": "Digitus"},{"title": "Rohrmotor 24"},{"title": "test"},{"title": "test2"}]'></everhome-news>
+          </div>-->
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 no-padding">
+                <everhome-test nowidth="true" content="Machen Sie aus Ihrem Haus ein Smart Home.
                   Testen Sie die everHome Funktionen auch ohne everHome CloudBox LAN Gateway, indem Sie sich einfach kostenlos registrieren und everHome ausprobieren."></everhome-test>
               </div>
-              <everhome-news items='[{"title": "Digitus"},{"title": "Rohrmotor 24"},{"title": "test"},{"title": "test2"}]'></everhome-news>
+              <div class="col-md-6 no-padding">
+                <everhome-news items='[{"title": "Digitus"},{"title": "Rohrmotor 24"},{"title": "test"},{"title": "test2"}]'></everhome-news>
+              </div>
             </div>
           </div>
           <div class$="{{descriptionClass(deviceimage)}}">
-            <div class="layout horizontal center wrap">
-              <div class="layout vertical description-content-fab">
-                <everhome-fab id="descriptionfab1" title="GERÄTE" icon="dns" state="active" on-click="selectDescriptionPage1"></everhome-fab>
-                <everhome-fab id="descriptionfab2" title="GRUPPEN" icon="mdi:view-column" state="inactive" on-click="selectDescriptionPage2"></everhome-fab>
-                <everhome-fab id="descriptionfab3" title="SZENEN" icon="mdi:calendar-multiple" state="inactive" on-click="selectDescriptionPage3"></everhome-fab>
-                <everhome-fab id="descriptionfab4" title="RÄUME" icon="mdi:view-quilt" state="inactive" on-click="selectDescriptionPage4"></everhome-fab>
-                <everhome-fab id="descriptionfab5" title="KARTEN" icon="mdi:map" state="inactive" on-click="selectDescriptionPage5"></everhome-fab>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-4 no-padding">
+                  <everhome-fab id="descriptionfab1" title="GERÄTE" icon="dns" state="active" on-click="selectDescriptionPage1"></everhome-fab>
+                  <everhome-fab id="descriptionfab2" title="GRUPPEN" icon="mdi:view-column" state="inactive" on-click="selectDescriptionPage2"></everhome-fab>
+                  <everhome-fab id="descriptionfab3" title="SZENEN" icon="mdi:calendar-multiple" state="inactive" on-click="selectDescriptionPage3"></everhome-fab>
+                  <everhome-fab id="descriptionfab4" title="RÄUME" icon="mdi:view-quilt" state="inactive" on-click="selectDescriptionPage4"></everhome-fab>
+                  <everhome-fab id="descriptionfab5" title="KARTEN" icon="mdi:map" state="inactive" on-click="selectDescriptionPage5"></everhome-fab>
+                </div>
+                <div class="col-md-8 no-padding">
+                  <neon-animated-pages selected="{{selected}}" entry-animation="scale-up-animation" exit-animation="scale-down-animation" style="min-height:470px;">
+                  <neon-animatable>
+                    <paper-material elevation="1">
+                      <div class="layout vertical start-justified">
+                        <h3>Lorem ipsum dolor</h3>
+                        <div class="layout horizontal center">
+                          <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                          </p>
+                          <everhome-index-device name="Kugellampe" imagesource="{{deviceimage}}" deviceid=1 buttons='[{"icon": "ai:on","actionid": "1"}]' menu roomname="Wohnzimmer" class="flex-6"></everhome-index-device>
+                        </div>
+                      </div>
+                    </paper-material> 
+                  </neon-animatable>
+                  <neon-animatable>
+                   <paper-material class="description-card" elevation="1">
+                      <div class="layout vertical start-justified">
+                        <h3>Lorem ipsum dolor 2</h3>
+                        <div class="layout horizontal center">
+                          <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                          </p>
+                          <everhome-device menu name="Rolladen" groupid=1 buttons='[{"icon": "mdi:chevron-up"}, {"icon": "mdi:chevron-down"}]' class="flex-6"></everhome-device>
+                        </div>
+                      </div>
+                    </paper-material>
+                  </neon-animatable>
+                  <neon-animatable>
+                   <paper-material class="description-card" elevation="1">
+                      <div class="layout vertical start-justified">
+                        <h3>Lorem ipsum dolor 3</h3>
+                        <div class="layout horizontal center">
+                          <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                          </p>
+                          <everhome-device name="Büro" sceneid=1 buttons='[{"icon": "ai:on"}]' menu class="flex-6"></everhome-device>
+                        </div>
+                      </div>
+                    </paper-material>
+                  </neon-animatable>
+                  <neon-animatable>
+                   <paper-material class="description-card" elevation="1">
+                      <div class="layout vertical start-justified">
+                        <h3>Lorem ipsum dolor 4</h3>
+                        <div class="layout horizontal center">
+                          <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                          </p>
+                          <everhome-device name="Wohnzimmer" roomid="1" class="flex-6"></everhome-device>
+                        </div>
+                      </div>
+                    </paper-material>
+                  </neon-animatable>
+                  <neon-animatable>
+                   <paper-material class="description-card" elevation="1">
+                      <div class="layout vertical start-justified">
+                        <h3>Lorem ipsum dolor 5</h3>
+                        <div class="layout horizontal center">
+                          <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                          </p>
+                          <paper-material class="flex-6" elevation="1">
+                            <h1>Karten</h1>
+                          </paper-material>
+                        </div>
+                      </div>
+                    </paper-material>
+                  </neon-animatable>
+                </neon-animated-pages>
+                </div>
               </div>
-              <div class="layout vertical"><!--entry-animation="scale-up-animation" exit-animation="slide-up-animation"-->
-              <neon-animated-pages selected="{{selected}}" entry-animation="scale-up-animation" exit-animation="scale-down-animation" style="min-height:470px;width: 560px;">
-                <neon-animatable>
-                  <paper-material class="description-card" elevation="1">
-                    <div class="layout vertical start-justified">
-                      <h3>Lorem ipsum dolor</h3>
-                      <div class="layout horizontal center">
-                        <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-                        </p>
-                        <everhome-index-device name="Kugellampe" imagesource="{{deviceimage}}" deviceid=1 buttons='[{"icon": "ai:on","actionid": "1"}]' menu roomname="Wohnzimmer" class="flex-6"></everhome-index-device>
+
+
+
+              <!--<div class="layout horizontal center wrap">
+                <div class="layout vertical description-content-fab">
+                  <everhome-fab id="descriptionfab1" title="GERÄTE" icon="dns" state="active" on-click="selectDescriptionPage1"></everhome-fab>
+                  <everhome-fab id="descriptionfab2" title="GRUPPEN" icon="mdi:view-column" state="inactive" on-click="selectDescriptionPage2"></everhome-fab>
+                  <everhome-fab id="descriptionfab3" title="SZENEN" icon="mdi:calendar-multiple" state="inactive" on-click="selectDescriptionPage3"></everhome-fab>
+                  <everhome-fab id="descriptionfab4" title="RÄUME" icon="mdi:view-quilt" state="inactive" on-click="selectDescriptionPage4"></everhome-fab>
+                  <everhome-fab id="descriptionfab5" title="KARTEN" icon="mdi:map" state="inactive" on-click="selectDescriptionPage5"></everhome-fab>
+                </div>
+                <div class="layout vertical">entry-animation="scale-up-animation" exit-animation="slide-up-animation"
+                <neon-animated-pages selected="{{selected}}" entry-animation="scale-up-animation" exit-animation="scale-down-animation" style="min-height:470px;width: 560px;">
+                  <neon-animatable>
+                    <paper-material class="description-card" elevation="1">
+                      <div class="layout vertical start-justified">
+                        <h3>Lorem ipsum dolor</h3>
+                        <div class="layout horizontal center">
+                          <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                          </p>
+                          <everhome-index-device name="Kugellampe" imagesource="{{deviceimage}}" deviceid=1 buttons='[{"icon": "ai:on","actionid": "1"}]' menu roomname="Wohnzimmer" class="flex-6"></everhome-index-device>
+                        </div>
                       </div>
-                    </div>
-                  </paper-material> 
-                </neon-animatable>
-                <neon-animatable>
-                 <paper-material class="description-card" elevation="1">
-                    <div class="layout vertical start-justified">
-                      <h3>Lorem ipsum dolor 2</h3>
-                      <div class="layout horizontal center">
-                        <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-                        </p>
-                        <everhome-device menu name="Rolladen" groupid=1 buttons='[{"icon": "mdi:chevron-up"}, {"icon": "mdi:chevron-down"}]' class="flex-6"></everhome-device>
+                    </paper-material> 
+                  </neon-animatable>
+                  <neon-animatable>
+                   <paper-material class="description-card" elevation="1">
+                      <div class="layout vertical start-justified">
+                        <h3>Lorem ipsum dolor 2</h3>
+                        <div class="layout horizontal center">
+                          <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                          </p>
+                          <everhome-device menu name="Rolladen" groupid=1 buttons='[{"icon": "mdi:chevron-up"}, {"icon": "mdi:chevron-down"}]' class="flex-6"></everhome-device>
+                        </div>
                       </div>
-                    </div>
-                  </paper-material>
-                </neon-animatable>
-                <neon-animatable>
-                 <paper-material class="description-card" elevation="1">
-                    <div class="layout vertical start-justified">
-                      <h3>Lorem ipsum dolor 3</h3>
-                      <div class="layout horizontal center">
-                        <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-                        </p>
-                        <everhome-device name="Büro" sceneid=1 buttons='[{"icon": "ai:on"}]' menu class="flex-6"></everhome-device>
+                    </paper-material>
+                  </neon-animatable>
+                  <neon-animatable>
+                   <paper-material class="description-card" elevation="1">
+                      <div class="layout vertical start-justified">
+                        <h3>Lorem ipsum dolor 3</h3>
+                        <div class="layout horizontal center">
+                          <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                          </p>
+                          <everhome-device name="Büro" sceneid=1 buttons='[{"icon": "ai:on"}]' menu class="flex-6"></everhome-device>
+                        </div>
                       </div>
-                    </div>
-                  </paper-material>
-                </neon-animatable>
-                <neon-animatable>
-                 <paper-material class="description-card" elevation="1">
-                    <div class="layout vertical start-justified">
-                      <h3>Lorem ipsum dolor 4</h3>
-                      <div class="layout horizontal center">
-                        <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-                        </p>
-                        <everhome-device name="Wohnzimmer" roomid="1" class="flex-6"></everhome-device>
+                    </paper-material>
+                  </neon-animatable>
+                  <neon-animatable>
+                   <paper-material class="description-card" elevation="1">
+                      <div class="layout vertical start-justified">
+                        <h3>Lorem ipsum dolor 4</h3>
+                        <div class="layout horizontal center">
+                          <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                          </p>
+                          <everhome-device name="Wohnzimmer" roomid="1" class="flex-6"></everhome-device>
+                        </div>
                       </div>
-                    </div>
-                  </paper-material>
-                </neon-animatable>
-                <neon-animatable>
-                 <paper-material class="description-card" elevation="1">
-                    <div class="layout vertical start-justified">
-                      <h3>Lorem ipsum dolor 5</h3>
-                      <div class="layout horizontal center">
-                        <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-                        </p>
-                        <paper-material class="flex-6" elevation="1">
-                          <h1>Karten</h1>
-                        </paper-material>
+                    </paper-material>
+                  </neon-animatable>
+                  <neon-animatable>
+                   <paper-material class="description-card" elevation="1">
+                      <div class="layout vertical start-justified">
+                        <h3>Lorem ipsum dolor 5</h3>
+                        <div class="layout horizontal center">
+                          <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                          </p>
+                          <paper-material class="flex-6" elevation="1">
+                            <h1>Karten</h1>
+                          </paper-material>
+                        </div>
                       </div>
-                    </div>
-                  </paper-material>
-                </neon-animatable>
-              </neon-animated-pages>
-              </div>
+                    </paper-material>
+                  </neon-animatable>
+                </neon-animated-pages>
+                </div>
+              </div>-->
+
+
+
+
             </div>
           </div>
           <paper-material elevation="1" class="shadow">

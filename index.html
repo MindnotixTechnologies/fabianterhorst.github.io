@@ -42,10 +42,6 @@
 
     <link rel="stylesheet" href="styles/bootstrap.min.css">
 
-    <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild-->
-
     <!-- build:css styles/app-theme.css -->
     <!--<link rel="stylesheet" href="styles/app-theme.css">-->
     <!-- endbuild-->
@@ -58,7 +54,25 @@
     <link rel="import" href="elements/vulcanize.html">
     <!-- endreplace-->
 
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild-->
+
     <style is="custom-style">
+
+        paper-item > .label{
+            display: block;
+            padding: 0;
+            font-size: inherit;
+            font-weight: inherit;
+            line-height: inherit;
+            color: #333;
+            text-align: inherit;
+            white-space: inherit;
+            vertical-align: inherit;
+            border-radius: inherit;
+        }
+
         body {
             background-color: #5C6BC0;
         }
@@ -68,14 +82,14 @@
         }
 
         .main-content {
-            background-image: url("images/cloud_start.png");
+            background-image: url(images/cloud_start.png);
             background-position: bottom; /*left top, right bottom*/
             background-repeat: no-repeat;
             background-size: contain;
         }
 
         .description-content {
-            background-image: url("images/cloud_end_shadow.png"), url(images/background_lamp.jpg);
+            background-image: url(images/cloud_end_top.png), url(images/background_lamp.jpg);
             background-position: top, left; /*left top, right bottom*/
             background-repeat: no-repeat;
             background-size: contain, cover;
@@ -339,9 +353,9 @@
                                     <neon-animatable>
                                         <paper-material elevation="1">
                                             <div class="layout vertical start-justified">
-                                                <h3>Lorem ipsum dolor 2</h3>
+                                                <div class="layout horizontal start">
+                                                    <h3>Lorem ipsum dolor 2</h3>
 
-                                                <div class="layout horizontal center">
                                                     <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing
                                                         elitr, sed diam nonumy eirmod tempor invidunt ut labore et
                                                         dolore magna aliquyam erat, sed diam voluptua.
@@ -500,7 +514,7 @@
                 <paper-material elevation="1" class="shadow">
                     <div class="container">
                         <everhome-manufacturer
-                                items='["images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png"]'></everhome-manufacturer>
+                                items='["images/brennenstuhl.png","images/asa.png","images/3t-motors.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png","images/nexus_6.png"]'></everhome-manufacturer>
                         <div class="row">
                             <div class="col-md-6 no-padding pull-left">
                                 <everhome-test nowidth="true" toptitle="Funk-Aktoren"
@@ -539,25 +553,56 @@
                 </div>
                 <div class="footer-content layout vertical center-justified">
                     <div id="footer-container">
-                        <div class="row">
-                            <div class="col-md-6 no-padding">
-                                <paper-item label="Impressum" data-route="contact" href="/contact">
-                                    <div class="label" fit>
-                                        <iron-icon icon="info"></iron-icon>
-                                        Impressum
-                                    </div>
-                                    <paper-ripple></paper-ripple>
-                                </paper-item>
-                            </div>
-                            <div class="col-md-6 no-padding">
-                                <paper-item label="Impressum" data-route="contact" href="/contact">
-                                    <div class="label" fit>
-                                        <iron-icon icon="info"></iron-icon>
-                                        Impressum
-                                    </div>
-                                    <paper-ripple></paper-ripple>
-                                </paper-item>
-                            </div>
+                        <div class="layout horizontal center-justified wrap">
+                            <paper-item label="Kunden-Support" data-route="contact" href="/contact">
+                                <div class="label" fit>
+                                    <iron-icon icon="mdi:forum"></iron-icon>
+                                    Kunden-Support
+                                </div>
+                                <paper-ripple></paper-ripple>
+                            </paper-item>
+                            <paper-item label="Impressum" data-route="contact" href="/contact">
+                                <div class="label" fit>
+                                    <iron-icon icon="mdi:information"></iron-icon>
+                                    Impressum
+                                </div>
+                                <paper-ripple></paper-ripple>
+                            </paper-item>
+                            <paper-item label="AGB" data-route="contact" href="/contact">
+                                <div class="label" fit>
+                                    <iron-icon icon="mdi:file-document-box"></iron-icon>
+                                    AGB
+                                </div>
+                                <paper-ripple></paper-ripple>
+                            </paper-item>
+                            <paper-item label="Widerrufsbelehrung" data-route="contact" href="/contact">
+                                <div class="label" fit>
+                                    <iron-icon icon="mdi:undo"></iron-icon>
+                                    Widerrufsbelehrung
+                                </div>
+                                <paper-ripple></paper-ripple>
+                            </paper-item>
+                            <paper-item label="Versandkosten" data-route="contact" href="/contact">
+                                <div class="label" fit>
+                                    <iron-icon icon="mdi:truck"></iron-icon>
+                                    Versandkosten
+                                </div>
+                                <paper-ripple></paper-ripple>
+                            </paper-item>
+                            <paper-item label="Zahlungsarten" data-route="contact" href="/contact">
+                                <div class="label" fit>
+                                    <iron-icon icon="mdi:credit-card"></iron-icon>
+                                    Zahlungsarten
+                                </div>
+                                <paper-ripple></paper-ripple>
+                            </paper-item>
+                            <paper-item label="Datenschutz" data-route="contact" href="/contact">
+                                <div class="label" fit>
+                                    <iron-icon icon="mdi:lock"></iron-icon>
+                                    Datenschutz
+                                </div>
+                                <paper-ripple></paper-ripple>
+                            </paper-item>
                         </div>
                     </div>
                 </div>

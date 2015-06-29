@@ -12385,217 +12385,247 @@ is separate from validation, and `allowed-pattern` does not affect how the input
 </style>
 
 <style is="custom-style">
-  /* Application theme */
-  :root {
-    --dark-primary-color: #303F9F;
-    --default-primary-color: #3F51B5;
-    --light-primary-color: #C5CAE9;
-    --text-primary-color: #ffffff; /*text/icons*/
-    --accent-color: #FF4081;
-    --primary-background-color: #c5cae9;
-    --primary-text-color: #212121;
-    --secondary-text-color: #727272;
-    --disabled-text-color: #bdbdbd;
-    --divider-color: #B6B6B6;
-    --paper-tabs-selection-bar-color:#FFFFFF;
+    /* Application theme */
+    :root {
+        --dark-primary-color: #303F9F;
+        --default-primary-color: #3F51B5;
+        --light-primary-color: #C5CAE9;
+        --text-primary-color: #ffffff; /*text/icons*/
+        --accent-color: #FF4081;
+        --primary-background-color: #c5cae9;
+        --primary-text-color: #212121;
+        --secondary-text-color: #727272;
+        --disabled-text-color: #bdbdbd;
+        --divider-color: #B6B6B6;
+        --paper-tabs-selection-bar-color: #FFFFFF;
 
-    /* Components */
+        /* Components */
 
-    /* paper-drawer-panel */
-    --drawer-menu-color: #ffffff;
-    --drawer-border-color: 1px solid #ccc;
-    --drawer-toolbar-border-color: 1px solid rgba(0, 0, 0, 0.22);
+        /* paper-drawer-panel */
+        --drawer-menu-color: #ffffff;
+        --drawer-border-color: 1px solid #ccc;
+        --drawer-toolbar-border-color: 1px solid rgba(0, 0, 0, 0.22);
 
-    /* paper-menu */
-    --paper-menu-background-color: #fff;
-    --menu-link-color: #111111;
-  }
+        /* paper-menu */
+        --paper-menu-background-color: #fff;
+        --menu-link-color: #111111;
+    }
 
-  /* General styles */
-  
-  .paper-tab-0 #ink.paper-tab {
-    color: #303F9F;
-  }
-  #drawerToolbar {
-    color: var(--secondary-text-color);
-    background-color: var(--drawer-menu-color);
-    border-bottom: var(--drawer-toolbar-border-color);
-    height: 64px;
-  }
+    /* General styles */
 
-  paper-item{
-    position: relative;
-    height: 48px;
-    line-height: 48px;
-    /*color: #646464;*/
-    font-size: 0.9em;
-  }
+    .paper-tab-0 #ink.paper-tab {
+        color: #303F9F;
+    }
 
-  paper-item.paper-item-0{
-    font-family: "Roboto Mono", Roboto, sans-serif;
-    letter-spacing: 0.25px;
-  }
+    #drawerToolbar {
+        color: var(--secondary-text-color);
+        background-color: var(--drawer-menu-color);
+        border-bottom: var(--drawer-toolbar-border-color);
+        height: 64px;
+    }
 
-  paper-material:not(.container):not(.shadow) {
-    border-radius: 2px;
-    padding: 16px 0 16px 0;
-    width: calc(98.66% - 16px);
-    margin: 16px auto;
-    background: white;
-  }
+    paper-item {
+        position: relative;
+        height: 48px;
+        line-height: 48px;
+        /*color: #646464;*/
+        font-size: 0.9em;
+    }
 
-  paper-menu iron-icon {
-    margin-right: 33px;
-    opacity: 0.54;
-  }
-
-  .paper-menu > .iron-selected {
-    color: var(--default-primary-color);
-  }
-
-  paper-menu a {
-    text-decoration: none;
-    color: var(--menu-link-color);
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -ms-flex-direction: row;
-    -webkit-flex-direction: row;
-    flex-direction: row;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-    font-family: 'Roboto', 'Noto', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 24px;
-    min-height: 48px;
-    padding: 0 16px;
-  }
-
-  #mainToolbar .middle {
-    margin-left: 48px;
-  }
-
-  /* -webkit-transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
-    transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
-    -moz-transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
-    -blink-transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);*/
-
-  #mainToolbar.has-shadow .middle {
-    /*font-size: 20px;*/
-    padding-bottom: 0;
-    margin-left: 48px;
-  }
-
-  /* Height of the scroll area */
-  /*.content {
-    height: 900px;
-  }*/
-
-  /* Breakpoints */
-
-  /* Small */
-  @media (max-width: 600px) {
+    paper-item.paper-item-0 {
+        font-family: "Roboto Mono", Roboto, sans-serif;
+        letter-spacing: 0.25px;
+    }
 
     paper-material:not(.container):not(.shadow) {
-      --menu-container-display: none;
-      width: calc(97.33% - 32px);
-      padding-left: 16px;
-      padding-right: 16px;
+        border-radius: 2px;
+        padding: 16px 0 16px 0;
+        width: calc(98.66% - 16px);
+        margin: 16px auto;
+        background: white;
     }
 
-    .paper-font-display1 {
-      font-size: 12px;
+    paper-menu iron-icon {
+        margin-right: 33px;
+        opacity: 0.54;
     }
 
-    .app-name {
-      font-size: 26px;
+    .paper-menu > .iron-selected {
+        color: var(--default-primary-color);
     }
 
-    #drawer .paper-toolbar {
-      margin-left: 16px;
+    paper-menu a {
+        text-decoration: none;
+        color: var(--menu-link-color);
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -ms-flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 24px;
+        min-height: 48px;
+        padding: 0 16px;
     }
 
-    #overlay {
-      min-width: 360px;
+    #mainToolbar .middle {
+        margin-left: 48px;
     }
 
-    .bg {
-      background: white;
+    /* -webkit-transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
+      transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
+      -moz-transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
+      -blink-transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);*/
+
+    #mainToolbar.has-shadow .middle {
+        /*font-size: 20px;*/
+        padding-bottom: 0;
+        margin-left: 48px;
     }
 
-    img{
-      width: calc(98.66% - 16px);
+    /* Height of the scroll area */
+    /*.content {
+      height: 900px;
+    }*/
+
+    /* Breakpoints */
+
+    /* Small */
+    @media (max-width: 600px) {
+
+        paper-material:not(.container):not(.shadow) {
+            --menu-container-display: none;
+            width: calc(97.33% - 32px);
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .paper-font-display1 {
+            font-size: 12px;
+        }
+
+        .app-name {
+            font-size: 26px;
+        }
+
+        #drawer .paper-toolbar {
+            margin-left: 16px;
+        }
+
+        #overlay {
+            min-width: 360px;
+        }
+
+        .bg {
+            background: white;
+        }
+
+        img {
+            width: calc(98.66% - 16px);
+        }
+
     }
 
-  }
+    /* Tablet+ */
+    @media (min-width: 601px) {
 
-  /* Tablet+ */
-  @media (min-width: 601px) {
+        paper-material:not(.container):not(.shadow) {
+            width: calc(98% - 46px);
+            margin-bottom: 32px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
 
-    paper-material:not(.container):not(.shadow) {
-      width: calc(98% - 46px);
-      margin-bottom: 32px;
-      padding-left: 30px;
-      padding-right: 30px;
+        #drawer.paper-drawer-panel > [drawer] {
+            border-right: 1px solid rgba(0, 0, 0, 0.14);
+        }
+
+        iron-pages {
+            padding: 48px 62px;
+        }
+
     }
 
-    #drawer.paper-drawer-panel > [drawer] {
-      border-right: 1px solid rgba(0, 0, 0, 0.14);
+    /* Material Design Adaptive Breakpoints */
+    /*
+      Below you'll find CSS media queries based on the breakpoint guidance
+      published by the Material Design team. You can choose to use, customise
+      or remove these breakpoints based on your needs.
+
+      http://www.google.com/design/spec/layout/adaptive-ui.html#adaptive-ui-breakpoints
+     */
+
+    /* mobile-small */
+    @media all and (min-width: 0) and (max-width: 360px) and (orientation: portrait) {
     }
 
-    iron-pages {
-      padding: 48px 62px;
+    /* mobile-large */
+    @media all and (min-width: 361px) and (orientation: portrait) {
     }
 
-  }
+    /* mobile-small-landscape */
+    @media all and (min-width: 0) and (max-width: 480px) and (orientation: landscape) {
+    }
 
-  /* Material Design Adaptive Breakpoints */
-  /*
-    Below you'll find CSS media queries based on the breakpoint guidance
-    published by the Material Design team. You can choose to use, customise
-    or remove these breakpoints based on your needs.
+    /* mobile-large-landscape */
+    @media all and (min-width: 481px) and (orientation: landscape) {
+    }
 
-    http://www.google.com/design/spec/layout/adaptive-ui.html#adaptive-ui-breakpoints
-   */
+    /* tablet-small-landscape */
+    @media all and (min-width: 600px) and (max-width: 960px) and (orientation: landscape) {
+    }
 
-  /* mobile-small */
-  @media all and (min-width: 0) and (max-width: 360px) and (orientation: portrait) {
-   }
-  /* mobile-large */
-  @media all and (min-width: 361px) and (orientation: portrait) {
-   }
-  /* mobile-small-landscape */
-  @media all and (min-width: 0) and (max-width: 480px) and (orientation: landscape) { }
-  /* mobile-large-landscape */
-  @media all and (min-width: 481px) and (orientation: landscape) { }
-  /* tablet-small-landscape */
-  @media all and (min-width: 600px) and (max-width: 960px) and (orientation: landscape) { }
-  /* tablet-large-landscape */
-  @media all and (min-width: 961px) and (orientation: landscape) { }
-  /* tablet-small */
-  @media all and (min-width: 600px) and (orientation: portrait) { }
-  /* tablet-large */
-  @media all and (min-width: 601px) and (max-width: 840px) and (orientation : portrait) { }
-  /* desktop-x-small-landscape */
-  @media all and (min-width: 0) and (max-width: 480px) and (orientation: landscape) { }
-  /* desktop-x-small */
-  @media all and (min-width: 0) and (max-width: 480px) and (max-aspect-ratio: 4/3) { }
-  /* desktop-small-landscape */
-  @media all and (min-width: 481px) and (max-width: 840px) and (orientation: landscape) { }
-  /* desktop-small */
-  @media all and (min-width: 481px) and (max-width: 840px) and (max-aspect-ratio: 4/3) { }
-  /* desktop-medium-landscape */
-  @media all and (min-width: 841px) and (max-width: 1280px) and (orientation: landscape) { }
-  /* desktop-medium */
-  @media all and (min-width: 841px) and (max-width: 1280px) and (max-aspect-ratio: 4/3) { }
-  /* desktop-large */
-  @media all and (min-width: 1281px) and (max-width: 1600px) { }
-  /* desktop-xlarge */
-  @media all and (min-width: 1601px) and (max-width: 1920px) { }
+    /* tablet-large-landscape */
+    @media all and (min-width: 961px) and (orientation: landscape) {
+    }
+
+    /* tablet-small */
+    @media all and (min-width: 600px) and (orientation: portrait) {
+    }
+
+    /* tablet-large */
+    @media all and (min-width: 601px) and (max-width: 840px) and (orientation: portrait) {
+    }
+
+    /* desktop-x-small-landscape */
+    @media all and (min-width: 0) and (max-width: 480px) and (orientation: landscape) {
+    }
+
+    /* desktop-x-small */
+    @media all and (min-width: 0) and (max-width: 480px) and (max-aspect-ratio: 4/3) {
+    }
+
+    /* desktop-small-landscape */
+    @media all and (min-width: 481px) and (max-width: 840px) and (orientation: landscape) {
+    }
+
+    /* desktop-small */
+    @media all and (min-width: 481px) and (max-width: 840px) and (max-aspect-ratio: 4/3) {
+    }
+
+    /* desktop-medium-landscape */
+    @media all and (min-width: 841px) and (max-width: 1280px) and (orientation: landscape) {
+    }
+
+    /* desktop-medium */
+    @media all and (min-width: 841px) and (max-width: 1280px) and (max-aspect-ratio: 4/3) {
+    }
+
+    /* desktop-large */
+    @media all and (min-width: 1281px) and (max-width: 1600px) {
+    }
+
+    /* desktop-xlarge */
+    @media all and (min-width: 1601px) and (max-width: 1920px) {
+    }
 </style>
 
 <script>
@@ -21287,85 +21317,85 @@ is separate from validation, and `allowed-pattern` does not affect how the input
 
 </script>
 <dom-module id="nexus-5" assetpath="nexus-5/">
-  <link rel="import" type="css" href="../styles/devices.min.css">
-  <style>
-    .marvel-device{
-      margin-right: 15px;
-    }
-    
-  </style>
-  <template>
-    <div class="marvel-device nexus5">
-      <div class="top-bar"></div>
-      <div class="sleep"></div>
-      <div class="volume"></div>
-      <div class="camera"></div>
-      <div class="screen">
-        
-      </div>
-    </div>
-  </template>
-  <script>
-    Polymer({
-      is: "nexus-5",
-      properties: {
-          items: {
-            type: Array,
-            notify: true,
-          }
+    <link rel="import" type="css" href="../styles/devices.min.css">
+    <style>
+        .marvel-device {
+            margin-right: 15px;
         }
-    });
-  </script>
+
+    </style>
+    <template>
+        <div class="marvel-device nexus5">
+            <div class="top-bar"></div>
+            <div class="sleep"></div>
+            <div class="volume"></div>
+            <div class="camera"></div>
+            <div class="screen">
+
+            </div>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: "nexus-5",
+            properties: {
+                items: {
+                    type: Array,
+                    notify: true,
+                }
+            }
+        });
+    </script>
 </dom-module><dom-module id="iphone-5c" assetpath="iphone-5c/">
-  <link rel="import" type="css" href="../styles/devices.min.css">
-  <style>
-    .marvel-device{
-    	margin-right: 15px;
-    }
-  </style>
-  <template>
-    <div class="marvel-device iphone5c blue">
-    <div class="top-bar"></div>
-    <div class="sleep"></div>
-    <div class="volume"></div>
-    <div class="camera"></div>
-    <div class="sensor"></div>
-    <div class="speaker"></div>
-    <div class="screen">
-        
-    </div>
-    <div class="home"></div>
-    <div class="bottom-bar"></div>
-</div>
-  </template>
-  <script>
-    Polymer({
-      is: "iphone-5c",
-      properties: {
-          items: {
-            type: Array,
-            notify: true,
-          }
+    <link rel="import" type="css" href="../styles/devices.min.css">
+    <style>
+        .marvel-device {
+            margin-right: 15px;
         }
-    });
-  </script>
+    </style>
+    <template>
+        <div class="marvel-device iphone5c blue">
+            <div class="top-bar"></div>
+            <div class="sleep"></div>
+            <div class="volume"></div>
+            <div class="camera"></div>
+            <div class="sensor"></div>
+            <div class="speaker"></div>
+            <div class="screen">
+
+            </div>
+            <div class="home"></div>
+            <div class="bottom-bar"></div>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: "iphone-5c",
+            properties: {
+                items: {
+                    type: Array,
+                    notify: true,
+                }
+            }
+        });
+    </script>
 </dom-module><dom-module id="ripple-wrapper" assetpath="ripple-wrapper/">
-  <style is="custom-style">
-    :host {
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-  </style>
-  <template>
-    <paper-ripple></paper-ripple>
-  </template>
+    <style is="custom-style">
+        :host {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    </style>
+    <template>
+        <paper-ripple></paper-ripple>
+    </template>
 </dom-module>
 <script>
-  Polymer({ is: 'ripple-wrapper' });
+    Polymer({is: 'ripple-wrapper'});
 </script><dom-module id="everhome-news" assetpath="everhome-news/">
     <link rel="import" type="css" href="../styles/app-theme.css">
     <style>
@@ -21487,186 +21517,212 @@ is separate from validation, and `allowed-pattern` does not affect how the input
     </script>
 
 </dom-module><dom-module id="everhome-test" assetpath="everhome-test/">
-  
-  <style>
-    :host{
-      font-family: "LatoLight", Georgia;
-      z-index: 1;
-    }
-    paper-button{
-      font-family: "Lato", Georgia;
-    }
-    .main-card:not(.nowidth){
-      background-color: var(--default-primary-color);
-      width:500px;
-      z-index: 1;
-      margin-right: 15px;
-      padding: 0;
-    }
-    .main-card{
-      background-color: var(--default-primary-color);
-      z-index: 1;
-      margin-right: 15px;
-      margin-left: 15px;
-      padding: 0;
-    }
-    .main-card > h3,p{
-      padding-left: 30px;
-      padding-right: 30px;
-      padding-top:16px;
-      padding-bottom: 16px;
-    }
-    .main-card-click{
-      background-color: #FFFFFF;
-    }
-    .main-card-click > iron-icon{
-      padding: 8px;
-    }
-    .main-card-click > paper-button{
-      margin: 0;
-    }
-    .main-card-arrow{
-      float: right;
-      margin-bottom: 10px;
-    }
-    div > paper-button{
-      border-top-width: 1px;
-      border-top-color: #333;
-      border-top-style: solid;
-      border-radius: 0px;
-    }
-    div > paper-button:first-child{
-      border-top-width: 0px;
-      border-top-style: inherit;
-    }
-    h3{
-      font-style: italic;
-      font-size: 25px;
-    }
-    p{
-      font-size: 20px;
-    }
-    .main-card-button-text{
-      float: left;
-      padding-top: 3px;
-    }
-    .light{
-      font-weight: 300;
-      font-size: 48px;
-      color: #FFFFFF;
-      font-style: inherit;
-    }
-    .light.small{
-      font-weight: 300;
-      font-size: 30px;
-      color: #FFFFFF;
-      font-style: inherit;
-      margin-left: 15px;
-    }
-     /*@media (max-width: 600px) {
-      .main-card{
-        width: calc(98.66% - 16px);
-      }
+    
+    <style>
+        :host {
+            font-family: "LatoLight", Georgia;
+            z-index: 1;
+        }
 
-    }*/
+        paper-button {
+            font-family: "Lato", Georgia;
+        }
 
-  </style>
-  <template>
-    <h3 id="title" class$="{{classTitle(smalltoptitle)}}">{{toptitle}}</h3>
-    <h3 id="everhometitle" class$="{{classTitle(smalltoptitle)}}"><everhome-title small=""></everhome-title> <span>{{toptitle}}</span></h3>
-  	<paper-material class$="{{classCard(nowidth)}}" elevation="1">
-      <h3 id="cardtitle" class="color white">{{title}}</h3>
-	    <h3 id="cardeverhometitle" class="color white"><everhome-title small=""></everhome-title> - Smart Home in der Cloud</h3>
-	    <p class="color white">{{content}}</p>
-	    <div class="main-card-click layout vertical">
-        <template is="dom-repeat" items="{{buttons}}">
-          <paper-button class="flex" href="{{item.link}}"><span class="main-card-button-text">{{item.title}}</span><iron-icon class="main-card-arrow" icon="{{item.icon}}"></iron-icon></paper-button>
-        </template>
-	    </div>
-    </paper-material>
-  </template>
-  <script>
-    Polymer({
-      is: "everhome-test",
-      properties: {
-        buttons: {
-          type: Array,
-          notify:true,
-        },
-        content: {
-          type: String,
-        },
-        toptitle: {
-          type: String,
-        },
-        title: {
-          type: String,
-        },
-        smalltoptitle: {
-          type: String,
-        },
-        everhomestart: {
-          type: String,
-        },
-        notitle: Boolean,
-        nowidth: String,
-      },
-      ready: function() {
-        if(typeof this.toptitle === "undefined"){
-          this.$.title.style.display = "none";
-        }else{
-          this.$.cardtitle.style.display = "none";
-          this.$.cardeverhometitle.style.display = "none";
+        .main-card:not(.nowidth) {
+            background-color: var(--default-primary-color);
+            width: 500px;
+            z-index: 1;
+            margin-right: 15px;
+            padding: 0;
         }
-        if(typeof this.buttons === "undefined"){
-          var button = {title:"everHome testen",icon:"arrow-forward"};
-          this.buttons = new Array(button);
-        }
-        if(typeof this.title === "undefined"){
-          this.$.cardtitle.style.display = "none";
-        }else{
-          this.$.cardeverhometitle.style.display = "none";
-        }
-        if(typeof this.smalltoptitle === "undefined"){
-          this.smalltoptitle = "false";
-        }
-        if(typeof this.everhomestart === "undefined"){
-          this.$.everhometitle.style.display = "none";
-        }else{
-          this.$.title.style.display = "none";
-        }
-        if(typeof this.notitle === "undefined"){
 
-        }else{
-          this.$.cardeverhometitle.style.display = "none";
+        .main-card {
+            background-color: var(--default-primary-color);
+            z-index: 1;
+            margin-right: 15px;
+            margin-left: 15px;
+            padding: 0;
         }
-        if(typeof this.nowidth === "undefined"){
-          this.nowidth = "false";
+
+        .main-card > h3, p {
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 16px;
+            padding-bottom: 16px;
         }
-      },
-      classTitle: function(small) {
-        if(small == "true"){
-          return 'light small';
-        }else{
-          return 'light';
+
+        .main-card-click {
+            background-color: #FFFFFF;
         }
-      },
-      classCard: function(nowidth) {
-        if(nowidth == "true"){
-          return 'main-card nowidth';
-        }else{
-          return 'main-card';
+
+        .main-card-click > iron-icon {
+            padding: 8px;
         }
-      },
-      titleHtml: function(title){
-        if(this.everhomestart == "true"){
-          return '<everhome-title small></everhome-title>' + title;
-        }else{
-          return title; 
+
+        .main-card-click > paper-button {
+            margin: 0;
         }
-      }
-    });
-  </script>
+
+        .main-card-arrow {
+            float: right;
+            margin-bottom: 10px;
+        }
+
+        div > paper-button {
+            border-top-width: 1px;
+            border-top-color: #333;
+            border-top-style: solid;
+            border-radius: 0px;
+        }
+
+        div > paper-button:first-child {
+            border-top-width: 0px;
+            border-top-style: inherit;
+        }
+
+        h3 {
+            font-style: italic;
+            font-size: 25px;
+        }
+
+        p {
+            font-size: 20px;
+        }
+
+        .main-card-button-text {
+            float: left;
+            padding-top: 3px;
+        }
+
+        .light {
+            font-weight: 300;
+            font-size: 48px;
+            color: #FFFFFF;
+            font-style: inherit;
+        }
+
+        .light.small {
+            font-weight: 300;
+            font-size: 30px;
+            color: #FFFFFF;
+            font-style: inherit;
+            margin-left: 15px;
+        }
+
+        /*@media (max-width: 600px) {
+         .main-card{
+           width: calc(98.66% - 16px);
+         }
+
+       }*/
+
+    </style>
+    <template>
+        <h3 id="title" class$="{{classTitle(smalltoptitle)}}">{{toptitle}}</h3>
+
+        <h3 id="everhometitle" class$="{{classTitle(smalltoptitle)}}">
+            <everhome-title small=""></everhome-title>
+            <span>{{toptitle}}</span></h3>
+        <paper-material class$="{{classCard(nowidth)}}" elevation="1">
+            <h3 id="cardtitle" class="color white">{{title}}</h3>
+
+            <h3 id="cardeverhometitle" class="color white">
+                <everhome-title small=""></everhome-title>
+                - Smart Home in der Cloud
+            </h3>
+            <p class="color white">{{content}}</p>
+
+            <div class="main-card-click layout vertical">
+                <template is="dom-repeat" items="{{buttons}}">
+                    <paper-button class="flex" href="{{item.link}}"><span class="main-card-button-text">{{item.title}}</span>
+                        <iron-icon class="main-card-arrow" icon="{{item.icon}}"></iron-icon>
+                    </paper-button>
+                </template>
+            </div>
+        </paper-material>
+    </template>
+    <script>
+        Polymer({
+            is: "everhome-test",
+            properties: {
+                buttons: {
+                    type: Array,
+                    notify: true
+                },
+                content: {
+                    type: String
+                },
+                toptitle: {
+                    type: String
+                },
+                title: {
+                    type: String
+                },
+                smalltoptitle: {
+                    type: String
+                },
+                everhomestart: {
+                    type: String
+                },
+                notitle: Boolean,
+                nowidth: String
+            },
+            ready: function () {
+                if (typeof this.toptitle === "undefined") {
+                    this.$.title.style.display = "none";
+                } else {
+                    this.$.cardtitle.style.display = "none";
+                    this.$.cardeverhometitle.style.display = "none";
+                }
+                if (typeof this.buttons === "undefined") {
+                    var button = {title: "everHome testen", icon: "arrow-forward"};
+                    this.buttons = new Array(button);
+                }
+                if (typeof this.title === "undefined") {
+                    this.$.cardtitle.style.display = "none";
+                } else {
+                    this.$.cardeverhometitle.style.display = "none";
+                }
+                if (typeof this.smalltoptitle === "undefined") {
+                    this.smalltoptitle = "false";
+                }
+                if (typeof this.everhomestart === "undefined") {
+                    this.$.everhometitle.style.display = "none";
+                } else {
+                    this.$.title.style.display = "none";
+                }
+                if (typeof this.notitle === "undefined") {
+
+                } else {
+                    this.$.cardeverhometitle.style.display = "none";
+                }
+                if (typeof this.nowidth === "undefined") {
+                    this.nowidth = "false";
+                }
+            },
+            classTitle: function (small) {
+                if (small == "true") {
+                    return 'light small';
+                } else {
+                    return 'light';
+                }
+            },
+            classCard: function (nowidth) {
+                if (nowidth == "true") {
+                    return 'main-card nowidth';
+                } else {
+                    return 'main-card';
+                }
+            },
+            titleHtml: function (title) {
+                if (this.everhomestart == "true") {
+                    return '<everhome-title small></everhome-title>' + title;
+                } else {
+                    return title;
+                }
+            }
+        });
+    </script>
 
 </dom-module><dom-module id="everhome-app" assetpath="everhome-app/">
     
@@ -21774,577 +21830,613 @@ is separate from validation, and `allowed-pattern` does not affect how the input
     </script>
 
 </dom-module><dom-module id="everhome-manufacturer" assetpath="everhome-manufacturer/">
-  <link rel="import" type="css" href="../styles/devices.min.css">
-  <style>
-  div{
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 0;
-  }
-  img{
-  	width:128px;
-    height: 128px;
-  	margin-right: 15px;
-    margin-top: 20px;
-  }
-  </style>
-  <template>
-    <div class="layout horizontal wrap">
-  		<template is="dom-repeat" items="{{items}}">
-  			<img src="{{item}}">
-  		</template>
-  	</div>
-  </template>
-  <script>
-    Polymer({
-      is: "everhome-manufacturer",
-      	properties: {
-          items: {
-            type: Array,
-            notify: true,
-          }
+    <link rel="import" type="css" href="../styles/devices.min.css">
+    <style>
+        div {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 0;
         }
-    });
-  </script>
+
+        img {
+            width: 128px;
+            height: 128px;
+            margin-right: 15px;
+            margin-top: 20px;
+        }
+    </style>
+    <template>
+        <div class="layout horizontal wrap">
+            <template is="dom-repeat" items="{{items}}">
+                <img src="{{item}}">
+            </template>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: "everhome-manufacturer",
+            properties: {
+                items: {
+                    type: Array,
+                    notify: true,
+                }
+            }
+        });
+    </script>
 </dom-module><dom-module id="everhome-fab" assetpath="everhome-fab/">
-  <link rel="import" type="css" href="../styles/app-theme.css">
-  <style>
-    paper-material{
-        -webkit-transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
-        transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
-        -moz-transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
-        -blink-transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
-    }
-
-    paper-material{
-      background-color: #4e4e4e;
-      color: #FFFFFF;
-      width: 60px;
-      padding-left: 50px;
-      height: 18px;
-      margin-top: 10px;
-      margin-left: -16px;
-      padding-right: 20px;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      z-index: 0;
-    }
-    /*border-radius: 12px;*/
-    paper-fab{
-        z-index: 1;
-        background-color: var(--default-primary-color);
-    }
-    span{
-    	color:#FFFFFF;
-    	float: right;
-    }
-    paper-material.active{
-      padding-left: 70px;
-      background-color: #FFFFFF;
-      padding-right: 10px;
-      color:#4e4e4e;
-    }
-
-    paper-material.active > span{
-      color:#4e4e4e;
-    }
-  </style>
-  <template>
-    <div class="layout horizontal">
-    	<paper-fab icon="{{icon}}"></paper-fab>
-        <paper-material class$="{{state}}">
-        	<ripple-wrapper></ripple-wrapper>
-        	<span>{{title}}</span>
-        </paper-material>
-    </div>
-  </template>
-  <script>
-    Polymer({
-      is: "everhome-fab",
-      properties: {
-          title: String,
-          icon: String,
-          state: String
+    <link rel="import" type="css" href="../styles/app-theme.css">
+    <style>
+        paper-material {
+            -webkit-transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            -moz-transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            -blink-transition: all 700ms cubic-bezier(0.175, 0.885, 0.320, 1);
         }
-    });
-  </script>
+
+        paper-material {
+            background-color: #4e4e4e;
+            color: #FFFFFF;
+            width: 60px;
+            padding-left: 50px;
+            height: 18px;
+            margin-top: 10px;
+            margin-left: -16px;
+            padding-right: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            z-index: 0;
+        }
+
+        /*border-radius: 12px;*/
+        paper-fab {
+            z-index: 1;
+            background-color: var(--default-primary-color);
+        }
+
+        span {
+            color: #FFFFFF;
+            float: right;
+        }
+
+        paper-material.active {
+            padding-left: 70px;
+            background-color: #FFFFFF;
+            padding-right: 10px;
+            color: #4e4e4e;
+        }
+
+        paper-material.active > span {
+            color: #4e4e4e;
+        }
+    </style>
+    <template>
+        <div class="layout horizontal">
+            <paper-fab icon="{{icon}}"></paper-fab>
+            <paper-material class$="{{state}}">
+                <ripple-wrapper></ripple-wrapper>
+                <span>{{title}}</span>
+            </paper-material>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: "everhome-fab",
+            properties: {
+                title: String,
+                icon: String,
+                state: String
+            }
+        });
+    </script>
 
 </dom-module><dom-module id="everhome-title" assetpath="everhome-title/">
-  <link rel="import" type="css" href="../styles/app-theme.css">
-  <style>
-    span.light{
-      font-weight: 300;
-      font-family: "LatoLight",Georgia;
-    }
-    span{
-      font-style: normal;
-    }
-    span.bold{
-      font-family: "Lato",Georgia;
-      font-weight: bold;
-    }
-    span.true{
-      font-size: 25px;
-    }
-    @media (max-width: 470px) {
-      span.toolbar{
-        font-size: 25px;
-      }
-    }
-  </style>
-  <template>
-    <span class$="{{classSpan(small,toolbar)}}"><span class="color white bold">ever</span>Home</span>
-  </template>
-  <script>
-    Polymer({
-      is: "everhome-title",
-      properties:{
-        small:Boolean,
-        toolbar:Boolean,
-      },
-      classSpan: function(size,toolbar) {
-        if(toolbar == false){
-          return 'color white light '+size;
-        }else{
-          return 'color white light toolbar '+size;
+    
+    <style>
+        span.light {
+            font-weight: 300;
+            font-family: "LatoLight", Georgia;
         }
-      },
-      ready : function(){
-        if(typeof this.small === "undefined"){
-          this.small = false;
-        }
-        if(typeof this.toolbar === "undefined"){
-          this.toolbar = false;
-        }
-      }
-    });
 
-  </script>
+        span {
+            font-style: normal;
+        }
+
+        span.bold {
+            font-family: "Lato", Georgia;
+            font-weight: bold;
+        }
+
+        span.true {
+            font-size: 25px;
+        }
+
+        @media (max-width: 470px) {
+            span.toolbar {
+                font-size: 25px;
+            }
+        }
+    </style>
+    <template>
+        <span class$="{{classSpan(small,toolbar)}}"><span class="color white bold">ever</span>Home</span>
+    </template>
+    <script>
+        Polymer({
+            is: "everhome-title",
+            properties: {
+                small: Boolean,
+                toolbar: Boolean,
+            },
+            classSpan: function (size, toolbar) {
+                if (toolbar == false) {
+                    return 'color white light ' + size;
+                } else {
+                    return 'color white light toolbar ' + size;
+                }
+            },
+            ready: function () {
+                if (typeof this.small === "undefined") {
+                    this.small = false;
+                }
+                if (typeof this.toolbar === "undefined") {
+                    this.toolbar = false;
+                }
+            }
+        });
+
+    </script>
 
 </dom-module><dom-module id="everhome-arrow-fab" assetpath="everhome-arrow-fab/">
-  <style>
-    :root {
-      --paper-fab-background:white;
-    }
-    paper-fab{
-      margin-right: 15px;
-      color:#333;
-      height: 52px;
-      width: 52px;
-    }
-    paper-fab[news="true"]{
-      margin-top: 10px;
-    }
-  </style>
-  <template>
-      <paper-fab mini="" icon="{{icon}}" disabled="{{disabled}}"></paper-fab>
-  </template>
-  <script>
-    Polymer({
-      is: "everhome-arrow-fab",
-      properties: {
-          icon: String,
-          disabled: Boolean
+    <style>
+        :root {
+            --paper-fab-background: white;
         }
-    });
-  </script>
+
+        paper-fab {
+            margin-right: 15px;
+            color: #333;
+            height: 52px;
+            width: 52px;
+        }
+
+        paper-fab[news="true"] {
+            margin-top: 10px;
+        }
+    </style>
+    <template>
+        <paper-fab mini="" icon="{{icon}}" disabled="{{disabled}}"></paper-fab>
+    </template>
+    <script>
+        Polymer({
+            is: "everhome-arrow-fab",
+            properties: {
+                icon: String,
+                disabled: Boolean
+            }
+        });
+    </script>
 </dom-module><dom-module id="everhome-presentation-screen" assetpath="everhome-presentation-screen/">
-  <style>
-    h1{
-    	margin-bottom:300px;
-    	text-shadow: 0px 1px 0px rgba(0,0,0,0.25);
-      line-height: 1;
-    }
-    p{
-    	margin-bottom:0;
-    	text-shadow: 0px 1px 15px rgb(0,0,0);
-    }
-    .content{
-      padding-left: 130px;
-      padding-right: 130px;
-      padding-bottom: 65px;
-      background-size: cover;
-      background-position: center;
-    }
+    <style>
+        h1 {
+            margin-bottom: 300px;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+            line-height: 1;
+        }
 
-    .log.content > div > h1{
-      margin-bottom:200px;
-    }
+        p {
+            margin-bottom: 0;
+            text-shadow: 0 1px 15px rgb(0, 0, 0);
+        }
 
-    @media all and (min-width: 361px) and (orientation: portrait) {
-      .content{
-        padding-left: 20px;
-        padding-right: 20px;
-        padding-bottom: 10px;
-      }
-      h1,.log.content > div > h1{
-        margin-bottom: 0;
-      }
-    }
+        .content {
+            padding-left: 130px;
+            padding-right: 130px;
+            padding-bottom: 65px;
+            background-size: cover;
+            background-position: center;
+        }
 
-    .automation.content{
-      background-image: url("../images/automation.jpg");
-    }
-    .camera.content{
-      background-image: url("../images/camera.jpg");
-    }
-    .home.content{
-      background-image: url("../images/home.jpg");
-    }
-    .log.content{
-      background-image: url("../images/log.jpg");
-    }
-  </style>
-  <template>
-  	<div class$="{{classImage(image)}}" async="">
-        <div class="layout vertical">
-            <h1 align="center" class="light flex self-center" style="">{{title}}</h1>
-           	<p style="" class="light flex self-center">{{content}}</p>
+        .log.content > div > h1 {
+            margin-bottom: 200px;
+        }
+
+        @media all and (min-width: 361px) and (orientation: portrait) {
+            .content {
+                padding-left: 20px;
+                padding-right: 20px;
+                padding-bottom: 10px;
+            }
+
+            h1, .log.content > div > h1 {
+                margin-bottom: 0;
+            }
+        }
+
+        .automation.content {
+            background-image: url("../images/automation.jpg");
+        }
+
+        .camera.content {
+            background-image: url("../images/camera.jpg");
+        }
+
+        .home.content {
+            background-image: url("../images/home.jpg");
+        }
+
+        .log.content {
+            background-image: url("../images/log.jpg");
+        }
+    </style>
+    <template>
+        <div class$="{{classImage(image)}}" async="">
+            <div class="container">
+                <h1 align="center" class="light flex self-center" style="">{{title}}</h1>
+
+                <p style="" class="light flex self-center">{{content}}</p>
+            </div>
         </div>
-    </div>
-  </template>
-  <script>
-    Polymer({
-      is: "everhome-presentation-screen",
-      properties: {
-          image: String,
-          title: {
-            type: String,
-            notify: true,
-          },
-          content: {
-            type: String,
-            notify: true,
-          }
-        },
-        classImage: function(image) {
-      		return 'content '+image;
-    	}
-    });
-  </script>
+    </template>
+    <script>
+        Polymer({
+            is: "everhome-presentation-screen",
+            properties: {
+                image: String,
+                title: {
+                    type: String,
+                    notify: true
+                },
+                content: {
+                    type: String,
+                    notify: true
+                }
+            },
+            classImage: function (image) {
+                return 'content ' + image;
+            }
+        });
+    </script>
 </dom-module><dom-module id="everhome-img-carousel" assetpath="everhome-img-carousel/">
-  <link rel="import" type="css" href="../styles/app-theme.css">
-  <style>
-  	neon-animatable {
-    	color: white;
-        @apply(--layout-horizontal);
-        @apply(--layout-center-center);
-        @apply(--paper-font-display4);
-      }
-  </style>
-  <template>
-  	<paper-material class="main-card" elevation="1">
-  	<button on-click="_onPrevClick">&lt;&lt;</button>
-    <button on-click="_onNextClick">&gt;&gt;</button>
-  	<neon-animated-pages id="pages" class="flex" selected="{{selected}}" entry-animation="slide-from-right-animation" exit-animation="slide-left-animation">
-	  <neon-animatable><img width="100px" height="100px" src="../images/nexus_6.png"></neon-animatable>
-	  <neon-animatable><img width="100px" height="100px" src="../images/nexus_6.png"></neon-animatable>
-	  <neon-animatable><img width="100px" height="100px" src="../images/nexus_6.png"></neon-animatable>
-	  <neon-animatable><img width="100px" height="100px" src="../images/nexus_6.png"></neon-animatable>
-	  <neon-animatable><img width="100px" height="100px" src="../images/nexus_6.png"></neon-animatable>
-	</neon-animated-pages>    
-    </paper-material>
-  </template>
-  <script>
-    Polymer({
-      is: "everhome-img-carousel",
-      _onPrevClick : function(){
-      	var scope = document.querySelector('#pages');
-    	scope.selected = 0;
-      	this.entryAnimation = 'slide-from-left-animation';
-      	this.exitAnimation = 'slide-right-animation';
-      	this.selected = this.selected === 0 ? 4 : (this.selected - 1);
-      },
-      _onNextClick : function(){
-      	var scope = document.querySelector('#pages');
-    	scope.selected = 0;
-      	this.entryAnimation = 'slide-from-right-animation';
-      	this.exitAnimation = 'slide-left-animation';
-      	this.selected = this.selected === 4 ? 0 : (this.selected + 1);
-      }
-    });
-  </script>
+    <link rel="import" type="css" href="../styles/app-theme.css">
+    <style>
+        neon-animatable {
+            color: white;
+        @apply(- -layout-horizontal);
+        @apply(- -layout-center-center);
+        @apply(- -paper-font-display4);
+        }
+    </style>
+    <template>
+        <paper-material class="main-card" elevation="1">
+            <button on-click="_onPrevClick">&lt;&lt;</button>
+            <button on-click="_onNextClick">&gt;&gt;</button>
+            <neon-animated-pages id="pages" class="flex" selected="{{selected}}" entry-animation="slide-from-right-animation" exit-animation="slide-left-animation">
+                <neon-animatable><img width="100px" height="100px" src="../images/nexus_6.png"></neon-animatable>
+                <neon-animatable><img width="100px" height="100px" src="../images/nexus_6.png"></neon-animatable>
+                <neon-animatable><img width="100px" height="100px" src="../images/nexus_6.png"></neon-animatable>
+                <neon-animatable><img width="100px" height="100px" src="../images/nexus_6.png"></neon-animatable>
+                <neon-animatable><img width="100px" height="100px" src="../images/nexus_6.png"></neon-animatable>
+            </neon-animated-pages>
+        </paper-material>
+    </template>
+    <script>
+        Polymer({
+            is: "everhome-img-carousel",
+            _onPrevClick: function () {
+                var scope = document.querySelector('#pages');
+                scope.selected = 0;
+                this.entryAnimation = 'slide-from-left-animation';
+                this.exitAnimation = 'slide-right-animation';
+                this.selected = this.selected === 0 ? 4 : (this.selected - 1);
+            },
+            _onNextClick: function () {
+                var scope = document.querySelector('#pages');
+                scope.selected = 0;
+                this.entryAnimation = 'slide-from-right-animation';
+                this.exitAnimation = 'slide-left-animation';
+                this.selected = this.selected === 4 ? 0 : (this.selected + 1);
+            }
+        });
+    </script>
 </dom-module><dom-module id="everhome-device" assetpath="everhome-device/">
-	<style>
-    	paper-material{
-      		/*width:500px;*/
-      		z-index: 1;
-      		margin-right: 15px;
-      		padding: 0;
-    	}
-      iron-image{
-        width:128px;
-        height:128px;
-        margin-top: 10px;
-        /*background-color: lightgray;*/
-      }
-      .round{
-        border-radius: 100%;
-        border-style: solid;
-        border-width: 3px;
-        border-color: #333;
-        margin-top: 10px;
-      }
-      p{
-        font-family: "LatoLight",Georgia;
-        font-weight: 300;
-        margin-top: 5px;
-      }
-      h2{
-        margin-bottom: 0;
-      }
-      paper-input{
-        margin-left:16px;
-        margin-right:16px;
-      }
-      paper-icon-button{
-        margin-right: 16px;
-        border-radius: 100%;
-      }
-  </style>
-  <template>
-  	<paper-material id="card" elevation="1" class="layout vertical" on-mouseover="onHovered" on-mouseout="onUnhovered">
-      <div class="layout horizontal start-justified">
-        <paper-icon-button icon="mdi:star" class="start"></paper-icon-button>
-        
-      </div>
-      <div class="round flex self-center">
-        <iron-image sizing="contain" class="flex self-center" preload="" fade="" placeholder="data:image/gif;base64,R0lGODdhyADIAOMAAO7u/5aWlqGho9jY5OPj8cLCyqyssLe3vc3N1wAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAyADIAAAE/hDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru987//AoHBILBqPyKRyyWw6n9CodEqtWq/YrHbL7Xq/4LB4TC6bz+i0es1uu9/wuHxOr9vv+Lx+z+/7/4CBgoOEhYaHiImKi4yNjo+QkZKTlJWWl5iZmpucnZ6foKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr/AwcLDxMXGx8jJysvMzc7P0NHS06kB1tYqA9cUBQEFrgLWAgIqBOEBFNuu1gMs2ugT3d/rAe0r77bsFwMGAQLzEggc8AcQAIJwA+EBuKbQmgF+3iocDHBAXiZ9Fd6dAxhuo4R3/gwnGDgnkqE1BBM0XrN3CSOFgQYM+ouHEsFMAP1i2lQIAN8EhwS6kZPQ74BMnpZcTgiHkoA1AhKxAWDaU+pHqwvrVVVI1ScmpRIwYjxwTqo+r1vTafV6FmtSrRXEak0ooB+8tjzR4v251m0llwSgUnUaAOrJtFMDoESrty9XxYi/wk0sMEBMoRKo7iRK8SiFxu285vQMoIDR0qdNN+rmbxxJlRFLi7u22OG1mDjP4bYb2uFVf+r0CZ+cyOS1oRD/cUM4cN5EA3bDhszqWOHEhBLIZh+qHdnmaFABwIwm9BxLZxAtn6fGvr379/Djy59Pv779+/jz69/Pv7///wAGQyjggAQWaOCBCCao4IIMNujggxBGKOGEFFZo4YUYZqjhhhx26OGHIIYo4ogklmjiiSimqOKKLLbo4oswxijjjDRKEQEAOw==" src="../images/licht.png" height="100px"></iron-image>
-      </div>
-      <h2 id="name" class="flex self-center">{{name}}</h2>
-      <p id="roomname" class="flex self-center">{{roomname}}</p>
-      <div class="layout horizontal">
-        <template is="dom-repeat" items="{{buttons}}">
-    		  <paper-button on-click="btnClick" class="flex btn-success"><iron-icon icon="{{item.icon}}"></iron-icon></paper-button>
-        </template>
-        <mat-menu-button id="menuButton" hidden$="{{!menu}}" target$="{{menuClassName(deviceid,groupid,sceneid)}}"></mat-menu-button>
-        
-              <mat-menu id$="{{menuClassName(deviceid,groupid,sceneid)}}">
-                <div class="layout horizontal">
-                  <paper-input label="in Sekunden ein"></paper-input>
-                  <paper-icon-button class="btn-success flex self-center" icon="ai:on"></paper-icon-button>
-                </div>
+    <style>
+        paper-material {
+            /*width:500px;*/
+            z-index: 1;
+            margin-right: 15px;
+            padding: 0;
+        }
+
+        iron-image {
+            width: 128px;
+            height: 128px;
+            margin-top: 10px;
+            /*background-color: lightgray;*/
+        }
+
+        .round {
+            border-radius: 100%;
+            border-style: solid;
+            border-width: 3px;
+            border-color: #333;
+            margin-top: 10px;
+        }
+
+        p {
+            font-family: "LatoLight", Georgia;
+            font-weight: 300;
+            margin-top: 5px;
+        }
+
+        h2 {
+            margin-bottom: 0;
+        }
+
+        paper-input {
+            margin-left: 16px;
+            margin-right: 16px;
+        }
+
+        paper-icon-button {
+            margin-right: 16px;
+            border-radius: 100%;
+        }
+    </style>
+    <template>
+        <paper-material id="card" elevation="1" class="layout vertical" on-mouseover="onHovered" on-mouseout="onUnhovered">
+            <div class="layout horizontal start-justified">
+                <paper-icon-button icon="mdi:star" class="start"></paper-icon-button>
                 
-              </mat-menu>
-      </div>
-  	</paper-material>
-  </template>
-  <script>
-    Polymer({
-      is: "everhome-device",
-      properties: {
-          buttons: {
-            type: Array,
-            notify: true,
-          },
-          menu : Boolean,
-          name: String,
-          roomname: String,
-          deviceid: 0,
-          groupid: 0,
-          sceneid: 0,
-          roomid: 0,
-          imagesource:{
-            type: String,
-            notify: true,
-          }, 
-        },
-        onHovered: function() {
-          this.$.card.elevation = 4
-        },
-        onUnhovered: function() {
-          this.$.card.elevation = 1
-        },
-        btnClick: function(){
-          this.imagesource = "test";
-        },
-        ready: function() {
-          if(typeof this.deviceid === "undefined"){
-            this.deviceid = 0;
-          }
-          if(typeof this.groupid === "undefined"){
-            this.groupid = 0;
-          }
-          if(typeof this.sceneid === "undefined"){
-            this.sceneid = 0;
-          }
-          if(typeof this.roomname === "undefined"){
-            this.$.roomname.style.display = "none";
-            this.$.name.style.marginBottom = "16px";
-          }
-          if(typeof this.menu === "undefined"){
-            this.$.menuButton.style.display = "none";
-          }
-      },
-      menuClassName: function(deviceid,groupid,sceneid) {
-          if(deviceid != 0){
-            return 'deviceMenu' + deviceid;
-          }else if(groupid != 0){
-            return 'groupMenu' + groupid;
-          }else if(sceneid != 0){
-            return 'sceneMenu' + sceneid;
-          }else{
-            return "menu";
-          }
-        },
-    });
-  </script>
+            </div>
+            <div class="round flex self-center">
+                <iron-image sizing="contain" class="flex self-center" preload="" fade="" placeholder="data:image/gif;base64,R0lGODdhyADIAOMAAO7u/5aWlqGho9jY5OPj8cLCyqyssLe3vc3N1wAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAyADIAAAE/hDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru987//AoHBILBqPyKRyyWw6n9CodEqtWq/YrHbL7Xq/4LB4TC6bz+i0es1uu9/wuHxOr9vv+Lx+z+/7/4CBgoOEhYaHiImKi4yNjo+QkZKTlJWWl5iZmpucnZ6foKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr/AwcLDxMXGx8jJysvMzc7P0NHS06kB1tYqA9cUBQEFrgLWAgIqBOEBFNuu1gMs2ugT3d/rAe0r77bsFwMGAQLzEggc8AcQAIJwA+EBuKbQmgF+3iocDHBAXiZ9Fd6dAxhuo4R3/gwnGDgnkqE1BBM0XrN3CSOFgQYM+ouHEsFMAP1i2lQIAN8EhwS6kZPQ74BMnpZcTgiHkoA1AhKxAWDaU+pHqwvrVVVI1ScmpRIwYjxwTqo+r1vTafV6FmtSrRXEak0ooB+8tjzR4v251m0llwSgUnUaAOrJtFMDoESrty9XxYi/wk0sMEBMoRKo7iRK8SiFxu285vQMoIDR0qdNN+rmbxxJlRFLi7u22OG1mDjP4bYb2uFVf+r0CZ+cyOS1oRD/cUM4cN5EA3bDhszqWOHEhBLIZh+qHdnmaFABwIwm9BxLZxAtn6fGvr379/Djy59Pv779+/jz69/Pv7///wAGQyjggAQWaOCBCCao4IIMNujggxBGKOGEFFZo4YUYZqjhhhx26OGHIIYo4ogklmjiiSimqOKKLLbo4oswxijjjDRKEQEAOw==" src="../images/licht.png" height="100px"></iron-image>
+            </div>
+            <h2 id="name" class="flex self-center">{{name}}</h2>
+                <p id="roomname" class="flex self-center">{{roomname}}</p>
+
+                <div class="layout horizontal">
+                    <template is="dom-repeat" items="{{buttons}}">
+                        <paper-button on-click="btnClick" class="flex btn-success">
+                            <iron-icon icon="{{item.icon}}"></iron-icon>
+                        </paper-button>
+                    </template>
+                    <mat-menu-button id="menuButton" hidden$="{{!menu}}" target$="{{menuClassName(deviceid,groupid,sceneid)}}"></mat-menu-button>
+                    
+                    <mat-menu id$="{{menuClassName(deviceid,groupid,sceneid)}}">
+                        <div class="layout horizontal">
+                            <paper-input label="in Sekunden ein"></paper-input>
+                            <paper-icon-button class="btn-success flex self-center" icon="ai:on"></paper-icon-button>
+                        </div>
+                        
+                    </mat-menu>
+                </div>
+        </paper-material>
+    </template>
+    <script>
+        Polymer({
+            is: "everhome-device",
+            properties: {
+                buttons: {
+                    type: Array,
+                    notify: true,
+                },
+                menu: Boolean,
+                name: String,
+                roomname: String,
+                deviceid: 0,
+                groupid: 0,
+                sceneid: 0,
+                roomid: 0,
+                imagesource: {
+                    type: String,
+                    notify: true,
+                },
+            },
+            onHovered: function () {
+                this.$.card.elevation = 4
+            },
+            onUnhovered: function () {
+                this.$.card.elevation = 1
+            },
+            btnClick: function () {
+                this.imagesource = "test";
+            },
+            ready: function () {
+                if (typeof this.deviceid === "undefined") {
+                    this.deviceid = 0;
+                }
+                if (typeof this.groupid === "undefined") {
+                    this.groupid = 0;
+                }
+                if (typeof this.sceneid === "undefined") {
+                    this.sceneid = 0;
+                }
+                if (typeof this.roomname === "undefined") {
+                    this.$.roomname.style.display = "none";
+                    this.$.name.style.marginBottom = "16px";
+                }
+                if (typeof this.menu === "undefined") {
+                    this.$.menuButton.style.display = "none";
+                }
+            },
+            menuClassName: function (deviceid, groupid, sceneid) {
+                if (deviceid != 0) {
+                    return 'deviceMenu' + deviceid;
+                } else if (groupid != 0) {
+                    return 'groupMenu' + groupid;
+                } else if (sceneid != 0) {
+                    return 'sceneMenu' + sceneid;
+                } else {
+                    return "menu";
+                }
+            },
+        });
+    </script>
 </dom-module><dom-module id="everhome-index-device" assetpath="everhome-index-device/">
-	<style>
-    	paper-material{
-      		/*width:500px;*/
-      		z-index: 1;
-      		margin-right: 15px;
-      		padding: 0;
-    	}
-      iron-image{
-        width:128px;
-        height:128px;
-        margin-top: 10px;
-        /*background-color: lightgray;*/
-      }
-      .round{
-        border-radius: 100%;
-        border-style: solid;
-        border-width: 3px;
-        border-color: #333;
-        margin-top: 10px;
-      }
-      p{
-        font-family: "LatoLight",Georgia;
-        font-weight: 300;
-        margin-top: 5px;
-      }
-      h2{
-        margin-bottom: 0;
-      }
-      paper-input{
-        margin-left:16px;
-        margin-right:16px;
-      }
-      paper-button{
-        -webkit-transition:all 500ms cubic-bezier(0.4, 0, 1, 1);
-        transition:all 500ms cubic-bezier(0.4, 0, 1, 1);
-        -moz-transition:all 500ms cubic-bezier(0.4, 0, 1, 1);
-        -blink-transition:all 500ms cubic-bezier(0.4, 0, 1, 1);
-      }
-      paper-icon-button{
-        margin-right: 16px;
-        border-radius: 100%;
-      }
-  </style>
-  <template>
-  	<paper-material id="card" elevation="1" class="layout vertical" on-mouseover="onHovered" on-mouseout="onUnhovered">
-      <div class="layout horizontal start-justified">
-        <paper-icon-button icon="mdi:star" class="start"></paper-icon-button>
-        
-      </div>
-      <div class="round flex self-center">
-        <iron-image id="deviceImage" sizing="contain" class="flex self-center" preload="" fade="" placeholder="data:image/gif;base64,R0lGODdhyADIAOMAAO7u/5aWlqGho9jY5OPj8cLCyqyssLe3vc3N1wAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAyADIAAAE/hDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru987//AoHBILBqPyKRyyWw6n9CodEqtWq/YrHbL7Xq/4LB4TC6bz+i0es1uu9/wuHxOr9vv+Lx+z+/7/4CBgoOEhYaHiImKi4yNjo+QkZKTlJWWl5iZmpucnZ6foKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr/AwcLDxMXGx8jJysvMzc7P0NHS06kB1tYqA9cUBQEFrgLWAgIqBOEBFNuu1gMs2ugT3d/rAe0r77bsFwMGAQLzEggc8AcQAIJwA+EBuKbQmgF+3iocDHBAXiZ9Fd6dAxhuo4R3/gwnGDgnkqE1BBM0XrN3CSOFgQYM+ouHEsFMAP1i2lQIAN8EhwS6kZPQ74BMnpZcTgiHkoA1AhKxAWDaU+pHqwvrVVVI1ScmpRIwYjxwTqo+r1vTafV6FmtSrRXEak0ooB+8tjzR4v251m0llwSgUnUaAOrJtFMDoESrty9XxYi/wk0sMEBMoRKo7iRK8SiFxu285vQMoIDR0qdNN+rmbxxJlRFLi7u22OG1mDjP4bYb2uFVf+r0CZ+cyOS1oRD/cUM4cN5EA3bDhszqWOHEhBLIZh+qHdnmaFABwIwm9BxLZxAtn6fGvr379/Djy59Pv779+/jz69/Pv7///wAGQyjggAQWaOCBCCao4IIMNujggxBGKOGEFFZo4YUYZqjhhhx26OGHIIYo4ogklmjiiSimqOKKLLbo4oswxijjjDRKEQEAOw==" src="{{deviceimage}}" height="100px"></iron-image>
-      </div>
-      <h2 id="name" class="flex self-center">{{name}}</h2>
-      <p id="roomname" class="flex self-center">{{roomname}}</p>
-      <div class="layout horizontal">
-        <template is="dom-repeat" items="{{buttons}}">
-    		  <paper-button id="{{item.actionid}}" on-click="btnClick" class="off flex btn-success"><iron-icon icon="{{item.icon}}"></iron-icon></paper-button>
-        </template>
-        <mat-menu-button id="menuButton" hidden$="{{!menu}}" target$="{{menuClassName(deviceid,groupid,sceneid)}}"></mat-menu-button>
-        
-              <mat-menu id$="{{menuClassName(deviceid,groupid,sceneid)}}">
-                <div class="layout horizontal">
-                  <paper-input label="in Sekunden ein"></paper-input>
-                  <paper-icon-button class="btn-success flex self-center" icon="ai:on"></paper-icon-button>
-                </div>
+    <style>
+        paper-material {
+            /*width:500px;*/
+            z-index: 1;
+            margin-right: 15px;
+            padding: 0;
+        }
+
+        iron-image {
+            width: 128px;
+            height: 128px;
+            margin-top: 10px;
+            /*background-color: lightgray;*/
+        }
+
+        .round {
+            border-radius: 100%;
+            border-style: solid;
+            border-width: 3px;
+            border-color: #333;
+            margin-top: 10px;
+        }
+
+        p {
+            font-family: "LatoLight", Georgia;
+            font-weight: 300;
+            margin-top: 5px;
+        }
+
+        h2 {
+            margin-bottom: 0;
+        }
+
+        paper-input {
+            margin-left: 16px;
+            margin-right: 16px;
+        }
+
+        paper-button {
+            -webkit-transition: all 500ms cubic-bezier(0.4, 0, 1, 1);
+            transition: all 500ms cubic-bezier(0.4, 0, 1, 1);
+            -moz-transition: all 500ms cubic-bezier(0.4, 0, 1, 1);
+            -blink-transition: all 500ms cubic-bezier(0.4, 0, 1, 1);
+        }
+
+        paper-icon-button {
+            margin-right: 16px;
+            border-radius: 100%;
+        }
+    </style>
+    <template>
+        <paper-material id="card" elevation="1" class="layout vertical" on-mouseover="onHovered" on-mouseout="onUnhovered">
+            <div class="layout horizontal start-justified">
+                <paper-icon-button icon="mdi:star" class="start"></paper-icon-button>
                 
-              </mat-menu>
-      </div>
-  	</paper-material>
-  </template>
-  <script>
-    Polymer({
-      is: "everhome-index-device",
-      properties: {
-          buttons: {
-            type: Array,
-            notify: true,
-          },
-          menu : Boolean,
-          name: String,
-          roomname: String,
-          deviceid: 0,
-          groupid: 0,
-          sceneid: 0,
-          roomid: 0,
-          deviceimage : String,
-          imagesource:{
-            type: String,
-            notify: true,
-          }, 
-        },
-        onHovered: function() {
-          this.$.card.elevation = 4
-        },
-        onUnhovered: function() {
-          this.$.card.elevation = 1
-        },
-        btnClick: function(){
-          var button = $("#1");
-          var deviceImage = $("#deviceImage");
-          if(button.hasClass("on")){
-            this.imagesource = "off";
-            button.addClass("off");
-            button.removeClass("on");
-            button.addClass("btn-success");
-            button.removeClass("btn-danger");
-            this.deviceimage = "../../images/licht_off.png";
-          }else if(button.hasClass("off")){
-            this.imagesource = "on";
-            button.addClass("on");
-            button.removeClass("off");
-            //button.setAttribute("state","on");
-            button.addClass("btn-danger");
-            button.removeClass("btn-success");
-            this.deviceimage = "../../images/licht.png";
-          }
-        },
-        ready: function() {
-          if(typeof this.deviceimage === "undefined"){
-            this.deviceimage = "../../images/licht_off.png";
-          }
-          if(typeof this.deviceid === "undefined"){
-            this.deviceid = 0;
-          }
-          if(typeof this.groupid === "undefined"){
-            this.groupid = 0;
-          }
-          if(typeof this.sceneid === "undefined"){
-            this.sceneid = 0;
-          }
-          if(typeof this.roomname === "undefined"){
-            this.$.roomname.style.display = "none";
-            this.$.name.style.marginBottom = "16px";
-          }
-          if(typeof this.menu === "undefined"){
-            this.$.menuButton.style.display = "none";
-          }
-      },
-      menuClassName: function(deviceid,groupid,sceneid) {
-          if(deviceid != 0){
-            return 'deviceMenu' + deviceid;
-          }else if(groupid != 0){
-            return 'groupMenu' + groupid;
-          }else if(sceneid != 0){
-            return 'sceneMenu' + sceneid;
-          }else{
-            return "menu";
-          }
-        },
-    });
-  </script>
+            </div>
+            <div class="round flex self-center">
+                <iron-image id="deviceImage" sizing="contain" class="flex self-center" preload="" fade="" placeholder="data:image/gif;base64,R0lGODdhyADIAOMAAO7u/5aWlqGho9jY5OPj8cLCyqyssLe3vc3N1wAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAyADIAAAE/hDISau9OOvNu/9gKI5kaZ5oqq5s675wLM90bd94ru987//AoHBILBqPyKRyyWw6n9CodEqtWq/YrHbL7Xq/4LB4TC6bz+i0es1uu9/wuHxOr9vv+Lx+z+/7/4CBgoOEhYaHiImKi4yNjo+QkZKTlJWWl5iZmpucnZ6foKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr/AwcLDxMXGx8jJysvMzc7P0NHS06kB1tYqA9cUBQEFrgLWAgIqBOEBFNuu1gMs2ugT3d/rAe0r77bsFwMGAQLzEggc8AcQAIJwA+EBuKbQmgF+3iocDHBAXiZ9Fd6dAxhuo4R3/gwnGDgnkqE1BBM0XrN3CSOFgQYM+ouHEsFMAP1i2lQIAN8EhwS6kZPQ74BMnpZcTgiHkoA1AhKxAWDaU+pHqwvrVVVI1ScmpRIwYjxwTqo+r1vTafV6FmtSrRXEak0ooB+8tjzR4v251m0llwSgUnUaAOrJtFMDoESrty9XxYi/wk0sMEBMoRKo7iRK8SiFxu285vQMoIDR0qdNN+rmbxxJlRFLi7u22OG1mDjP4bYb2uFVf+r0CZ+cyOS1oRD/cUM4cN5EA3bDhszqWOHEhBLIZh+qHdnmaFABwIwm9BxLZxAtn6fGvr379/Djy59Pv779+/jz69/Pv7///wAGQyjggAQWaOCBCCao4IIMNujggxBGKOGEFFZo4YUYZqjhhhx26OGHIIYo4ogklmjiiSimqOKKLLbo4oswxijjjDRKEQEAOw==" src="{{deviceimage}}" height="100px"></iron-image>
+            </div>
+            <h2 id="name" class="flex self-center">{{name}}</h2>
+                <p id="roomname" class="flex self-center">{{roomname}}</p>
+
+                <div class="layout horizontal">
+                    <template is="dom-repeat" items="{{buttons}}">
+                        <paper-button id="{{item.actionid}}" on-click="btnClick" class="off flex btn-success">
+                            <iron-icon icon="{{item.icon}}"></iron-icon>
+                        </paper-button>
+                    </template>
+                    <mat-menu-button id="menuButton" hidden$="{{!menu}}" target$="{{menuClassName(deviceid,groupid,sceneid)}}"></mat-menu-button>
+                    
+                    <mat-menu id$="{{menuClassName(deviceid,groupid,sceneid)}}">
+                        <div class="layout horizontal">
+                            <paper-input label="in Sekunden ein"></paper-input>
+                            <paper-icon-button class="btn-success flex self-center" icon="ai:on"></paper-icon-button>
+                        </div>
+                        
+                    </mat-menu>
+                </div>
+        </paper-material>
+    </template>
+    <script>
+        Polymer({
+            is: "everhome-index-device",
+            properties: {
+                buttons: {
+                    type: Array,
+                    notify: true,
+                },
+                menu: Boolean,
+                name: String,
+                roomname: String,
+                deviceid: 0,
+                groupid: 0,
+                sceneid: 0,
+                roomid: 0,
+                deviceimage: String,
+                imagesource: {
+                    type: String,
+                    notify: true,
+                },
+            },
+            onHovered: function () {
+                this.$.card.elevation = 4
+            },
+            onUnhovered: function () {
+                this.$.card.elevation = 1
+            },
+            btnClick: function () {
+                var button = $("#1");
+                var deviceImage = $("#deviceImage");
+                if (button.hasClass("on")) {
+                    this.imagesource = "off";
+                    button.addClass("off");
+                    button.removeClass("on");
+                    button.addClass("btn-success");
+                    button.removeClass("btn-danger");
+                    this.deviceimage = "../../images/licht_off.png";
+                } else if (button.hasClass("off")) {
+                    this.imagesource = "on";
+                    button.addClass("on");
+                    button.removeClass("off");
+                    //button.setAttribute("state","on");
+                    button.addClass("btn-danger");
+                    button.removeClass("btn-success");
+                    this.deviceimage = "../../images/licht.png";
+                }
+            },
+            ready: function () {
+                if (typeof this.deviceimage === "undefined") {
+                    this.deviceimage = "../../images/licht_off.png";
+                }
+                if (typeof this.deviceid === "undefined") {
+                    this.deviceid = 0;
+                }
+                if (typeof this.groupid === "undefined") {
+                    this.groupid = 0;
+                }
+                if (typeof this.sceneid === "undefined") {
+                    this.sceneid = 0;
+                }
+                if (typeof this.roomname === "undefined") {
+                    this.$.roomname.style.display = "none";
+                    this.$.name.style.marginBottom = "16px";
+                }
+                if (typeof this.menu === "undefined") {
+                    this.$.menuButton.style.display = "none";
+                }
+            },
+            menuClassName: function (deviceid, groupid, sceneid) {
+                if (deviceid != 0) {
+                    return 'deviceMenu' + deviceid;
+                } else if (groupid != 0) {
+                    return 'groupMenu' + groupid;
+                } else if (sceneid != 0) {
+                    return 'sceneMenu' + sceneid;
+                } else {
+                    return "menu";
+                }
+            },
+        });
+    </script>
 </dom-module><dom-module id="everhome-house" assetpath="everhome-house/">
 <template>
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1594 580" enable-background="new 0 0 1594 580" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1594 580" enable-background="new 0 0 1594 580" xml:space="preserve">
 <g id="Ebene_2" display="none">
 	<rect x="-2" y="-2" display="inline" fill="#3F51B5" stroke="#000000" stroke-miterlimit="10" width="1599" height="585"></rect>
 </g>
@@ -23161,6 +23253,131 @@ BgD0rSc0U5bq8wAAAABJRU5ErkJggg==">
 		<rect x="1503" y="390.5" fill="#FFDE00" width="10" height="160"></rect>
 	</g>
 </g>
+<g id="objekte">
+	<g id="kueche">
+		<g id="fenster_kueche_2">
+			<rect x="1287" y="411" fill="#7F6600" width="91" height="89"></rect>
+			<rect x="1335" y="417" fill="#EBFBFF" width="37" height="77"></rect>
+			<rect x="1293" y="417" fill="#EBFBFF" width="37" height="77"></rect>
+		</g>
+		<g id="fenster_kueche_1">
+			<rect x="1166" y="411" fill="#7F6600" width="91" height="89"></rect>
+			<rect x="1214" y="417" fill="#EBFBFF" width="37" height="77"></rect>
+			<rect x="1172" y="417" fill="#EBFBFF" width="37" height="77"></rect>
+		</g>
+		<g id="lampe_kueche_1">
+			<path opacity="0.5" fill="#FFB400" d="M1280.2,421c3.1,5.3,10.1,9,18.3,9s15.2-3.7,18.3-9H1280.2z"></path>
+			<rect x="1295" y="391.5" fill="#BEA279" width="7" height="13"></rect>
+			<path fill="#0F616D" d="M1306,414H1291c-1.1,0-2-0.9-2-2V404c0-1.1,0.9-2,2-2h14.9c1.1,0,2,0.9,2,2v7.9
+				C1308,413.1,1307.1,414,1306,414z"></path>
+			<path fill="#638E96" d="M1325.9,410h-54.8c-7.2,0-13.1,6-13.1,13h81C1339,416,1333.1,410,1325.9,410z"></path>
+		</g>
+		<g id="stuhl_kueche_2">
+			<rect x="1344" y="518.8" fill="#BDA17C" width="6" height="29.3"></rect>
+			<rect x="1316" y="518.4" fill="#BDA17C" width="6" height="29.6"></rect>
+			<rect x="1321" y="525" fill="#BDA17C" width="24" height="3"></rect>
+			<path fill="#BDA17C" d="M1348,465h2v50h-8v-44C1342,467.7,1344.7,465,1348,465z"></path>
+			<path fill="#FFFDF1" d="M1316,520v-3.5c0-3,2.5-5.5,5.5-5.5h28.5v9H1316z"></path>
+		</g>
+		<g id="stuhl_kueche_1">
+			<rect x="1168" y="518.8" fill="#BDA17C" width="6" height="29.3"></rect>
+			<rect x="1196" y="518.4" fill="#BDA17C" width="6" height="29.6"></rect>
+			<rect x="1173" y="525" fill="#BDA17C" width="24" height="3"></rect>
+			<path fill="#BDA17C" d="M1170,465h-2v50h8v-44C1176,467.7,1173.3,465,1170,465z"></path>
+			<path fill="#FFFDF1" d="M1202,520v-3.5c0-3-2.5-5.5-5.5-5.5H1168v9H1202z"></path>
+		</g>
+		<g id="tisch_kueche_1">
+			<rect x="1210" y="495" fill="#BDA17C" width="11" height="54"></rect>
+			<rect x="1296" y="495" fill="#BDA17C" width="11" height="54"></rect>
+			<rect x="1201" y="490" fill="#D0AD7E" width="115" height="8"></rect>
+		</g>
+		<g id="herd_kueche_1">
+			<rect x="1387" y="488" fill="#BDA17C" width="63" height="60"></rect>
+			<rect x="1396" y="507" fill="#4E4E4E" width="45" height="33"></rect>
+			<rect x="1396" y="510" fill="#727272" width="45" height="3"></rect>
+			<rect x="1388" y="499" fill="#4A453F" width="61" height="4"></rect>
+			<rect x="1387" y="488" fill="#4A453F" width="63" height="2"></rect>
+			<circle fill="#626262" cx="1403.5" cy="494.5" r="3"></circle>
+			<circle fill="#626262" cx="1413.5" cy="494.5" r="3"></circle>
+			<circle fill="#626262" cx="1423.5" cy="494.5" r="3"></circle>
+			<circle fill="#626262" cx="1433.5" cy="494.5" r="3"></circle>
+		</g>
+		<g id="kuehlschrank_kueche_1">
+			<rect x="1454" y="403" fill="#7F999E" width="69" height="145"></rect>
+			<rect x="1454" y="496" width="69" height="2"></rect>
+			<rect x="1459" y="502" fill="#4C5456" width="4" height="32"></rect>
+			<rect x="1459" y="460" fill="#4C5456" width="4" height="32"></rect>
+		</g>
+	</g>
+	<g id="flur_1_">
+		<g id="lampe_flur_1">
+			<rect x="994" y="438" fill="#BEA279" width="7" height="114"></rect>
+			<polygon opacity="0.85" fill="#FFB400" points="1010.2,434 998,434 997,434 984.8,434 978,469 997,469 998,469 1017,469 			"></polygon>
+			<path fill="#BEA279" d="M1014,548c-7.2,0-13-5.8-13-13h-4v16h17V548z"></path>
+			<path fill="#BEA279" d="M981,548c7.2,0,13-5.8,13-13h4v16h-17V548z"></path>
+		</g>
+		<g id="tuer_flur_1">
+			<rect x="1019" y="424" fill="#163B48" width="68" height="128"></rect>
+			<rect x="1023" y="428" fill="#2D7791" width="60" height="122"></rect>
+			<circle fill="#276176" cx="1075" cy="493" r="3"></circle>
+			<rect x="1064" y="482" fill="#1E4451" width="10" height="2"></rect>
+			<circle fill="#276176" cx="1075" cy="483" r="4"></circle>
+		</g>
+		<g id="treppe_flur_1">
+			<g id="stufen">
+				<rect x="831" y="467" fill="#7C7167" width="20" height="22.2"></rect>
+				<rect x="851" y="477" fill="#7C7167" width="20" height="22.2"></rect>
+				<rect x="871" y="487" fill="#7C7167" width="20" height="22.2"></rect>
+				<rect x="891" y="497" fill="#7C7167" width="20" height="22.2"></rect>
+				<rect x="911" y="507" fill="#7C7167" width="20" height="22.2"></rect>
+				<rect x="931" y="517" fill="#7C7167" width="20" height="22.2"></rect>
+				<rect x="951" y="527" fill="#7C7167" width="20" height="22.2"></rect>
+				<rect x="971" y="537" fill="#7C7167" width="20" height="22.2"></rect>
+				<rect x="811" y="457" fill="#7C7167" width="20" height="22.2"></rect>
+				<rect x="791" y="447" fill="#7C7167" width="20" height="22.2"></rect>
+			</g>
+			<g id="gelaender">
+				<polygon fill="#9F907F" points="787,445.6 787,551 998.9,551 				"></polygon>
+				<polygon fill="#9F907F" points="986,506.5 780,404.5 784,396.5 990,498.5 				"></polygon>
+				<rect x="804" y="412" fill="#9F907F" width="5" height="50"></rect>
+				<rect x="824" y="422" fill="#9F907F" width="5" height="50"></rect>
+				<rect x="844" y="432" fill="#9F907F" width="5" height="50"></rect>
+				<rect x="864" y="442" fill="#9F907F" width="5" height="50"></rect>
+				<rect x="884" y="452" fill="#9F907F" width="5" height="50"></rect>
+				<rect x="904" y="462" fill="#9F907F" width="5" height="50"></rect>
+				<rect x="924" y="472" fill="#9F907F" width="5" height="50"></rect>
+				<rect x="944" y="482" fill="#9F907F" width="5" height="50"></rect>
+				<rect x="964" y="492" fill="#9F907F" width="5" height="50"></rect>
+				<rect x="982" y="484" fill="#9F907F" width="10" height="66"></rect>
+				<rect x="977" y="481" fill="#9F907F" width="20" height="7"></rect>
+			</g>
+		</g>
+		<g id="kamera_flur_1">
+			<rect x="918" y="394.5" fill="#576A6E" width="4" height="9"></rect>
+			<rect x="914" y="392" fill="#6A7172" width="12" height="4"></rect>
+			<g id="kamera_1_">
+
+					<rect x="911.7" y="402.7" transform="matrix(0.891 0.454 -0.454 0.891 285.8302 -374.1708)" fill="#4C5456" width="21" height="11"></rect>
+
+					<rect x="930.9" y="410.9" transform="matrix(0.891 0.454 -0.454 0.891 289.4688 -378.4312)" fill="#6D858A" width="4" height="5.5"></rect>
+			</g>
+		</g>
+	</g>
+	<g id="wohnzimmer_1_">
+		<g id="fenster_kueche_1_Kopie" display="none">
+			<rect x="896" y="236" display="inline" fill="#7F6600" width="91" height="89"></rect>
+			<rect x="944" y="242" display="inline" fill="#EBFBFF" width="37" height="77"></rect>
+			<rect x="902" y="242" display="inline" fill="#EBFBFF" width="37" height="77"></rect>
+		</g>
+		<g id="sofa">
+			<path fill="#9B815C" d="M815,356v22h16v-10.3c0-1.5,1.2-2.7,2.7-2.7h134.5c1.5,0,2.7,1.2,2.7,2.7V378h16v-22H815z"></path>
+			<path fill="#9F4141" d="M835.8,294h130.5c3.7,0,6.8,3,6.8,6.8V348H829v-47.3C829,297,832,294,835.8,294z"></path>
+			<rect x="809" y="340" fill="#923C3C" width="184" height="22"></rect>
+			<path fill="#923C3C" d="M815.8,314h19.5c3.7,0,6.8,3,6.8,6.8V352h-33v-31.3C809,317,812,314,815.8,314z"></path>
+			<path fill="#923C3C" d="M966.8,314h19.5c3.7,0,6.8,3,6.8,6.8V352h-33v-31.3C960,317,963,314,966.8,314z"></path>
+		</g>
+	</g>
+</g>
 <g id="aussenwaende">
 	<rect x="773" y="373" fill="#FFFFFF" width="770" height="20"></rect>
 	<rect x="788.3" y="198" fill="#FFFFFF" width="738.2" height="20"></rect>
@@ -23169,8 +23386,8 @@ BgD0rSc0U5bq8wAAAABJRU5ErkJggg==">
 	<rect x="1102" y="390.5" fill="#FFFFFF" width="12" height="160"></rect>
 	<rect x="1185" y="215.5" fill="#FFFFFF" width="12" height="160"></rect>
 	<rect x="773" y="548" fill="#FFFFFF" width="770" height="20"></rect>
-	<g>
-		<polygon fill="#6D6050" points="1185.1,37.1 1158.1,24.7 1158,24.7 1157.9,24.7 1130.9,37.1 1131.1,37.2 739.5,218 793.4,218 
+	<g id="Dach">
+		<polygon fill="#6D6050" points="1185.1,37.1 1158.1,24.7 1158,24.7 1157.9,24.7 1130.9,37.1 1131.1,37.2 739.5,218 793.4,218
 			1158,49.6 1522.6,218 1576.5,218 1184.9,37.2 		"></polygon>
 	</g>
 </g>

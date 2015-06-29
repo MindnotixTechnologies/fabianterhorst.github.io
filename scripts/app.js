@@ -112,7 +112,6 @@
   };
 
   function checkScroll(){
-        console.log(app.selectedImage);
         if(app.selectedImage === 0){
           var imageLeftButton = document.querySelector('#imageLeftButton');
           imageLeftButton.setAttribute("disabled","true");

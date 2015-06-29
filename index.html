@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="">
+<span lang="">
 
 <head>
     <meta charset="utf-8">
@@ -79,12 +79,7 @@
             background-position: top, left; /*left top, right bottom*/
             background-repeat: no-repeat;
             background-size: contain, cover;
-            /*padding-left: 130px;*/
             padding-top: 200px;
-        }
-
-        .description-content-fab {
-            width: 200px;
         }
 
         .shadow {
@@ -101,12 +96,12 @@
             background-repeat: no-repeat;
         }
 
-        #footer-container {
-            margin-top: 150px;
+        paper-dialog > paper-input {
+            margin-top: 0;
         }
 
-        .description-card {
-            width: 500px;
+        #footer-container {
+            margin-top: 150px;
         }
 
         #paperToggle {
@@ -117,48 +112,21 @@
             display: block;
         }
 
-        /* mobile-large */
-        @media all and (min-width: 361px) and (orientation: portrait) {
-            .main-section {
-            @apply(- -layout-wrap);
-            }
-
-            .description-content {
-                padding-left: 20px;
-            }
-        }
-
         paper-material > .container {
             padding-bottom: 32px;
         }
-
-        @media (max-width: 600px) {
-            .flex-none {
-                -webkit-flex: initial;
-                flex: initial;
-            }
-
-            .description-card {
-                width: calc(98.66% - 40px);
-            }
-        }
-
-        @media (max-width: 1200px) {
-            .main-section {
-            @apply(- -layout-wrap);
-            }
-        }
-
-        /*
-
-        @apply(--layout-center-justified)
-
-        */
 
         #topBar > paper-item {
             font-size: 20px;
             font-family: "Lato", Georgia;
             opacity: 0.8;
+        }
+
+        #login-dialog {
+            background-color: white;
+            position: fixed;
+            top: 40px;
+            right: 16px;
         }
 
         /*Responsive Toolbar*/
@@ -205,9 +173,8 @@
     </style>
 
 </head>
-
 <body unresolved class="fullbleed layout vertical">
-<!--<span id="browser-sync-binding"></span>-->
+<span id="browser-sync-binding"></span>
 <template is="dom-bind" id="app">
     <paper-drawer-panel id="paperDrawerPanel" forceNarrow="true">
         <paper-header-panel drawer mode="scroll"><!--seam-->
@@ -259,7 +226,27 @@
                     <paper-tab>Forum</paper-tab>
                     <paper-tab>Hilfe</paper-tab>
                 </paper-tabs>
-                <paper-button class="login btn-success" raised>Anmelden</paper-button>
+                <paper-button class="login btn-success" onclick="document.getElementById('login-dialog').open()" raised>
+                    Anmelden
+                </paper-button>
+                <!-- <paper-dialog id="login-dialog" modal>
+                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                     <div class="buttons">
+                         <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+                     </div>
+                 </paper-dialog>-->
+                <paper-dialog elevation="1" id="login-dialog" entry-animation="slide-down-animation"
+                              exit-animation="fade-out-animation">
+                    <h2>Anmelden</h2>
+                    <paper-input label="Email"></paper-input>
+                    <paper-input label="Passwort"></paper-input>
+                    <paper-button>Passwort vergessen?</paper-button>
+                    <div class="buttons">
+                        <paper-button class="btn-success login" raised>Jetzt Registrieren</paper-button>
+                        <paper-button dialog-dismiss>Abbrechen</paper-button>
+                        <paper-button dialog-confirm autofocus>Anmelden</paper-button>
+                    </div>
+                </paper-dialog>
                 <!--<paper-item label="Anmelden" data-route="contact" href="#">
                   <div class="label" fit>
 
@@ -268,6 +255,13 @@
                 </paper-item>-->
                 <mat-menu-button id="menuButton" target="accountMenu" color="white"></mat-menu-button>
                 <mat-menu id="accountMenu">
+                    <paper-item href="#">
+                        <div class="label" fit>
+                            <iron-icon icon="home"></iron-icon>
+                            fabian.terhorst@gmail.com
+                        </div>
+                        <paper-ripple></paper-ripple>
+                    </paper-item>
                     <mat-option label="Abmelden"></mat-option>
                 </mat-menu>
 
@@ -301,7 +295,7 @@
                         </div>
                         <div class="col-md-6 no-padding">
                             <everhome-news
-                                    items='[{"title": "Digitus"},{"title": "Rohrmotor 24"},{"title": "test"},{"title": "test2"}]'></everhome-news>
+                                    items='[{"title": "Digitus","content": "test"},{"title": "Rohrmotor 24","content": "test"},{"title": "test","content": "test"},{"title": "test2","content": "test"}]'></everhome-news>
                         </div>
                     </div>
                 </div>
@@ -343,7 +337,7 @@
                                         </paper-material>
                                     </neon-animatable>
                                     <neon-animatable>
-                                        <paper-material class="description-card" elevation="1">
+                                        <paper-material elevation="1">
                                             <div class="layout vertical start-justified">
                                                 <h3>Lorem ipsum dolor 2</h3>
 
@@ -360,7 +354,7 @@
                                         </paper-material>
                                     </neon-animatable>
                                     <neon-animatable>
-                                        <paper-material class="description-card" elevation="1">
+                                        <paper-material elevation="1">
                                             <div class="layout vertical start-justified">
                                                 <h3>Lorem ipsum dolor 3</h3>
 
@@ -376,7 +370,7 @@
                                         </paper-material>
                                     </neon-animatable>
                                     <neon-animatable>
-                                        <paper-material class="description-card" elevation="1">
+                                        <paper-material elevation="1">
                                             <div class="layout vertical start-justified">
                                                 <h3>Lorem ipsum dolor 4</h3>
 
@@ -392,7 +386,7 @@
                                         </paper-material>
                                     </neon-animatable>
                                     <neon-animatable>
-                                        <paper-material class="description-card" elevation="1">
+                                        <paper-material elevation="1">
                                             <div class="layout vertical start-justified">
                                                 <h3>Lorem ipsum dolor 5</h3>
 
@@ -465,9 +459,15 @@
                                     App
                                 </h1>
                                 <div class="row">
+                                    <img class="col-md-4 no-padding img-responsiv visible-md visible-lg"
+                                         src="images/nexus_6.png"/>
+                                    <img class="col-md-4 no-padding img-responsiv visible-md visible-lg"
+                                         src="images/nexus_6.png"/>
+                                    <img class="col-md-4 no-padding img-responsiv visible-md visible-lg"
+                                         src="images/nexus_6.png"/>
+                                    <!--<nexus-5 class="col-md-4 no-padding" items="[]"></nexus-5>
                                     <nexus-5 class="col-md-4 no-padding" items="[]"></nexus-5>
-                                    <nexus-5 class="col-md-4 no-padding" items="[]"></nexus-5>
-                                    <iphone-5c class="col-md-4 no-padding" items="[]"></iphone-5c>
+                                    <iphone-5c class="col-md-4 no-padding" items="[]"></iphone-5c>-->
                                 </div>
                             </div>
                         </div>
@@ -489,7 +489,7 @@
                                     <everhome-title></everhome-title>
                                     CloudBox
                                 </h1>
-                                <img height="400px" src="images/cloudbox.png"/>
+                                <img src="images/cloudbox.png"/>
                             </div>
                         </div>
                     </div>
@@ -524,10 +524,12 @@
                                            toptitle="Besuchen Sie unseren Showroom" smalltoptitle="true"
                                            content="Lassen Sie sich alle Funktionen des everHome Portals, der everHome App und der everHome CloudBox in unserem Showroom in Coesfeld im Münsterland demonstrieren. Eine Terminvereinbarung ist erforderlich. Nutzen Sie hierzu unser Kontaktformular."
                                            buttons='[{"title": "Zum Kontaktformular","icon": "mdi:send"}]'></everhome-test>
-                            <!--desktop-only--><img class=" col-md-6 no-padding hidden-sm" src="images/showroom.png"/>
+                            <!--desktop-only--><img class=" col-md-6 no-padding hidden-sm hidden-xs"
+                                                    src="images/showroom.png"/>
                         </div>
                         <div class="row">
-                            <!--desktop-only--><img class="col-md-6 no-padding hidden-sm" src="images/community.png"/>
+                            <!--desktop-only--><img class="col-md-6 no-padding hidden-sm hidden-xs"
+                                                    src="images/community.png"/>
                             <everhome-test class="col-md-6 no-padding" nowidth="true" everhomestart="true"
                                            toptitle="Community und Forum" smalltoptitle="true"
                                            content="Besuchen Sie unsere everHome Google+ Community, unsere Facebook Seite und unser everHome Forum und teilen Sie uns und anderen Ihre Wünsche und Kommentare zu everHome mit."
@@ -535,15 +537,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="footer-content layout horizontal center-justified">
+                <div class="footer-content layout vertical center-justified">
                     <div id="footer-container">
-                        <paper-item label="Impressum" data-route="contact" href="/contact">
-                            <div class="label" fit>
-                                <iron-icon icon="info"></iron-icon>
-                                Impressum
+                        <div class="row">
+                            <div class="col-md-6 no-padding">
+                                <paper-item label="Impressum" data-route="contact" href="/contact">
+                                    <div class="label" fit>
+                                        <iron-icon icon="info"></iron-icon>
+                                        Impressum
+                                    </div>
+                                    <paper-ripple></paper-ripple>
+                                </paper-item>
                             </div>
-                            <paper-ripple></paper-ripple>
-                        </paper-item>
+                            <div class="col-md-6 no-padding">
+                                <paper-item label="Impressum" data-route="contact" href="/contact">
+                                    <div class="label" fit>
+                                        <iron-icon icon="info"></iron-icon>
+                                        Impressum
+                                    </div>
+                                    <paper-ripple></paper-ripple>
+                                </paper-item>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -560,4 +575,4 @@
 <!-- endbuild-->
 </body>
 
-</html>
+    </html>

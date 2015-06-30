@@ -46,3 +46,93 @@ p.light {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
+
+paper-item.active {
+    border-bottom-color: white;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.shadow {
+    -webkit-box-shadow: 0 0 40px 10px rgba(0, 0, 0, 0.50) !important;
+    -moz-box-shadow: 0 0 40px 10px rgba(0, 0, 0, 0.50) !important;
+    box-shadow: 0 0 40px 10px rgba(0, 0, 0, 0.50) !important;
+}
+
+.main-content {
+    background-image: url(../images/cloud_start.png);
+    background-position: bottom; /*left top, right bottom*/
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.description-content {
+    background-image: url(../images/cloud_end_top.png), url(../images/background_lamp.jpg);
+    background-position: top, left; /*left top, right bottom*/
+    background-repeat: no-repeat;
+    background-size: contain, cover;
+    padding-top: 200px;
+}
+
+.everhome-background {
+    background: url(../images/axiom-pattern_black_blue.png);
+}
+
+#footer-container {
+    margin-top: 150px;
+}
+
+.footer-content {
+    background-image: url(../images/cloud_start_footer.png);
+    background-color: #FFFFFF;
+    background-position: top;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+#login-dialog {
+    background-color: white;
+    position: fixed;
+    top: 40px;
+    right: 16px;
+}
+
+#topBar > paper-item {
+    font-size: 20px;
+    font-family: "Lato", Georgia;
+    opacity: 0.8;
+}
+
+paper-item > .label.white {
+    color: white;
+}
+
+paper-dialog > paper-input {
+    margin-top: 0;
+}
+
+/*Responsive Toolbar*/
+.toolbar-item {
+    display: block;
+}
+
+#paperToggle {
+    display: none;
+}
+
+@media (max-width: 1300px) {
+    #paperToggle {
+        display: block !important;
+    }
+
+    #topBar > paper-item {
+        opacity: 1;
+        font-weight: bold;
+    }
+
+    .toolbar-item {
+        display: none !important;
+    }
+}

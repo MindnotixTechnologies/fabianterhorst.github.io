@@ -26,9 +26,9 @@
     <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
     <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
 
-    <link rel="stylesheet" type="text/css"
+    <!--<link rel="stylesheet" type="text/css"
           href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,400italic,500,500italic,700,700italic|Roboto:400,400italic,500,500italic,700,700italic">
-
+-->
     <link rel="stylesheet" type="text/css" media="screen" href="fonts/Lato-Light.css"/>
 
     <link rel="stylesheet" type="text/css" media="screen" href="fonts/Lato-Bold.css"/>
@@ -59,126 +59,12 @@
     <!-- endbuild-->
 
     <style is="custom-style">
-
-        paper-item > .label {
-            display: block;
-            padding: 0;
-            font-size: inherit;
-            font-weight: inherit;
-            line-height: inherit;
-            color: #333;
-            text-align: inherit;
-            white-space: inherit;
-            vertical-align: inherit;
-            border-radius: inherit;
-        }
-
-        paper-item > .label.white {
-            color: white;
-        }
-
         body {
             background-color: #5C6BC0;
         }
 
-        .everhome-background {
-            background: url("images/axiom-pattern_black_blue.png");
-        }
-
-        .main-content {
-            background-image: url(images/cloud_start.png);
-            background-position: bottom; /*left top, right bottom*/
-            background-repeat: no-repeat;
-            background-size: contain;
-        }
-
-        .description-content {
-            background-image: url(images/cloud_end_top.png), url(images/background_lamp.jpg);
-            background-position: top, left; /*left top, right bottom*/
-            background-repeat: no-repeat;
-            background-size: contain, cover;
-            padding-top: 200px;
-        }
-
-        .shadow {
-            -webkit-box-shadow: 0 0 40px 10px rgba(0, 0, 0, 0.50);
-            -moz-box-shadow: 0 0 40px 10px rgba(0, 0, 0, 0.50);
-            box-shadow: 0 0 40px 10px rgba(0, 0, 0, 0.50);
-        }
-
-        .footer-content {
-            background-image: url(images/cloud_start_footer.png);
-            background-color: #FFFFFF;
-            background-position: top;
-            background-size: 100%;
-            background-repeat: no-repeat;
-        }
-
-        paper-dialog > paper-input {
-            margin-top: 0;
-        }
-
-        #footer-container {
-            margin-top: 150px;
-        }
-
-        #paperToggle {
-            display: none;
-        }
-
-        #navigation-tabs {
-            display: block;
-        }
-
         paper-material > .container {
             padding-bottom: 32px;
-        }
-
-        #topBar > paper-item {
-            font-size: 20px;
-            font-family: "Lato", Georgia;
-            opacity: 0.8;
-        }
-
-        #login-dialog {
-            background-color: white;
-            position: fixed;
-            top: 40px;
-            right: 16px;
-        }
-
-        /*Responsive Toolbar*/
-        @media (max-width: 1300px) {
-            #paperToggle {
-                display: block;
-            }
-
-            #navigation-tabs {
-                display: none;
-            }
-
-            #topBar > paper-item {
-                opacity: 1;
-                font-weight: bold;
-            }
-        }
-
-        paper-tab.paper-tab-0 {
-            display: -ms-inline-flexbox;
-            display: -webkit-inline-flex;
-            display: inline-flex;
-            -ms-flex-align: center;
-            -webkit-align-items: center;
-            align-items: center;
-            -ms-flex-pack: center;
-            -webkit-justify-content: center;
-            justify-content: center;
-            -ms-flex: initial;
-            -webkit-flex: initial;
-            flex: inherit;
-            -webkit-flex-basis: initial;
-            flex-basis: inherit;
-            font-size: 20px;
         }
 
         #imageLeftButton {
@@ -205,6 +91,11 @@
 
             <!-- Drawer Content -->
             <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
+                <mat-sublist label="Profil" collapsible>
+                    <mat-item selectable label="Alvin Kelley"></mat-item>
+                    <mat-item selectable label="Lois Roy"></mat-item>
+                    <mat-item selectable label="Oscar Vaughn"></mat-item>
+                </mat-sublist>
                 <paper-item class="" label="Home" tabindex="0" data-route="home" href="#">
                     <div class="label" fit>
                         <iron-icon icon="home"></iron-icon>
@@ -226,6 +117,11 @@
                     </div>
                     <paper-ripple></paper-ripple>
                 </paper-item>
+                <mat-sublist label="Favorites" icon="action:stars" collapsible>
+                    <mat-item selectable label="Alvin Kelley"></mat-item>
+                    <mat-item selectable label="Lois Roy"></mat-item>
+                    <mat-item selectable label="Oscar Vaughn"></mat-item>
+                </mat-sublist>
             </paper-menu>
         </paper-header-panel>
         <paper-header-panel main mode="waterfall">
@@ -237,16 +133,36 @@
 
                 <!-- Toolbar icons -->
                 <!--<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>-->
-                <paper-tabs id="navigation-tabs" selected="0">
-                    <paper-tab>Mein Portal</paper-tab>
-                    <paper-tab>Online Shop</paper-tab>
-                    <paper-tab>Sensoren und Aktoren</paper-tab>
-                    <paper-tab>Forum</paper-tab>
-                    <paper-tab style="padding: 0;">
-                        <mat-menu-label-button target="hilfeMenu" label="Hilfe"
-                                               color="white"></mat-menu-label-button>
-                    </paper-tab>
-                </paper-tabs>
+                <!--- <div id="tabsContainer" class="flex style-scope paper-tabs">
+                     <div id="tabsContent" class="horizontal layout style-scope paper-tabs">-->
+                <paper-item class="toolbar-item" href="https://everhome.de">
+                    <div class="label white" fit>
+                        Mein Portal
+                    </div>
+                    <paper-ripple></paper-ripple>
+                </paper-item>
+                <paper-item class="toolbar-item" href="#">
+                    <div class="label white" fit>
+                        Online Shop
+                    </div>
+                    <paper-ripple></paper-ripple>
+                </paper-item>
+                <paper-item class="toolbar-item" href="#">
+                    <div class="label white" fit>
+                        Sensoren und Aktoren
+                    </div>
+                    <paper-ripple></paper-ripple>
+                </paper-item>
+                <paper-item class="toolbar-item" href="#">
+                    <div class="label white" fit>
+                        Forum
+                    </div>
+                    <paper-ripple></paper-ripple>
+                </paper-item>
+                <mat-menu-label-button class="toolbar-item" target="hilfeMenu" label="Hilfe"
+                                       color="white"></mat-menu-label-button>
+                <!-- </div>
+             </div>-->
                 <mat-menu id="hilfeMenu">
                     <paper-item href="#">
                         <div class="label" fit>
@@ -279,7 +195,7 @@
                   </div>
                   <paper-ripple></paper-ripple>
                 </paper-item>-->
-                <mat-menu-label-button target="accountMenu" label="fabian.terhorst@gmail.com"
+                <mat-menu-label-button class="toolbar-item" target="accountMenu" label="fabian.terhorst@gmail.com"
                                        color="white"></mat-menu-label-button>
                 <mat-menu id="accountMenu">
                     <paper-item href="#">
@@ -343,17 +259,19 @@
                             </div>
                             <div class="col-md-8 no-padding">
                                 <neon-animated-pages selected="{{selected}}" entry-animation="scale-up-animation"
-                                                     exit-animation="scale-down-animation" style="min-height:470px;">
+                                                     exit-animation="scale-down-animation" style="min-height:500px;">
                                     <neon-animatable>
                                         <paper-material elevation="1">
-                                            <div class="layout vertical start-justified">
-                                                <h3>Lorem ipsum dolor</h3>
+                                            <div class="row">
+                                                <div class="col-md-6 no-padding">
+                                                    <h3>Lorem ipsum dolor</h3>
 
-                                                <div class="layout horizontal center">
                                                     <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing
                                                         elitr, sed diam nonumy eirmod tempor invidunt ut labore et
                                                         dolore magna aliquyam erat, sed diam voluptua.
                                                     </p>
+                                                </div>
+                                                <div class="col-md-6 no-padding">
                                                     <everhome-index-device name="Kugellampe"
                                                                            imagesource="{{deviceimage}}" deviceid=1
                                                                            buttons='[{"icon": "ai:on","actionid": "1"}]'
@@ -365,14 +283,16 @@
                                     </neon-animatable>
                                     <neon-animatable>
                                         <paper-material elevation="1">
-                                            <div class="layout vertical start-justified">
-                                                <div class="layout horizontal start">
-                                                    <h3>Lorem ipsum dolor 2</h3>
+                                            <div class="row">
+                                                <div class="col-md-6 no-padding">
+                                                    <h3>Lorem ipsum dolor</h3>
 
                                                     <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing
                                                         elitr, sed diam nonumy eirmod tempor invidunt ut labore et
                                                         dolore magna aliquyam erat, sed diam voluptua.
                                                     </p>
+                                                </div>
+                                                <div class="col-md-6 no-padding">
                                                     <everhome-device menu name="Rolladen" groupid=1
                                                                      buttons='[{"icon": "mdi:chevron-up"}, {"icon": "mdi:chevron-down"}]'
                                                                      class="flex-6"></everhome-device>
@@ -382,14 +302,16 @@
                                     </neon-animatable>
                                     <neon-animatable>
                                         <paper-material elevation="1">
-                                            <div class="layout vertical start-justified">
-                                                <h3>Lorem ipsum dolor 3</h3>
+                                            <div class="row">
+                                                <div class="col-md-6 no-padding">
+                                                    <h3>Lorem ipsum dolor</h3>
 
-                                                <div class="layout horizontal center">
                                                     <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing
                                                         elitr, sed diam nonumy eirmod tempor invidunt ut labore et
                                                         dolore magna aliquyam erat, sed diam voluptua.
                                                     </p>
+                                                </div>
+                                                <div class="col-md-6 no-padding">
                                                     <everhome-device name="Büro" sceneid=1 buttons='[{"icon": "ai:on"}]'
                                                                      menu class="flex-6"></everhome-device>
                                                 </div>
@@ -398,14 +320,16 @@
                                     </neon-animatable>
                                     <neon-animatable>
                                         <paper-material elevation="1">
-                                            <div class="layout vertical start-justified">
-                                                <h3>Lorem ipsum dolor 4</h3>
+                                            <div class="row">
+                                                <div class="col-md-6 no-padding">
+                                                    <h3>Lorem ipsum dolor</h3>
 
-                                                <div class="layout horizontal center">
                                                     <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing
                                                         elitr, sed diam nonumy eirmod tempor invidunt ut labore et
                                                         dolore magna aliquyam erat, sed diam voluptua.
                                                     </p>
+                                                </div>
+                                                <div class="col-md-6 no-padding">
                                                     <everhome-device name="Wohnzimmer" roomid="1"
                                                                      class="flex-6"></everhome-device>
                                                 </div>
@@ -414,14 +338,16 @@
                                     </neon-animatable>
                                     <neon-animatable>
                                         <paper-material elevation="1">
-                                            <div class="layout vertical start-justified">
-                                                <h3>Lorem ipsum dolor 5</h3>
+                                            <div class="row">
+                                                <div class="col-md-6 no-padding">
+                                                    <h3>Lorem ipsum dolor</h3>
 
-                                                <div class="layout horizontal center">
                                                     <p class="flex-6">Lorem ipsum dolor sit amet, consetetur sadipscing
                                                         elitr, sed diam nonumy eirmod tempor invidunt ut labore et
                                                         dolore magna aliquyam erat, sed diam voluptua.
                                                     </p>
+                                                </div>
+                                                <div class="col-md-6 no-padding">
                                                     <paper-material class="flex-6" elevation="1">
                                                         <h1>Karten</h1>
                                                     </paper-material>
@@ -492,9 +418,6 @@
                                          src="images/nexus_6.png"/>
                                     <img class="col-md-4 no-padding img-responsiv visible-md visible-lg"
                                          src="images/nexus_6.png"/>
-                                    <!--<nexus-5 class="col-md-4 no-padding" items="[]"></nexus-5>
-                                    <nexus-5 class="col-md-4 no-padding" items="[]"></nexus-5>
-                                    <iphone-5c class="col-md-4 no-padding" items="[]"></iphone-5c>-->
                                 </div>
                             </div>
                         </div>
@@ -611,7 +534,7 @@
                             </paper-item>
                             <paper-item label="Datenschutz" data-route="contact" href="/contact">
                                 <div class="label" fit>
-                                    <iron-icon icon="mdi:lock"></iron-icon>
+                                    <iron-icon icon="lock"></iron-icon>
                                     Datenschutz
                                 </div>
                                 <paper-ripple></paper-ripple>

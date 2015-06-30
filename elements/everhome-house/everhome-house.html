@@ -1,746 +1,1328 @@
 <dom-module id="everhome-house">
     <style is="custom-style">
-        #rollladen_kueche_2_x5F_2, #rollladen_kueche_2_x5F_1 {
+        #rollladen_kueche_2_2, #rollladen_kueche_2_1 {
             width: 37px;
             transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             -webkit-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             -moz-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
         }
 
-        #rollladen_kueche_2_x5F_2.active, #rollladen_kueche_2_x5F_1.active {
+        #rollladen_kueche_2_2.active, #rollladen_kueche_2_1.active {
             width: 37px;
             height: 77px;
         }
 
-        #lichtkegel_wohnzimmer_1_x5F_1_1_, #lichtkegel_flur_1_x5F_1, #lichtkegel_arbeitszimmer_1_x5F_1, #lichtkegel_kueche_1_x5F_1_1_, #lichtkegel_kinderzimmer_1_x5F_1_1_ {
+        #lichtkegel_wohnzimmer_1_1, #lichtkegel_flur_1_1, #lichtkegel_arbeitszimmer_1_1, #lichtkegel_kueche_1_1, #lichtkegel_kinderzimmer_1_1, #lichtkegel_garage_1_1 {
             transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             -webkit-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             -moz-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             opacity: 0;
         }
 
-        #lichtkegel_wohnzimmer_1_x5F_1_1_.active, #lichtkegel_flur_1_x5F_1.active, #lichtkegel_arbeitszimmer_1_x5F_1.active, #lichtkegel_kueche_1_x5F_1_1_.active, #lichtkegel_kinderzimmer_1_x5F_1_1_.active{
+        #lichtkegel_wohnzimmer_1_1.active, #lichtkegel_flur_1_1.active, #lichtkegel_arbeitszimmer_1_1.active, #lichtkegel_kueche_1_1.active, #lichtkegel_kinderzimmer_1_1.active, #lichtkegel_garage_1_1.active{
             opacity: 0.2;
         }
 
-        #lampe_wohnzimmer_1_x5F_1, #lampe_flur_1_x5F_1_1_, #lampe_arbeitszimmer_1_x5F_1_1_, #lampe_kueche_1_x5F_1, #lampe_kinderzimmer_1_x5F_1 {
+        #lampe_wohnzimmer_1_1, #lampe_flur_1_1, #lampe_arbeitszimmer_1_1_1_, #lampe_kueche_1_1, #lampe_kinderzimmer_1_1, #lampe_garage_1_1  {
             transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             -webkit-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             -moz-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             fill: #DBDBDB;
         }
 
-        #lampe_wohnzimmer_1_x5F_1.active, #lampe_flur_1_x5F_1_1_.active, #lampe_arbeitszimmer_1_x5F_1_1_.active, #lampe_kueche_1_x5F_1.active, #lampe_kinderzimmer_1_x5F_1.active {
+        #lampe_wohnzimmer_1_1.active, #lampe_flur_1_1.active, #lampe_arbeitszimmer_1_1_1_.active, #lampe_kueche_1_1.active, #lampe_kinderzimmer_1_1.active {
             fill: #ffb400;
         }
 
-        #schatten_wohnzimmer_1_, #schatten_flur, #schatten_arbeitszimmer, #schatten_kueche, #schatten_kinderzimmer {
+		#lampe_garage_1_1.active{
+			fill:#fffcde;
+		}
+
+        #schatten_wohnzimmer_1_, #schatten_flur, #schatten_arbeitszimmer, #schatten_kueche, #schatten_kinderzimmer, #schatten_garage {
             transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             -webkit-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             -moz-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             opacity: 0.5;
         }
 
-		#garagentor{
-			transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
-		}
-		#garagentor.active{
-			y: -535.5px;
-			transform: rotate(90deg);
-			x: 417px;
-		}
+        #garagentor {
+            transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+        }
 
-        #schatten_wohnzimmer_1_.active, #schatten_flur.active, #schatten_arbeitszimmer.active, #schatten_kueche.active, #schatten_kinderzimmer.active {
+        #garagentor.active {
+            y: -535.5px;
+            transform: rotate(90deg);
+            x: 417px;
+        }
+
+        #schatten_wohnzimmer_1_.active, #schatten_flur.active, #schatten_arbeitszimmer.active, #schatten_kueche.active, #schatten_kinderzimmer.active, #schatten_garage.active {
             opacity: 0;
         }
+
+		#markise_garten_1 > *{
+			transition: all 4000ms cubic-bezier(0.175, 0.885, 0.320, 1);
+			-webkit-transition: all 4000ms cubic-bezier(0.175, 0.885, 0.320, 1);
+			-moz-transition: all 4000ms cubic-bezier(0.175, 0.885, 0.320, 1);
+		}
+
+		#markise_garten_1.active > #markise_garten_1_1{
+			/*x: 593.5;
+			y: 439.7;*/
+			x: 925.5;
+			y: 410.7;
+		}
+		#markise_garten_1.active > #markise_garten_1_2{
+			/*x: 594.1;
+			y: 442.6;*/
+			x: 594.1;
+			y: 413.6;
+		}
+		#markise_garten_1.active > #markise_garten_1_3{
+		  x: 592;
+		}
     </style>
     <template>
-		<div class="layout vertical">
+        <div class="layout vertical">
+            <div>
+                <paper-button raised on-click="wohnzimmer_ein">Ein</paper-button>
+                <paper-button raised on-click="wohnzimmer_aus">Aus</paper-button>
+            </div>
+            <div>
+                <paper-button raised on-click="flur_ein">Ein</paper-button>
+                <paper-button raised on-click="flur_aus">Aus</paper-button>
+            </div>
+            <div>
+                <paper-button raised on-click="arbeitszimmer_ein">Ein</paper-button>
+                <paper-button raised on-click="arbeitszimmer_aus">Aus</paper-button>
+            </div>
+            <div>
+                <paper-button raised on-click="kueche_ein">Ein</paper-button>
+                <paper-button raised on-click="kueche_aus">Aus</paper-button>
+            </div>
+            <div>
+                <paper-button raised on-click="kinderzimmer_ein">Ein</paper-button>
+                <paper-button raised on-click="kinderzimmer_aus">Aus</paper-button>
+            </div>
 			<div>
-				<paper-button raised on-click="wohnzimmer_ein">Ein</paper-button>
-				<paper-button raised on-click="wohnzimmer_aus">Aus</paper-button>
+				<paper-button raised on-click="markise_raus">Raus</paper-button>
+				<paper-button raised on-click="markise_rein">Rein</paper-button>
 			</div>
 			<div>
-				<paper-button raised on-click="flur_ein">Ein</paper-button>
-				<paper-button raised on-click="flur_aus">Aus</paper-button>
+				<paper-button raised on-click="garage_ein">Ein</paper-button>
+				<paper-button raised on-click="garage_aus">Aus</paper-button>
 			</div>
-			<div>
-				<paper-button raised on-click="arbeitszimmer_ein">Ein</paper-button>
-				<paper-button raised on-click="arbeitszimmer_aus">Aus</paper-button>
-			</div>
-			<div>
-				<paper-button raised on-click="kueche_ein">Ein</paper-button>
-				<paper-button raised on-click="kueche_aus">Aus</paper-button>
-			</div>
-			<div>
-				<paper-button raised on-click="kinderzimmer_ein">Ein</paper-button>
-				<paper-button raised on-click="kinderzimmer_aus">Aus</paper-button>
-			</div>
-		</div>
+        </div>
         <div>
 			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 1599 585" enable-background="new 0 0 1599 585" xml:space="preserve">
+	 viewBox="0 0 1599 775" enable-background="new 0 0 1599 775" xml:space="preserve">
 <g id="garage">
+	<rect x="0.5" y="190" display="none" fill="#0031FF" width="1599" height="585"/>
 	<g id="tapeten_1_">
-		<rect x="363.5" y="405" fill="#ABABAB" width="420.5" height="157.5"/>
+		<rect x="364" y="595" fill="#ABABAB" width="420" height="157.5"/>
 	</g>
 	<g id="objekte_1_">
-		<g id="tormotor_garage_1">
-			<path fill="#C1C1C1" d="M373,447c0-12.7,10.3-23,23-23h131v-6H397c-16.6,0-30,13.4-30,30v102h6V447z"/>
-			<rect id="garagentor" x="395" y="426" width="175" height="2"/>
-			<path fill="#505050" d="M569,411h30v19c0,1.7-1.3,3-3,3h-24c-1.7,0-3-1.3-3-3V411z"/>
-		</g>
-		<g id="lichtkegel_garage_1">
-			<polygon id="lichtkegel_garage_1_x5F_1" opacity="0" fill="#FFF980" points="784,532.3 659.7,408 486.3,408 367,527.3 367,556
-				784,556 			"/>
-		</g>
-		<g id="lampe_garage_1">
-			<path fill="#D7D7D7" d="M467,411h212v4c0,3.3-2.7,6-6,6H473c-3.3,0-6-2.7-6-6V411z"/>
-			<rect id="lampe_garage_1_x5F_1_1_" x="473" y="416" fill="#EAEAEA" width="200" height="5"/>
-		</g>
-		<g id="tor_garage_1">
-			<path fill="#B9D2DA" d="M361.8,515c-1,0-1.8-0.8-1.8-1.8v-5.5c0-1,0.8-1.8,1.8-1.8h3.6v-2h-4.1c-1.8,0-3.2,1.4-3.2,3.2v6.6
-				c0,1.8,1.4,3.2,3.2,3.2h4.1v-2H361.8z"/>
-			<rect x="364" y="412.5" fill="#88B1BF" width="6" height="140"/>
-		</g>
-		<g id="werkzeugwagen_garage_1">
-			<circle cx="760" cy="545" r="5"/>
-			<rect x="759" y="537" width="2" height="5"/>
-			<circle cx="718" cy="545" r="5"/>
-			<rect x="717" y="537" width="2" height="5"/>
-			<rect x="710" y="474" fill="#7F999E" width="58" height="65"/>
-			<rect x="713" y="482" fill="#202020" width="52" height="54"/>
-			<g id="schubladen_1_">
-				<rect x="715" y="484" fill="#98B1B6" width="48" height="11"/>
-				<rect x="734" y="487" fill="#5C686B" width="10" height="2"/>
-				<rect x="715" y="497" fill="#98B1B6" width="48" height="11"/>
-				<rect x="734" y="500" fill="#5C686B" width="10" height="2"/>
-				<rect x="715" y="510" fill="#98B1B6" width="48" height="11"/>
-				<rect x="734" y="513" fill="#5C686B" width="10" height="2"/>
-				<rect x="715" y="523" fill="#98B1B6" width="48" height="11"/>
-				<rect x="734" y="526" fill="#5C686B" width="10" height="2"/>
+		<g id="garten">
+			<g id="blume_garten_1">
+				<rect x="428" y="525.9" fill="#A2B21D" width="4" height="32"/>
+				<polygon fill="#2ADF95" points="442.7,585 430.5,585 429.5,585 417.3,585 410.5,557 429.5,557 430.5,557 449.5,557 				"/>
+				<path fill="#A2B21D" d="M437.1,539.1c-3,2.5-4.8,6-5.2,9.6c3.6,0.2,7.4-0.9,10.4-3.5s4.8-6,5.2-9.6
+					C443.8,535.4,440.1,536.5,437.1,539.1z"/>
+				<path fill="#A2B21D" d="M422.9,543.1c3,2.5,4.8,6,5.2,9.6c-3.6,0.2-7.4-0.9-10.4-3.5c-3-2.5-4.8-6-5.2-9.6
+					C416.2,539.4,419.9,540.5,422.9,543.1z"/>
+				<g>
+					<path fill="#DFD49E" d="M436.4,506.8c-2.5,0-4.8,1.1-6.4,2.9v23l2.1-1.9c7.3-6.6,12.1-11,12.1-16.3
+						C444.2,510.2,440.7,506.8,436.4,506.8z"/>
+					<path fill="#D3C47A" d="M423.6,506.8c-4.4,0-7.8,3.4-7.8,7.8c0,5.3,4.8,9.7,12.1,16.3l2.1,1.9v-23
+						C428.5,508,426.1,506.8,423.6,506.8z"/>
+				</g>
+			</g>
+			<g id="lichtkegel_garten_1">
+				<path id="lichtkegel_garten_1_1" opacity="0" fill="#FFF800" d="M768.1,502.6l-3.2-23.2L451.2,298.3
+					C415.6,354.3,395,420.7,395,492c0,50,10.1,97.6,28.5,140.9h269.4L768.1,502.6z"/>
+			</g>
+			<g id="gartenzaun_garten_1">
+				<g>
+					<rect x="377" y="548" fill="#473221" width="406" height="6"/>
+					<rect x="377" y="569" fill="#473221" width="406" height="6"/>
+					<polygon fill="#473221" points="760,530.1 755,538 755,587.5 760,587.5 765,587.5 765,538 					"/>
+					<polygon fill="#473221" points="739,530.1 734,538 734,587.5 739,587.5 744,587.5 744,538 					"/>
+					<polygon fill="#473221" points="718,530.1 713,538 713,587.5 718,587.5 723,587.5 723,538 					"/>
+					<polygon fill="#473221" points="697,530.1 692,538 692,587.5 697,587.5 702,587.5 702,538 					"/>
+					<polygon fill="#473221" points="676,530.1 671,538 671,587.5 676,587.5 681,587.5 681,538 					"/>
+					<polygon fill="#473221" points="655,530.1 650,538 650,587.5 655,587.5 660,587.5 660,538 					"/>
+					<polygon fill="#473221" points="634,530.1 629,538 629,587.5 634,587.5 639,587.5 639,538 					"/>
+					<polygon fill="#473221" points="613,530.1 608,538 608,587.5 613,587.5 618,587.5 618,538 					"/>
+					<polygon fill="#473221" points="592,530.1 587,538 587,587.5 592,587.5 597,587.5 597,538 					"/>
+					<polygon fill="#473221" points="571,530.1 566,538 566,587.5 571,587.5 576,587.5 576,538 					"/>
+					<polygon fill="#473221" points="529,530.1 524,538 524,587.5 529,587.5 534,587.5 534,538 					"/>
+					<polygon fill="#473221" points="550,530.1 545,538 545,587.5 550,587.5 555,587.5 555,538 					"/>
+					<polygon fill="#473221" points="508,530.1 503,538 503,587.5 508,587.5 513,587.5 513,538 					"/>
+					<polygon fill="#473221" points="487,530.1 482,538 482,587.5 487,587.5 492,587.5 492,538 					"/>
+					<polygon fill="#473221" points="466,530.1 461,538 461,587.5 466,587.5 471,587.5 471,538 					"/>
+					<polygon fill="#473221" points="445,530.1 440,538 440,587.5 445,587.5 450,587.5 450,538 					"/>
+					<polygon fill="#473221" points="424,530.1 419,538 419,587.5 424,587.5 429,587.5 429,538 					"/>
+					<polygon fill="#473221" points="403,530.1 398,538 398,587.5 403,587.5 408,587.5 408,538 					"/>
+					<polygon fill="#473221" points="382,530.1 377,538 377,587.5 382,587.5 387,587.5 387,538 					"/>
+				</g>
+				<g>
+					<rect x="377" y="548" fill="#88725E" width="406" height="6"/>
+					<rect x="377" y="569" fill="#88725E" width="406" height="6"/>
+					<polygon fill="#473221" points="760,530.1 755,538 755,587.5 760,587.5 765,587.5 765,538 					"/>
+					<polygon fill="#473221" points="739,530.1 734,538 734,587.5 739,587.5 744,587.5 744,538 					"/>
+					<polygon fill="#473221" points="718,530.1 713,538 713,587.5 718,587.5 723,587.5 723,538 					"/>
+					<polygon fill="#473221" points="697,530.1 692,538 692,587.5 697,587.5 702,587.5 702,538 					"/>
+					<polygon fill="#473221" points="676,530.1 671,538 671,587.5 676,587.5 681,587.5 681,538 					"/>
+					<polygon fill="#473221" points="655,530.1 650,538 650,587.5 655,587.5 660,587.5 660,538 					"/>
+					<polygon fill="#473221" points="634,530.1 629,538 629,587.5 634,587.5 639,587.5 639,538 					"/>
+					<polygon fill="#473221" points="613,530.1 608,538 608,587.5 613,587.5 618,587.5 618,538 					"/>
+					<polygon fill="#473221" points="592,530.1 587,538 587,587.5 592,587.5 597,587.5 597,538 					"/>
+					<polygon fill="#473221" points="571,530.1 566,538 566,587.5 571,587.5 576,587.5 576,538 					"/>
+					<polygon fill="#473221" points="529,530.1 524,538 524,587.5 529,587.5 534,587.5 534,538 					"/>
+					<polygon fill="#473221" points="550,530.1 545,538 545,587.5 550,587.5 555,587.5 555,538 					"/>
+					<polygon fill="#473221" points="508,530.1 503,538 503,587.5 508,587.5 513,587.5 513,538 					"/>
+					<polygon fill="#473221" points="487,530.1 482,538 482,587.5 487,587.5 492,587.5 492,538 					"/>
+					<polygon fill="#473221" points="466,530.1 461,538 461,587.5 466,587.5 471,587.5 471,538 					"/>
+					<polygon fill="#473221" points="445,530.1 440,538 440,587.5 445,587.5 450,587.5 450,538 					"/>
+					<polygon fill="#473221" points="424,530.1 419,538 419,587.5 424,587.5 429,587.5 429,538 					"/>
+					<polygon fill="#473221" points="403,530.1 398,538 398,587.5 403,587.5 408,587.5 408,538 					"/>
+					<polygon fill="#473221" points="382,530.1 377,538 377,587.5 382,587.5 387,587.5 387,538 					"/>
+				</g>
+			</g>
+			<g id="markise_garten_1">
+
+					<rect id="markise_garten_1_1" x="758.5" y="410.7" transform="matrix(-0.9848 0.1736 -0.1736 -0.9848 1750.4606 669.2454)" fill="#FFFFFF" width="175" height="1"/>
+
+					<rect id="markise_garten_1_2" x="759.1" y="413.6" transform="matrix(0.9848 -0.1736 0.1736 0.9848 -59.2249 153.3259)" fill="#D8D8D8" width="175" height="3"/>
+
+					<rect id="markise_garten_1_3" x="756.3" y="421.4" transform="matrix(0.9848 -0.1736 0.1736 0.9848 -63.083 138.4581)" fill="#AFAFAF" width="7" height="16.8"/>
+				<path fill="#AFAFAF" d="M770.9,437.8l10.8-1.9l-3.5-19.7l-10.8,1.9c-2.2,0.4-3.6,2.5-3.2,4.6l2.1,11.8
+					C766.7,436.7,768.7,438.1,770.9,437.8z"/>
 			</g>
 		</g>
-		<g id="blume_garage_1">
-			<rect x="428" y="335.9" fill="#A2B21D" width="4" height="32"/>
-			<polygon fill="#2ADF95" points="442.7,395 430.5,395 429.5,395 417.3,395 410.5,367 429.5,367 430.5,367 449.5,367 			"/>
-			<path fill="#A2B21D" d="M437.1,349.1c-3,2.5-4.8,6-5.2,9.6c3.6,0.2,7.4-0.9,10.4-3.5s4.8-6,5.2-9.6
-				C443.8,345.4,440.1,346.5,437.1,349.1z"/>
-			<path fill="#A2B21D" d="M422.9,353.1c3,2.5,4.8,6,5.2,9.6c-3.6,0.2-7.4-0.9-10.4-3.5c-3-2.5-4.8-6-5.2-9.6
-				C416.2,349.4,419.9,350.5,422.9,353.1z"/>
-			<g>
-				<path fill="#DFD49E" d="M436.4,316.8c-2.5,0-4.8,1.1-6.4,2.9v23l2.1-1.9c7.3-6.6,12.1-11,12.1-16.3
-					C444.2,320.2,440.7,316.8,436.4,316.8z"/>
-				<path fill="#D3C47A" d="M423.6,316.8c-4.4,0-7.8,3.4-7.8,7.8c0,5.3,4.8,9.7,12.1,16.3l2.1,1.9v-23
-					C428.5,318,426.1,316.8,423.6,316.8z"/>
+		<g id="garage_1_">
+			<g id="tormotor_garage_1">
+				<path fill="#C1C1C1" d="M373,637c0-12.7,10.3-23,23-23h131v-6H397c-16.6,0-30,13.4-30,30v102h6V637z"/>
+				<rect x="395" y="616" width="175" height="2"/>
+				<path fill="#505050" d="M569,601h30v19c0,1.7-1.3,3-3,3h-24c-1.7,0-3-1.3-3-3V601z"/>
+			</g>
+			<g id="lichtkegel_garage_1">
+				<polygon id="lichtkegel_garage_1_1" opacity="0" fill="#FFF980" points="784,722.3 659.7,598 486.3,598 367,717.3 367,746
+					784,746 				"/>
+			</g>
+			<g id="lampe_garage_1">
+				<path fill="#D7D7D7" d="M467,601h212v4c0,3.3-2.7,6-6,6H473c-3.3,0-6-2.7-6-6V601z"/>
+				<rect id="lampe_garage_1_1" x="473" y="606" fill="#EAEAEA" width="200" height="5"/>
+			</g>
+			<g id="werkzeugwagen_garage_1">
+				<circle cx="760" cy="735" r="5"/>
+				<rect x="759" y="727" width="2" height="5"/>
+				<circle cx="718" cy="735" r="5"/>
+				<rect x="717" y="727" width="2" height="5"/>
+				<rect x="710" y="664" fill="#7F999E" width="58" height="65"/>
+				<rect x="713" y="672" fill="#202020" width="52" height="54"/>
+				<g id="schubladen_1_">
+					<rect x="715" y="674" fill="#98B1B6" width="48" height="11"/>
+					<rect x="734" y="677" fill="#5C686B" width="10" height="2"/>
+					<rect x="715" y="687" fill="#98B1B6" width="48" height="11"/>
+					<rect x="734" y="690" fill="#5C686B" width="10" height="2"/>
+					<rect x="715" y="700" fill="#98B1B6" width="48" height="11"/>
+					<rect x="734" y="703" fill="#5C686B" width="10" height="2"/>
+					<rect x="715" y="713" fill="#98B1B6" width="48" height="11"/>
+					<rect x="734" y="716" fill="#5C686B" width="10" height="2"/>
+				</g>
+			</g>
+			<g id="auto_garage_1">
+				<polygon fill="#EFEFEF" points="687,700.3 702.4,700.3 702.3,699.3 700.4,698.5 698.8,696.7 698,695.1 697.7,693.6 697.4,692.7
+					693.9,693.2 691.5,693.4 689.2,693.4 687.6,693.4 686.8,693.4 687,691.3 687.9,687.9 689.1,685.8 690.9,684.7 693.2,684.1
+					695.6,683.4 697.9,682.9 697.9,682.3 698.7,680 675.8,671 666.3,667.3 653.1,663.1 644.1,660.4 636,657.9 628.7,656.4
+					621.8,655.3 611.1,653.7 601.3,653.3 579.3,652.3 558.3,653.4 545.8,654.8 537,656.9 521.4,663.2 512.9,667.1 502.8,672.9
+					499.6,674.8 497,676.8 478.5,677.9 453.2,680.8 442.8,682.8 434.3,685.5 429.7,688.1 425.8,690.8 422.8,693.9 426.1,693.2
+					429.7,692.6 434.5,692.3 439.2,692 433.2,700.2 431,700.2 427.3,700.2 422.9,700 420.3,699.8 419.6,701.9 418.7,705.5
+					422.7,705.5 422.7,714.3 417.5,714.3 417.4,715.9 417.4,717 415.7,720.1 415,721.4 415,722.4 416,723 423.2,724.5 431,725.8
+					436.8,726.7 443.1,727.2 486.3,727.8 621.8,726.6 663.6,725.5 676.4,723.5 684.5,721.6 687.5,720.6 689.1,719.9 697,719.9
+					700.9,715.4 702.3,713.3 703.5,711.4 704.4,708.9 703.9,707 702.9,705.5 702.6,703.8 702.5,701.9 687,701.9 				"/>
+				<polygon id="grau_1_" fill="#CECFCE" points="687,700.3 687,701.9 702.5,701.9 702.4,700.3 				"/>
+				<path id="türgriff_1_" fill="#CECFCE" d="M564.9,688.4h-8.3c-0.6,0-1-0.5-1-1l0,0c0-0.6,0.5-1,1-1h8.3c0.6,0,1,0.5,1,1l0,0
+					C565.9,688,565.5,688.4,564.9,688.4z"/>
+				<polygon id="nummernschild_1_" fill="#7B797B" points="422.7,705.5 418.7,705.5 418.1,708 417.7,712.9 417.5,714.3 422.7,714.3
+									"/>
+				<polygon id="ruecklicht_1_" fill="#FF5D18" points="695.6,683.4 693.2,684.1 690.9,684.7 689.1,685.8 687.9,687.9 687,691.3
+					686.8,693.4 687.6,693.4 689.2,693.4 691.5,693.4 693.9,693.2 697.4,692.7 697.3,692.4 698.1,690.5 698.3,688.4 697.9,685.7
+					697.8,683.9 697.9,682.9 697.9,682.9 				"/>
+				<polygon id="vorderlicht_1_" fill="#CECFCE" points="427.3,700.2 431,700.2 433.2,700.2 439.2,692 434.5,692.3 429.7,692.6
+					426.1,693.2 422.8,693.9 421.1,697.2 420.3,699.8 422.9,700 				"/>
+				<circle fill="#31596B" cx="466.1" cy="718.4" r="22.2"/>
+				<circle fill="#DEE3E7" cx="466.1" cy="718.4" r="16"/>
+				<circle fill="#31596B" cx="466.1" cy="718.4" r="5.7"/>
+				<circle fill="#31596B" cx="642.5" cy="718.4" r="22.2"/>
+				<circle fill="#DEE3E7" cx="642.5" cy="718.4" r="16"/>
+				<circle fill="#31596B" cx="642.5" cy="718.4" r="5.7"/>
+				<polygon id="fenster_vorne_1_" fill="#009ECE" points="571.2,676.9 575,656.9 564.7,657.3 556.4,657.9 550.9,658.8 545.1,660.5
+					540.6,662.2 536.5,663.7 531.9,665.8 528.2,667.6 522.7,670.1 517.4,673.4 512.5,676.1 509.3,678.4 508.5,678.9 				"/>
+				<polygon fill="#009ECE" points="576.1,676.9 631.3,675.3 638.6,672.8 642.9,671.4 644.5,670.2 644.5,669.3 642.5,668.8
+					627,664.5 619.8,662.6 613.2,661.1 604.8,659.4 596.6,658.3 583.7,657.4 579.6,657.4 				"/>
+				<polygon fill="none" stroke="#CECFCE" stroke-miterlimit="10" points="565.4,725.1 577.9,654.6 567.2,654.8 559.4,655.5
+					549.2,656.9 541.8,658.6 532.1,662.3 524.3,665.7 518.2,668.9 512.7,672.1 505.4,676.3 501.7,678.8 500.9,679.6 500.9,725.1
+									"/>
+			</g>
+			<rect id="schatten_garage" x="364.3" y="592.9" opacity="0.5" width="421.7" height="153.1"/>
+			<g id="tor_garage_1">
+				<path fill="#B9D2DA" d="M361.8,705c-1,0-1.8-0.8-1.8-1.8v-5.5c0-1,0.8-1.8,1.8-1.8h3.6v-2h-4.1c-1.8,0-3.2,1.4-3.2,3.2v6.6
+					c0,1.8,1.4,3.2,3.2,3.2h4.1v-2H361.8z"/>
+				<rect id="tor_garage_1_1" x="364" y="602.5" fill="#88B1BF" width="6" height="140"/>
 			</g>
 		</g>
-		<g id="gartenzaun_garage_1">
-			<g>
-				<rect x="377" y="358" fill="#473221" width="406" height="6"/>
-				<rect x="377" y="379" fill="#473221" width="406" height="6"/>
-				<polygon fill="#473221" points="760,340.1 755,348 755,397.5 760,397.5 765,397.5 765,348 				"/>
-				<polygon fill="#473221" points="739,340.1 734,348 734,397.5 739,397.5 744,397.5 744,348 				"/>
-				<polygon fill="#473221" points="718,340.1 713,348 713,397.5 718,397.5 723,397.5 723,348 				"/>
-				<polygon fill="#473221" points="697,340.1 692,348 692,397.5 697,397.5 702,397.5 702,348 				"/>
-				<polygon fill="#473221" points="676,340.1 671,348 671,397.5 676,397.5 681,397.5 681,348 				"/>
-				<polygon fill="#473221" points="655,340.1 650,348 650,397.5 655,397.5 660,397.5 660,348 				"/>
-				<polygon fill="#473221" points="634,340.1 629,348 629,397.5 634,397.5 639,397.5 639,348 				"/>
-				<polygon fill="#473221" points="613,340.1 608,348 608,397.5 613,397.5 618,397.5 618,348 				"/>
-				<polygon fill="#473221" points="592,340.1 587,348 587,397.5 592,397.5 597,397.5 597,348 				"/>
-				<polygon fill="#473221" points="571,340.1 566,348 566,397.5 571,397.5 576,397.5 576,348 				"/>
-				<polygon fill="#473221" points="529,340.1 524,348 524,397.5 529,397.5 534,397.5 534,348 				"/>
-				<polygon fill="#473221" points="550,340.1 545,348 545,397.5 550,397.5 555,397.5 555,348 				"/>
-				<polygon fill="#473221" points="508,340.1 503,348 503,397.5 508,397.5 513,397.5 513,348 				"/>
-				<polygon fill="#473221" points="487,340.1 482,348 482,397.5 487,397.5 492,397.5 492,348 				"/>
-				<polygon fill="#473221" points="466,340.1 461,348 461,397.5 466,397.5 471,397.5 471,348 				"/>
-				<polygon fill="#473221" points="445,340.1 440,348 440,397.5 445,397.5 450,397.5 450,348 				"/>
-				<polygon fill="#473221" points="424,340.1 419,348 419,397.5 424,397.5 429,397.5 429,348 				"/>
-				<polygon fill="#473221" points="403,340.1 398,348 398,397.5 403,397.5 408,397.5 408,348 				"/>
-				<polygon fill="#473221" points="382,340.1 377,348 377,397.5 382,397.5 387,397.5 387,348 				"/>
-			</g>
-			<g>
-				<rect x="377" y="358" fill="#88725E" width="406" height="6"/>
-				<rect x="377" y="379" fill="#88725E" width="406" height="6"/>
-				<polygon fill="#473221" points="760,340.1 755,348 755,397.5 760,397.5 765,397.5 765,348 				"/>
-				<polygon fill="#473221" points="739,340.1 734,348 734,397.5 739,397.5 744,397.5 744,348 				"/>
-				<polygon fill="#473221" points="718,340.1 713,348 713,397.5 718,397.5 723,397.5 723,348 				"/>
-				<polygon fill="#473221" points="697,340.1 692,348 692,397.5 697,397.5 702,397.5 702,348 				"/>
-				<polygon fill="#473221" points="676,340.1 671,348 671,397.5 676,397.5 681,397.5 681,348 				"/>
-				<polygon fill="#473221" points="655,340.1 650,348 650,397.5 655,397.5 660,397.5 660,348 				"/>
-				<polygon fill="#473221" points="634,340.1 629,348 629,397.5 634,397.5 639,397.5 639,348 				"/>
-				<polygon fill="#473221" points="613,340.1 608,348 608,397.5 613,397.5 618,397.5 618,348 				"/>
-				<polygon fill="#473221" points="592,340.1 587,348 587,397.5 592,397.5 597,397.5 597,348 				"/>
-				<polygon fill="#473221" points="571,340.1 566,348 566,397.5 571,397.5 576,397.5 576,348 				"/>
-				<polygon fill="#473221" points="529,340.1 524,348 524,397.5 529,397.5 534,397.5 534,348 				"/>
-				<polygon fill="#473221" points="550,340.1 545,348 545,397.5 550,397.5 555,397.5 555,348 				"/>
-				<polygon fill="#473221" points="508,340.1 503,348 503,397.5 508,397.5 513,397.5 513,348 				"/>
-				<polygon fill="#473221" points="487,340.1 482,348 482,397.5 487,397.5 492,397.5 492,348 				"/>
-				<polygon fill="#473221" points="466,340.1 461,348 461,397.5 466,397.5 471,397.5 471,348 				"/>
-				<polygon fill="#473221" points="445,340.1 440,348 440,397.5 445,397.5 450,397.5 450,348 				"/>
-				<polygon fill="#473221" points="424,340.1 419,348 419,397.5 424,397.5 429,397.5 429,348 				"/>
-				<polygon fill="#473221" points="403,340.1 398,348 398,397.5 403,397.5 408,397.5 408,348 				"/>
-				<polygon fill="#473221" points="382,340.1 377,348 377,397.5 382,397.5 387,397.5 387,348 				"/>
-			</g>
-		</g>
-		<g id="auto">
-			<polygon fill="#EFEFEF" points="687,510.3 702.4,510.3 702.3,509.3 700.4,508.5 698.8,506.7 698,505.1 697.7,503.6 697.4,502.7
-				693.9,503.2 691.5,503.4 689.2,503.4 687.6,503.4 686.8,503.4 687,501.3 687.9,497.9 689.1,495.8 690.9,494.7 693.2,494.1
-				695.6,493.4 697.9,492.9 697.9,492.3 698.7,490 675.8,481 666.3,477.3 653.1,473.1 644.1,470.4 636,467.9 628.7,466.4
-				621.8,465.3 611.1,463.7 601.3,463.3 579.3,462.3 558.3,463.4 545.8,464.8 537,466.9 521.4,473.2 512.9,477.1 502.8,482.9
-				499.6,484.8 497,486.8 478.5,487.9 453.2,490.8 442.8,492.8 434.3,495.5 429.7,498.1 425.8,500.8 422.8,503.9 426.1,503.2
-				429.7,502.6 434.5,502.3 439.2,502 433.2,510.2 431,510.2 427.3,510.2 422.9,510 420.3,509.8 419.6,511.9 418.7,515.5
-				422.7,515.5 422.7,524.3 417.5,524.3 417.4,525.9 417.4,527 415.7,530.1 415,531.4 415,532.4 416,533 423.2,534.5 431,535.8
-				436.8,536.7 443.1,537.2 486.3,537.8 621.8,536.6 663.6,535.5 676.4,533.5 684.5,531.6 687.5,530.6 689.1,529.9 697,529.9
-				700.9,525.4 702.3,523.3 703.5,521.4 704.4,518.9 703.9,517 702.9,515.5 702.6,513.8 702.5,511.9 687,511.9 			"/>
-			<polygon id="grau_1_" fill="#CECFCE" points="687,510.3 687,511.9 702.5,511.9 702.4,510.3 			"/>
-			<path id="türgriff_1_" fill="#CECFCE" d="M564.9,498.4h-8.3c-0.6,0-1-0.5-1-1l0,0c0-0.6,0.5-1,1-1h8.3c0.6,0,1,0.5,1,1l0,0
-				C565.9,498,565.5,498.4,564.9,498.4z"/>
-			<polygon id="nummernschild_1_" fill="#7B797B" points="422.7,515.5 418.7,515.5 418.1,518 417.7,522.9 417.5,524.3 422.7,524.3
-							"/>
-			<polygon id="ruecklicht_1_" fill="#FF5D18" points="695.6,493.4 693.2,494.1 690.9,494.7 689.1,495.8 687.9,497.9 687,501.3
-				686.8,503.4 687.6,503.4 689.2,503.4 691.5,503.4 693.9,503.2 697.4,502.7 697.3,502.4 698.1,500.5 698.3,498.4 697.9,495.7
-				697.8,493.9 697.9,492.9 697.9,492.9 			"/>
-			<polygon id="vorderlicht_1_" fill="#CECFCE" points="427.3,510.2 431,510.2 433.2,510.2 439.2,502 434.5,502.3 429.7,502.6
-				426.1,503.2 422.8,503.9 421.1,507.2 420.3,509.8 422.9,510 			"/>
-			<circle fill="#31596B" cx="466.1" cy="528.4" r="22.2"/>
-			<circle fill="#DEE3E7" cx="466.1" cy="528.4" r="16"/>
-			<circle fill="#31596B" cx="466.1" cy="528.4" r="5.7"/>
-			<circle fill="#31596B" cx="642.5" cy="528.4" r="22.2"/>
-			<circle fill="#DEE3E7" cx="642.5" cy="528.4" r="16"/>
-			<circle fill="#31596B" cx="642.5" cy="528.4" r="5.7"/>
-			<polygon id="fenster_vorne_1_" fill="#009ECE" points="571.2,486.9 575,466.9 564.7,467.3 556.4,467.9 550.9,468.8 545.1,470.5
-				540.6,472.2 536.5,473.7 531.9,475.8 528.2,477.6 522.7,480.1 517.4,483.4 512.5,486.1 509.3,488.4 508.5,488.9 			"/>
-			<polygon fill="#009ECE" points="576.1,486.9 631.3,485.3 638.6,482.8 642.9,481.4 644.5,480.2 644.5,479.3 642.5,478.8
-				627,474.5 619.8,472.6 613.2,471.1 604.8,469.4 596.6,468.3 583.7,467.4 579.6,467.4 			"/>
-			<polygon fill="none" stroke="#CECFCE" stroke-miterlimit="10" points="565.4,535.1 577.9,464.6 567.2,464.8 559.4,465.5
-				549.2,466.9 541.8,468.6 532.1,472.3 524.3,475.7 518.2,478.9 512.7,482.1 505.4,486.3 501.7,488.8 500.9,489.6 500.9,535.1
-				"/>
-		</g>
-		<rect id="schatten_garage" x="367.5" y="402.9" opacity="0.5" width="418.5" height="153.1"/>
 	</g>
 	<g id="aussenwaende_1_">
-		<rect x="774" y="395" fill="#FFFFFF" width="20" height="175"/>
-		<rect x="364" y="395" fill="#FFFFFF" width="430" height="20"/>
-		<rect x="364" y="550" fill="#FFFFFF" width="430" height="20"/>
+		<rect x="774" y="585" fill="#FFFFFF" width="20" height="175"/>
+		<rect x="364" y="585" fill="#FFFFFF" width="430" height="20"/>
+		<rect x="364" y="740" fill="#FFFFFF" width="430" height="20"/>
 	</g>
 </g>
 <g id="haus">
 	<g id="tapeten">
 		<g id="kinderzimmer">
-			<rect x="1157" y="43.5" fill="#669054" width="12" height="160"/>
-			<rect x="1177" y="43.5" fill="#669054" width="12" height="160"/>
-			<rect x="1168" y="43.5" fill="#72A15E" width="10" height="160"/>
-			<rect x="1197" y="55.6" fill="#669054" width="12" height="147.9"/>
-			<rect x="1188" y="55.6" fill="#72A15E" width="10" height="147.9"/>
-			<rect x="1217" y="63.8" fill="#669054" width="12" height="139.8"/>
-			<rect x="1208" y="63.8" fill="#72A15E" width="10" height="139.8"/>
-			<rect x="1237" y="73" fill="#669054" width="12" height="130.5"/>
-			<rect x="1228" y="73" fill="#72A15E" width="10" height="130.5"/>
-			<rect x="1257" y="80" fill="#669054" width="12" height="123.5"/>
-			<rect x="1248" y="80" fill="#72A15E" width="10" height="123.5"/>
-			<rect x="1277" y="89" fill="#669054" width="12" height="114.5"/>
-			<rect x="1268" y="89" fill="#72A15E" width="10" height="114.5"/>
-			<rect x="1297" y="98" fill="#669054" width="12" height="105.5"/>
-			<rect x="1288" y="98" fill="#72A15E" width="10" height="105.5"/>
-			<rect x="1317" y="106.8" fill="#669054" width="12" height="96.8"/>
-			<rect x="1308" y="106.8" fill="#72A15E" width="10" height="96.8"/>
-			<rect x="1337" y="120.3" fill="#669054" width="12" height="83.3"/>
-			<rect x="1328" y="120.3" fill="#72A15E" width="10" height="83.3"/>
-			<rect x="1357" y="129.3" fill="#669054" width="12" height="74.3"/>
-			<rect x="1348" y="129.3" fill="#72A15E" width="10" height="74.3"/>
-			<rect x="1377" y="137" fill="#669054" width="12" height="66.5"/>
-			<rect x="1368" y="137" fill="#72A15E" width="10" height="66.5"/>
-			<rect x="1397" y="145" fill="#669054" width="12" height="58.5"/>
-			<rect x="1388" y="145" fill="#72A15E" width="10" height="58.5"/>
-			<rect x="1417" y="153.5" fill="#669054" width="12" height="50"/>
-			<rect x="1408" y="153.5" fill="#72A15E" width="10" height="50"/>
-			<rect x="1437" y="163.5" fill="#669054" width="12" height="40"/>
-			<rect x="1428" y="163.5" fill="#72A15E" width="10" height="40"/>
-			<rect x="1457" y="172.8" fill="#669054" width="12" height="30.8"/>
-			<rect x="1448" y="172.8" fill="#72A15E" width="10" height="30.8"/>
-			<rect x="1477" y="181.5" fill="#669054" width="12" height="22"/>
-			<rect x="1468" y="181.5" fill="#72A15E" width="10" height="22"/>
-			<rect x="837" y="185" fill="#669054" width="12" height="18.5"/>
-			<rect x="828" y="185" fill="#72A15E" width="10" height="18.5"/>
-			<rect x="857" y="174" fill="#669054" width="12" height="29.5"/>
-			<rect x="848" y="174" fill="#72A15E" width="10" height="29.5"/>
-			<rect x="877" y="165" fill="#669054" width="12" height="38.5"/>
-			<rect x="868" y="165" fill="#72A15E" width="10" height="38.5"/>
-			<rect x="897" y="154.8" fill="#669054" width="12" height="48.8"/>
-			<rect x="888" y="154.8" fill="#72A15E" width="10" height="48.8"/>
-			<rect x="917" y="144.5" fill="#669054" width="12" height="59"/>
-			<rect x="908" y="144.5" fill="#72A15E" width="10" height="59"/>
-			<rect x="937" y="136" fill="#669054" width="12" height="67.5"/>
-			<rect x="928" y="136" fill="#72A15E" width="10" height="67.5"/>
-			<rect x="957" y="128" fill="#669054" width="12" height="75.5"/>
-			<rect x="948" y="128" fill="#72A15E" width="10" height="75.5"/>
-			<rect x="977" y="119.3" fill="#669054" width="12" height="84.3"/>
-			<rect x="968" y="119.3" fill="#72A15E" width="10" height="84.3"/>
-			<rect x="997" y="110.3" fill="#669054" width="12" height="93.3"/>
-			<rect x="988" y="110.3" fill="#72A15E" width="10" height="93.3"/>
-			<rect x="1017" y="101" fill="#669054" width="12" height="102.5"/>
-			<rect x="1008" y="101" fill="#72A15E" width="10" height="102.5"/>
-			<rect x="1037" y="91.8" fill="#669054" width="12" height="111.8"/>
-			<rect x="1028" y="91.8" fill="#72A15E" width="10" height="111.8"/>
-			<rect x="1057" y="83.8" fill="#669054" width="12" height="119.8"/>
-			<rect x="1048" y="83.8" fill="#72A15E" width="10" height="119.8"/>
-			<rect x="1077" y="75.3" fill="#669054" width="12" height="128.3"/>
-			<rect x="1068" y="75.3" fill="#72A15E" width="10" height="128.3"/>
-			<rect x="1097" y="66" fill="#669054" width="12" height="137.5"/>
-			<rect x="1088" y="66" fill="#72A15E" width="10" height="137.5"/>
-			<rect x="1117" y="57" fill="#669054" width="12" height="146.5"/>
-			<rect x="1108" y="57" fill="#72A15E" width="10" height="146.5"/>
-			<rect x="1137" y="43.5" fill="#669054" width="12" height="160"/>
-			<rect x="1128" y="43.5" fill="#72A15E" width="10" height="160"/>
-			<rect x="1148" y="43.5" fill="#72A15E" width="10" height="160"/>
+			<rect x="1157" y="233.5" fill="#669054" width="12" height="160"/>
+			<rect x="1177" y="233.5" fill="#669054" width="12" height="160"/>
+			<rect x="1168" y="233.5" fill="#72A15E" width="10" height="160"/>
+			<rect x="1197" y="245.6" fill="#669054" width="12" height="147.9"/>
+			<rect x="1188" y="245.6" fill="#72A15E" width="10" height="147.9"/>
+			<rect x="1217" y="253.8" fill="#669054" width="12" height="139.8"/>
+			<rect x="1208" y="253.8" fill="#72A15E" width="10" height="139.8"/>
+			<rect x="1237" y="263" fill="#669054" width="12" height="130.5"/>
+			<rect x="1228" y="263" fill="#72A15E" width="10" height="130.5"/>
+			<rect x="1257" y="270" fill="#669054" width="12" height="123.5"/>
+			<rect x="1248" y="270" fill="#72A15E" width="10" height="123.5"/>
+			<rect x="1277" y="279" fill="#669054" width="12" height="114.5"/>
+			<rect x="1268" y="279" fill="#72A15E" width="10" height="114.5"/>
+			<rect x="1297" y="288" fill="#669054" width="12" height="105.5"/>
+			<rect x="1288" y="288" fill="#72A15E" width="10" height="105.5"/>
+			<rect x="1317" y="296.8" fill="#669054" width="12" height="96.8"/>
+			<rect x="1308" y="296.8" fill="#72A15E" width="10" height="96.8"/>
+			<rect x="1337" y="310.3" fill="#669054" width="12" height="83.3"/>
+			<rect x="1328" y="310.3" fill="#72A15E" width="10" height="83.3"/>
+			<rect x="1357" y="319.3" fill="#669054" width="12" height="74.3"/>
+			<rect x="1348" y="319.3" fill="#72A15E" width="10" height="74.3"/>
+			<rect x="1377" y="327" fill="#669054" width="12" height="66.5"/>
+			<rect x="1368" y="327" fill="#72A15E" width="10" height="66.5"/>
+			<rect x="1397" y="335" fill="#669054" width="12" height="58.5"/>
+			<rect x="1388" y="335" fill="#72A15E" width="10" height="58.5"/>
+			<rect x="1417" y="343.5" fill="#669054" width="12" height="50"/>
+			<rect x="1408" y="343.5" fill="#72A15E" width="10" height="50"/>
+			<rect x="1437" y="353.5" fill="#669054" width="12" height="40"/>
+			<rect x="1428" y="353.5" fill="#72A15E" width="10" height="40"/>
+			<rect x="1457" y="362.8" fill="#669054" width="12" height="30.8"/>
+			<rect x="1448" y="362.8" fill="#72A15E" width="10" height="30.8"/>
+			<rect x="1477" y="371.5" fill="#669054" width="12" height="22"/>
+			<rect x="1468" y="371.5" fill="#72A15E" width="10" height="22"/>
+			<rect x="837" y="375" fill="#669054" width="12" height="18.5"/>
+			<rect x="828" y="375" fill="#72A15E" width="10" height="18.5"/>
+			<rect x="857" y="364" fill="#669054" width="12" height="29.5"/>
+			<rect x="848" y="364" fill="#72A15E" width="10" height="29.5"/>
+			<rect x="877" y="355" fill="#669054" width="12" height="38.5"/>
+			<rect x="868" y="355" fill="#72A15E" width="10" height="38.5"/>
+			<rect x="897" y="344.8" fill="#669054" width="12" height="48.8"/>
+			<rect x="888" y="344.8" fill="#72A15E" width="10" height="48.8"/>
+			<rect x="917" y="334.5" fill="#669054" width="12" height="59"/>
+			<rect x="908" y="334.5" fill="#72A15E" width="10" height="59"/>
+			<rect x="937" y="326" fill="#669054" width="12" height="67.5"/>
+			<rect x="928" y="326" fill="#72A15E" width="10" height="67.5"/>
+			<rect x="957" y="318" fill="#669054" width="12" height="75.5"/>
+			<rect x="948" y="318" fill="#72A15E" width="10" height="75.5"/>
+			<rect x="977" y="309.3" fill="#669054" width="12" height="84.3"/>
+			<rect x="968" y="309.3" fill="#72A15E" width="10" height="84.3"/>
+			<rect x="997" y="300.3" fill="#669054" width="12" height="93.3"/>
+			<rect x="988" y="300.3" fill="#72A15E" width="10" height="93.3"/>
+			<rect x="1017" y="291" fill="#669054" width="12" height="102.5"/>
+			<rect x="1008" y="291" fill="#72A15E" width="10" height="102.5"/>
+			<rect x="1037" y="281.8" fill="#669054" width="12" height="111.8"/>
+			<rect x="1028" y="281.8" fill="#72A15E" width="10" height="111.8"/>
+			<rect x="1057" y="273.8" fill="#669054" width="12" height="119.8"/>
+			<rect x="1048" y="273.8" fill="#72A15E" width="10" height="119.8"/>
+			<rect x="1077" y="265.3" fill="#669054" width="12" height="128.3"/>
+			<rect x="1068" y="265.3" fill="#72A15E" width="10" height="128.3"/>
+			<rect x="1097" y="256" fill="#669054" width="12" height="137.5"/>
+			<rect x="1088" y="256" fill="#72A15E" width="10" height="137.5"/>
+			<rect x="1117" y="247" fill="#669054" width="12" height="146.5"/>
+			<rect x="1108" y="247" fill="#72A15E" width="10" height="146.5"/>
+			<rect x="1137" y="233.5" fill="#669054" width="12" height="160"/>
+			<rect x="1128" y="233.5" fill="#72A15E" width="10" height="160"/>
+			<rect x="1148" y="233.5" fill="#72A15E" width="10" height="160"/>
 		</g>
 		<g id="arbeitszimmer">
-			<rect x="1193.3" y="217.3" fill="#4CB3A8" width="334.7" height="161.3"/>
+			<rect x="1193.3" y="407.3" fill="#4CB3A8" width="334.7" height="161.3"/>
 		</g>
 		<g id="wohnzimmer">
-			<rect x="790" y="216" fill="#C93F35" width="399.3" height="164"/>
+			<rect x="790" y="406" fill="#C93F35" width="399.3" height="164"/>
 		</g>
 		<g id="flur">
-			<rect x="788" y="387.3" fill="#4C98B3" width="318.7" height="168.7"/>
+			<rect x="788" y="577.3" fill="#4C98B3" width="318.7" height="168.7"/>
 		</g>
 		<g id="kueche_gelb">
-			<rect x="1113" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1133" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1124" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1153" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1144" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1173" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1164" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1193" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1184" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1213" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1204" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1233" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1224" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1253" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1244" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1273" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1264" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1293" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1284" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1313" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1304" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1333" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1324" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1353" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1344" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1373" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1364" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1393" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1384" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1413" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1404" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1433" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1424" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1453" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1444" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1473" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1464" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1493" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1484" y="392.5" fill="#FFDE00" width="10" height="160"/>
-			<rect x="1513" y="392.5" fill="#F2D300" width="12" height="160"/>
-			<rect x="1504" y="392.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1113" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1133" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1124" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1153" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1144" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1173" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1164" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1193" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1184" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1213" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1204" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1233" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1224" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1253" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1244" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1273" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1264" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1293" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1284" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1313" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1304" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1333" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1324" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1353" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1344" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1373" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1364" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1393" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1384" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1413" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1404" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1433" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1424" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1453" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1444" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1473" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1464" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1493" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1484" y="582.5" fill="#FFDE00" width="10" height="160"/>
+			<rect x="1513" y="582.5" fill="#F2D300" width="12" height="160"/>
+			<rect x="1504" y="582.5" fill="#FFDE00" width="10" height="160"/>
 		</g>
 	</g>
 	<g id="objekte">
 		<g id="kueche">
 			<g id="fenster_kueche_2">
-				<rect x="1288" y="413" fill="#7F6600" width="91" height="89"/>
-				<rect x="1336" y="419" fill="#EBFBFF" width="37" height="77"/>
-				<rect x="1294" y="419" fill="#EBFBFF" width="37" height="77"/>
+				<rect x="1288" y="603" fill="#7F6600" width="91" height="89"/>
+				<rect x="1336" y="609" fill="#EBFBFF" width="37" height="77"/>
+				<rect x="1294" y="609" fill="#EBFBFF" width="37" height="77"/>
 			</g>
 			<g id="fenster_kueche_1">
-				<rect x="1167" y="413" fill="#7F6600" width="91" height="89"/>
-				<rect x="1215" y="419" fill="#EBFBFF" width="37" height="77"/>
-				<rect x="1173" y="419" fill="#EBFBFF" width="37" height="77"/>
+				<rect x="1167" y="603" fill="#7F6600" width="91" height="89"/>
+				<rect x="1215" y="609" fill="#EBFBFF" width="37" height="77"/>
+				<rect x="1173" y="609" fill="#EBFBFF" width="37" height="77"/>
 			</g>
 			<g id="rollladen_kueche_2">
-				<rect id="rollladen_kueche_2_x5F_2_1_" x="1336" y="419" fill="#C1C1C1" width="37" height="0"/>
-				<rect id="rollladen_kueche_2_x5F_1_1_" x="1294" y="419" fill="#C1C1C1" width="37" height="0"/>
+				<rect id="rollladen_kueche_2_2" x="1336" y="609" fill="#C1C1C1" width="37" height="0"/>
+				<rect id="rollladen_kueche_2_1" x="1294" y="609" fill="#C1C1C1" width="37" height="0"/>
 			</g>
 			<g id="rollladen_kueche_1">
-				<rect id="rollladen_kueche_1_x5F_2" x="1215" y="419" fill="#C1C1C1" width="37" height="0"/>
-				<rect id="rollladen_kueche_1_x5F_1" x="1173" y="419" fill="#C1C1C1" width="37" height="0"/>
+				<rect id="rollladen_kueche_1_2" x="1215" y="609" fill="#C1C1C1" width="37" height="0"/>
+				<rect id="rollladen_kueche_1_1" x="1173" y="609" fill="#C1C1C1" width="37" height="0"/>
 			</g>
 			<g id="lichtkegel_kueche_1">
-				<polygon id="lichtkegel_kueche_1_x5F_1_1_" opacity="0" fill="#FFF800" points="1444.6,553 1299.5,407.9 1154.4,553 				"/>
+				<polygon id="lichtkegel_kueche_1_1" opacity="0" fill="#FFF800" points="1444.6,743 1299.5,597.9 1154.4,743 				"/>
 			</g>
 			<g id="lampe_kueche_1">
-				<path opacity="0.85" fill="#DBDBDB" d="M1281.2,423c3.1,5.3,10.1,9,18.3,9s15.2-3.7,18.3-9H1281.2z"/>
-				<rect x="1296" y="393.5" fill="#BEA279" width="7" height="13"/>
-				<path fill="#0F616D" d="M1307,416H1292c-1.1,0-2-0.9-2-2V406c0-1.1,0.9-2,2-2h14.9c1.1,0,2,0.9,2,2v7.9
-					C1309,415.1,1308.1,416,1307,416z"/>
-				<path id="lampe_kueche_1_x5F_1" fill="#638E96" d="M1326.9,412h-54.8c-7.2,0-13.1,6-13.1,13h81C1340,418,1334.1,412,1326.9,412z
-					"/>
+				<path id="lampe_kueche_1_1" opacity="0.85" fill="#DBDBDB" d="M1281.2,613c3.1,5.3,10.1,9,18.3,9s15.2-3.7,18.3-9H1281.2z"/>
+				<rect x="1296" y="583.5" fill="#BEA279" width="7" height="13"/>
+				<path fill="#0F616D" d="M1307,606H1292c-1.1,0-2-0.9-2-2V596c0-1.1,0.9-2,2-2h14.9c1.1,0,2,0.9,2,2v7.9
+					C1309,605.1,1308.1,606,1307,606z"/>
+				<path fill="#638E96" d="M1326.9,602h-54.8c-7.2,0-13.1,6-13.1,13h81C1340,608,1334.1,602,1326.9,602z"/>
 			</g>
 			<g id="stuhl_kueche_2">
-				<rect x="1345" y="520.8" fill="#BDA17C" width="6" height="29.3"/>
-				<rect x="1317" y="520.4" fill="#BDA17C" width="6" height="29.6"/>
-				<rect x="1322" y="527" fill="#BDA17C" width="24" height="3"/>
-				<path fill="#BDA17C" d="M1349,467h2v50h-8v-44C1343,469.7,1345.7,467,1349,467z"/>
-				<path fill="#FFFDF1" d="M1317,522v-3.5c0-3,2.5-5.5,5.5-5.5h28.5v9H1317z"/>
+				<rect x="1345" y="710.8" fill="#BDA17C" width="6" height="29.3"/>
+				<rect x="1317" y="710.4" fill="#BDA17C" width="6" height="29.6"/>
+				<rect x="1322" y="717" fill="#BDA17C" width="24" height="3"/>
+				<path fill="#BDA17C" d="M1349,657h2v50h-8v-44C1343,659.7,1345.7,657,1349,657z"/>
+				<path fill="#FFFDF1" d="M1317,712v-3.5c0-3,2.5-5.5,5.5-5.5h28.5v9H1317z"/>
 			</g>
 			<g id="stuhl_kueche_1">
-				<rect x="1169" y="520.8" fill="#BDA17C" width="6" height="29.3"/>
-				<rect x="1197" y="520.4" fill="#BDA17C" width="6" height="29.6"/>
-				<rect x="1174" y="527" fill="#BDA17C" width="24" height="3"/>
-				<path fill="#BDA17C" d="M1171,467h-2v50h8v-44C1177,469.7,1174.3,467,1171,467z"/>
-				<path fill="#FFFDF1" d="M1203,522v-3.5c0-3-2.5-5.5-5.5-5.5H1169v9H1203z"/>
+				<rect x="1169" y="710.8" fill="#BDA17C" width="6" height="29.3"/>
+				<rect x="1197" y="710.4" fill="#BDA17C" width="6" height="29.6"/>
+				<rect x="1174" y="717" fill="#BDA17C" width="24" height="3"/>
+				<path fill="#BDA17C" d="M1171,657h-2v50h8v-44C1177,659.7,1174.3,657,1171,657z"/>
+				<path fill="#FFFDF1" d="M1203,712v-3.5c0-3-2.5-5.5-5.5-5.5H1169v9H1203z"/>
 			</g>
 			<g id="tisch_kueche_1">
-				<rect x="1211" y="497" fill="#BDA17C" width="11" height="54"/>
-				<rect x="1297" y="497" fill="#BDA17C" width="11" height="54"/>
-				<rect x="1202" y="492" fill="#D0AD7E" width="115" height="8"/>
+				<rect x="1211" y="687" fill="#BDA17C" width="11" height="54"/>
+				<rect x="1297" y="687" fill="#BDA17C" width="11" height="54"/>
+				<rect x="1202" y="682" fill="#D0AD7E" width="115" height="8"/>
 			</g>
 			<g id="herd_kueche_1">
-				<rect x="1388" y="490" fill="#BDA17C" width="63" height="60"/>
-				<rect x="1397" y="509" fill="#4E4E4E" width="45" height="33"/>
-				<rect x="1397" y="512" fill="#727272" width="45" height="3"/>
-				<rect x="1389" y="501" fill="#4A453F" width="61" height="4"/>
-				<rect x="1388" y="490" fill="#4A453F" width="63" height="2"/>
-				<circle fill="#626262" cx="1404.5" cy="496.5" r="3"/>
-				<circle fill="#626262" cx="1414.5" cy="496.5" r="3"/>
-				<circle fill="#626262" cx="1424.5" cy="496.5" r="3"/>
-				<circle fill="#626262" cx="1434.5" cy="496.5" r="3"/>
+				<rect x="1388" y="680" fill="#BDA17C" width="63" height="60"/>
+				<rect x="1397" y="699" fill="#4E4E4E" width="45" height="33"/>
+				<rect x="1397" y="702" fill="#727272" width="45" height="3"/>
+				<rect x="1389" y="691" fill="#4A453F" width="61" height="4"/>
+				<rect x="1388" y="680" fill="#4A453F" width="63" height="2"/>
+				<circle fill="#626262" cx="1404.5" cy="686.5" r="3"/>
+				<circle fill="#626262" cx="1414.5" cy="686.5" r="3"/>
+				<circle fill="#626262" cx="1424.5" cy="686.5" r="3"/>
+				<circle fill="#626262" cx="1434.5" cy="686.5" r="3"/>
 			</g>
 			<g id="kuehlschrank_kueche_1">
-				<rect x="1455" y="405" fill="#7F999E" width="69" height="145"/>
-				<rect x="1455" y="498" width="69" height="2"/>
-				<rect x="1460" y="504" fill="#4C5456" width="4" height="32"/>
-				<rect x="1460" y="462" fill="#4C5456" width="4" height="32"/>
+				<rect x="1455" y="595" fill="#7F999E" width="69" height="145"/>
+				<rect x="1455" y="688" width="69" height="2"/>
+				<rect x="1460" y="694" fill="#4C5456" width="4" height="32"/>
+				<rect x="1460" y="652" fill="#4C5456" width="4" height="32"/>
 			</g>
-			<rect id="schatten_kueche" x="1113" y="392.5" opacity="0.5" width="415" height="163.5"/>
+			<rect id="schatten_kueche" x="1113" y="582.5" opacity="0.5" width="415" height="163.5"/>
 		</g>
 		<g id="flur_1_">
 			<g id="tuer_flur_1">
-				<rect x="1020" y="426" fill="#163B48" width="68" height="128"/>
-				<rect x="1024" y="430" fill="#2D7791" width="60" height="122"/>
-				<circle fill="#276176" cx="1076" cy="495" r="3"/>
-				<rect x="1065" y="484" fill="#1E4451" width="10" height="2"/>
-				<circle fill="#276176" cx="1076" cy="485" r="4"/>
+				<rect x="1020" y="616" fill="#163B48" width="68" height="128"/>
+				<rect x="1024" y="620" fill="#2D7791" width="60" height="122"/>
+				<circle fill="#276176" cx="1076" cy="685" r="3"/>
+				<rect x="1065" y="674" fill="#1E4451" width="10" height="2"/>
+				<circle fill="#276176" cx="1076" cy="675" r="4"/>
 			</g>
 			<g id="lichtkegel_flur_1">
-				<polygon id="lichtkegel_flur_1_x5F_1" opacity="0" fill="#FFF800" points="1106.9,560 998.5,451.6 890.1,560 				"/>
+				<polygon id="lichtkegel_flur_1_1" opacity="0" fill="#FFF800" points="1106.9,750 998.5,641.6 890.1,750 				"/>
 			</g>
 			<g id="lampe_flur_1">
-				<rect x="995" y="440" fill="#BEA279" width="7" height="114"/>
-				<polygon id="lampe_flur_1_x5F_1_1_" opacity="0.85" fill="#DBDBDB" points="1011.2,436 999,436 998,436 985.8,436 979,471
-					998,471 999,471 1018,471 				"/>
-				<path fill="#BEA279" d="M1015,550c-7.2,0-13-5.8-13-13h-4v16h17V550z"/>
-				<path fill="#BEA279" d="M982,550c7.2,0,13-5.8,13-13h4v16h-17V550z"/>
+				<rect x="995" y="630" fill="#BEA279" width="7" height="114"/>
+				<polygon id="lampe_flur_1_1" opacity="0.85" fill="#DBDBDB" points="1011.2,626 999,626 998,626 985.8,626 979,661 998,661
+					999,661 1018,661 				"/>
+				<path fill="#BEA279" d="M1015,740c-7.2,0-13-5.8-13-13h-4v16h17V740z"/>
+				<path fill="#BEA279" d="M982,740c7.2,0,13-5.8,13-13h4v16h-17V740z"/>
 			</g>
 			<g id="treppe_flur_1">
 				<g id="stufen">
-					<rect x="832" y="469" fill="#7C7167" width="20" height="22.2"/>
-					<rect x="852" y="479" fill="#7C7167" width="20" height="22.2"/>
-					<rect x="872" y="489" fill="#7C7167" width="20" height="22.2"/>
-					<rect x="892" y="499" fill="#7C7167" width="20" height="22.2"/>
-					<rect x="912" y="509" fill="#7C7167" width="20" height="22.2"/>
-					<rect x="932" y="519" fill="#7C7167" width="20" height="22.2"/>
-					<rect x="952" y="529" fill="#7C7167" width="20" height="22.2"/>
-					<rect x="972" y="539" fill="#7C7167" width="20" height="22.2"/>
-					<rect x="812" y="459" fill="#7C7167" width="20" height="22.2"/>
-					<rect x="792" y="449" fill="#7C7167" width="20" height="22.2"/>
+					<rect x="832" y="659" fill="#7C7167" width="20" height="22.2"/>
+					<rect x="852" y="669" fill="#7C7167" width="20" height="22.2"/>
+					<rect x="872" y="679" fill="#7C7167" width="20" height="22.2"/>
+					<rect x="892" y="689" fill="#7C7167" width="20" height="22.2"/>
+					<rect x="912" y="699" fill="#7C7167" width="20" height="22.2"/>
+					<rect x="932" y="709" fill="#7C7167" width="20" height="22.2"/>
+					<rect x="952" y="719" fill="#7C7167" width="20" height="22.2"/>
+					<rect x="972" y="729" fill="#7C7167" width="20" height="22.2"/>
+					<rect x="812" y="649" fill="#7C7167" width="20" height="22.2"/>
+					<rect x="792" y="639" fill="#7C7167" width="20" height="22.2"/>
 				</g>
 				<g id="gelaender">
-					<polygon fill="#9F907F" points="788,447.6 788,553 999.9,553 					"/>
-					<polygon fill="#9F907F" points="987,508.5 781,406.5 785,398.5 991,500.5 					"/>
-					<rect x="805" y="414" fill="#9F907F" width="5" height="50"/>
-					<rect x="825" y="424" fill="#9F907F" width="5" height="50"/>
-					<rect x="845" y="434" fill="#9F907F" width="5" height="50"/>
-					<rect x="865" y="444" fill="#9F907F" width="5" height="50"/>
-					<rect x="885" y="454" fill="#9F907F" width="5" height="50"/>
-					<rect x="905" y="464" fill="#9F907F" width="5" height="50"/>
-					<rect x="925" y="474" fill="#9F907F" width="5" height="50"/>
-					<rect x="945" y="484" fill="#9F907F" width="5" height="50"/>
-					<rect x="965" y="494" fill="#9F907F" width="5" height="50"/>
-					<rect x="983" y="486" fill="#9F907F" width="10" height="66"/>
-					<rect x="978" y="483" fill="#9F907F" width="20" height="7"/>
+					<polygon fill="#9F907F" points="788,637.6 788,743 999.9,743 					"/>
+					<polygon fill="#9F907F" points="987,698.5 781,596.5 785,588.5 991,690.5 					"/>
+					<rect x="805" y="604" fill="#9F907F" width="5" height="50"/>
+					<rect x="825" y="614" fill="#9F907F" width="5" height="50"/>
+					<rect x="845" y="624" fill="#9F907F" width="5" height="50"/>
+					<rect x="865" y="634" fill="#9F907F" width="5" height="50"/>
+					<rect x="885" y="644" fill="#9F907F" width="5" height="50"/>
+					<rect x="905" y="654" fill="#9F907F" width="5" height="50"/>
+					<rect x="925" y="664" fill="#9F907F" width="5" height="50"/>
+					<rect x="945" y="674" fill="#9F907F" width="5" height="50"/>
+					<rect x="965" y="684" fill="#9F907F" width="5" height="50"/>
+					<rect x="983" y="676" fill="#9F907F" width="10" height="66"/>
+					<rect x="978" y="673" fill="#9F907F" width="20" height="7"/>
 				</g>
 			</g>
 			<g id="kamera_flur_1">
-				<rect x="919" y="396.5" fill="#576A6E" width="4" height="9"/>
-				<rect x="915" y="394" fill="#6A7172" width="12" height="4"/>
+				<rect x="919" y="586.5" fill="#576A6E" width="4" height="9"/>
+				<rect x="915" y="584" fill="#6A7172" width="12" height="4"/>
 				<g id="kamera_1_">
 
-						<rect x="912.7" y="404.7" transform="matrix(0.891 0.454 -0.454 0.891 286.8472 -374.4068)" fill="#4C5456" width="21" height="11"/>
+						<rect x="912.7" y="594.7" transform="matrix(0.891 0.454 -0.454 0.891 373.1045 -353.6985)" fill="#4C5456" width="21" height="11"/>
 
-						<rect x="931.9" y="412.9" transform="matrix(0.891 0.454 -0.454 0.891 290.4857 -378.6671)" fill="#6D858A" width="4" height="5.5"/>
+						<rect x="931.9" y="602.9" transform="matrix(0.891 0.454 -0.454 0.891 376.7431 -357.9588)" fill="#6D858A" width="4" height="5.5"/>
 				</g>
 			</g>
-			<rect id="schatten_flur" x="789.3" y="392.5" opacity="0.5" width="318.7" height="163.5"/>
+			<rect id="schatten_flur" x="789.3" y="582.5" opacity="0.5" width="318.7" height="163.5"/>
 		</g>
 		<g id="wohnzimmer_1_">
 			<g id="fenster_wohnzimmer_1">
-				<rect x="897" y="238" fill="#7F6600" width="91" height="89"/>
-				<rect x="945" y="244" fill="#EBFBFF" width="37" height="77"/>
-				<rect x="903" y="244" fill="#EBFBFF" width="37" height="77"/>
+				<rect x="897" y="428" fill="#7F6600" width="91" height="89"/>
+				<rect x="945" y="434" fill="#EBFBFF" width="37" height="77"/>
+				<rect x="903" y="434" fill="#EBFBFF" width="37" height="77"/>
 			</g>
 			<g id="rollladen_wohnzimmer_1">
-				<rect id="rollladen_wohnzimmer_1_x5F_2" x="945" y="244" fill="#C1C1C1" width="37" height="0"/>
-				<rect id="rollladen_wohnzimmer_1_x5F_1" x="903" y="244" fill="#C1C1C1" width="37" height="0"/>
+				<rect id="rollladen_wohnzimmer_1_2" x="945" y="434" fill="#C1C1C1" width="37" height="0"/>
+				<rect id="rollladen_wohnzimmer_1_1" x="903" y="434" fill="#C1C1C1" width="37" height="0"/>
 			</g>
 			<g id="lichtkegel_wohnzimmer_1">
-				<polygon id="lichtkegel_wohnzimmer_1_x5F_1_1_" opacity="0" fill="#FFF800" points="885.2,257.5 925.7,217 789.3,217
-					829.8,257.5 				"/>
+				<polygon id="lichtkegel_wohnzimmer_1_1" opacity="0" fill="#FFF800" points="885.2,447.5 925.7,407 789.3,407 829.8,447.5
+					"/>
 			</g>
 			<g id="lampe_wohnzimmer_1">
-				<rect x="854" y="265" fill="#BEA279" width="7" height="114"/>
-				<path fill="#BEA279" d="M867,375c-3,0-6.6-5.8-6.6-13H858v16h9V375z"/>
-				<path fill="#BEA279" d="M847,375c4,0,7.6-5.8,7.6-13h2.4v16h-10V375z"/>
-				<path id="lampe_wohnzimmer_1_x5F_1" opacity="0.85" fill="#DBDBDB" d="M857.5,256c-11.6,0-22.4-0.9-31.5-2.4
-					c0.5,9.9,14.4,17.9,31.5,17.9s30.9-8,31.5-17.9C879.9,255.1,869.1,256,857.5,256z"/>
+				<rect x="854" y="455" fill="#BEA279" width="7" height="114"/>
+				<path fill="#BEA279" d="M867,565c-3,0-6.6-5.8-6.6-13H858v16h9V565z"/>
+				<path fill="#BEA279" d="M847,565c4,0,7.6-5.8,7.6-13h2.4v16h-10V565z"/>
+				<path id="lampe_wohnzimmer_1_1" opacity="0.85" fill="#DBDBDB" d="M857.5,446c-11.6,0-22.4-0.9-31.5-2.4
+					c0.5,9.9,14.4,17.9,31.5,17.9s30.9-8,31.5-17.9C879.9,445.1,869.1,446,857.5,446z"/>
 			</g>
 			<g id="geraet_wohnzimmer_1">
-				<rect x="1097" y="339.5" width="6" height="2"/>
-				<rect x="1119" y="339.5" width="6" height="2"/>
-				<rect x="1095" y="334" fill="#4C5456" width="32" height="6"/>
-				<circle fill="#262A2B" cx="1100" cy="337" r="2"/>
-				<circle fill="#262A2B" cx="1105" cy="337" r="1"/>
-				<circle fill="#262A2B" cx="1108" cy="337" r="1"/>
-				<rect x="1113" y="336" fill="#262A2B" width="12" height="1"/>
+				<rect x="1097" y="529.5" width="6" height="2"/>
+				<rect x="1119" y="529.5" width="6" height="2"/>
+				<rect x="1095" y="524" fill="#4C5456" width="32" height="6"/>
+				<circle fill="#262A2B" cx="1100" cy="527" r="2"/>
+				<circle fill="#262A2B" cx="1105" cy="527" r="1"/>
+				<circle fill="#262A2B" cx="1108" cy="527" r="1"/>
+				<rect x="1113" y="526" fill="#262A2B" width="12" height="1"/>
+			</g>
+			<g id="cloudbox_wohnzimmer_1">
+				<path fill="#262626" d="M1084,523h4c0.6,0,1,0.4,1,1v6c0,0.6-0.4,1-1,1h-4c-0.6,0-1-0.4-1-1v-6C1083,523.4,1083.4,523,1084,523z
+					"/>
+				<rect x="1087.3" y="521.5" fill="#262626" width="0.5" height="3"/>
+				<rect x="1087.3" y="529" fill="#0DFF00" width="0.5" height="1"/>
 			</g>
 			<g id="tisch_wohnzimmer_1">
-				<rect x="1140" y="344.5" fill="#9B815C" width="11" height="33"/>
-				<rect x="1043" y="344.5" fill="#9B815C" width="11" height="33"/>
-				<rect x="1043" y="341" fill="#DCCDB7" width="108" height="7"/>
+				<rect x="1140" y="534.5" fill="#9B815C" width="11" height="33"/>
+				<rect x="1043" y="534.5" fill="#9B815C" width="11" height="33"/>
+				<rect x="1043" y="531" fill="#DCCDB7" width="108" height="7"/>
 			</g>
 			<g id="fernseher_wohnzimmer_1">
-				<path fill="#4C5456" d="M1024.7,326h144.6c1.5,0,2.7-1.2,2.7-2.7v-79.6c0-1.5-1.2-2.7-2.7-2.7h-144.6c-1.5,0-2.7,1.2-2.7,2.7
-					v79.6C1022,324.8,1023.2,326,1024.7,326z"/>
-				<rect x="1028" y="245" width="138" height="73"/>
-				<path fill="#3A4041" d="M1104,323h-14c-0.6,0-1-0.4-1-1l0,0c0-0.6,0.4-1,1-1h14c0.6,0,1,0.4,1,1l0,0
-					C1105,322.6,1104.6,323,1104,323z"/>
+				<path fill="#4C5456" d="M1024.7,516h144.6c1.5,0,2.7-1.2,2.7-2.7v-79.6c0-1.5-1.2-2.7-2.7-2.7h-144.6c-1.5,0-2.7,1.2-2.7,2.7
+					v79.6C1022,514.8,1023.2,516,1024.7,516z"/>
+				<rect x="1028" y="435" width="138" height="73"/>
+				<path fill="#3A4041" d="M1104,513h-14c-0.6,0-1-0.4-1-1l0,0c0-0.6,0.4-1,1-1h14c0.6,0,1,0.4,1,1l0,0
+					C1105,512.6,1104.6,513,1104,513z"/>
 			</g>
 			<g id="sofa_wohnzimmer_1">
-				<path fill="#9B815C" d="M816,358v22h16v-10.3c0-1.5,1.2-2.7,2.7-2.7h134.5c1.5,0,2.7,1.2,2.7,2.7V380h16v-22H816z"/>
-				<path fill="#9F4141" d="M836.8,296h130.5c3.7,0,6.8,3,6.8,6.8V350H830v-47.3C830,299,833,296,836.8,296z"/>
-				<rect x="810" y="342" fill="#923C3C" width="184" height="22"/>
-				<path fill="#923C3C" d="M816.8,316h19.5c3.7,0,6.8,3,6.8,6.8V354h-33v-31.3C810,319,813,316,816.8,316z"/>
-				<path fill="#923C3C" d="M967.8,316h19.5c3.7,0,6.8,3,6.8,6.8V354h-33v-31.3C961,319,964,316,967.8,316z"/>
+				<path fill="#9B815C" d="M816,548v22h16v-10.3c0-1.5,1.2-2.7,2.7-2.7h134.5c1.5,0,2.7,1.2,2.7,2.7V570h16v-22H816z"/>
+				<path fill="#9F4141" d="M836.8,486h130.5c3.7,0,6.8,3,6.8,6.8V540H830v-47.3C830,489,833,486,836.8,486z"/>
+				<rect x="810" y="532" fill="#923C3C" width="184" height="22"/>
+				<path fill="#923C3C" d="M816.8,506h19.5c3.7,0,6.8,3,6.8,6.8V544h-33v-31.3C810,509,813,506,816.8,506z"/>
+				<path fill="#923C3C" d="M967.8,506h19.5c3.7,0,6.8,3,6.8,6.8V544h-33v-31.3C961,509,964,506,967.8,506z"/>
 			</g>
-			<rect id="schatten_wohnzimmer_1_" x="789.3" y="212.2" opacity="0.5" width="403.7" height="169.8"/>
+			<rect id="schatten_wohnzimmer_1_" x="789.3" y="402.2" opacity="0.5" width="403.7" height="169.8"/>
 		</g>
 		<g id="arbeitszimmer_1_">
 			<g id="fenster_arbeitszimmer_1">
-				<rect x="1417" y="238" fill="#7F6600" width="91" height="89"/>
-				<rect x="1465" y="244" fill="#EBFBFF" width="37" height="77"/>
-				<rect x="1423" y="244" fill="#EBFBFF" width="37" height="77"/>
+				<rect x="1417" y="428" fill="#7F6600" width="91" height="89"/>
+				<rect x="1465" y="434" fill="#EBFBFF" width="37" height="77"/>
+				<rect x="1423" y="434" fill="#EBFBFF" width="37" height="77"/>
 			</g>
 			<g id="rollladen_arbeitszimmer_1">
-				<rect id="rollladen_arbeitszimmer_1_x5F_2_1_" x="1465" y="244" fill="#C1C1C1" width="37" height="0"/>
-				<rect id="rollladen_arbeitszimmer_1_x5F_1_1_" x="1423" y="244" fill="#C1C1C1" width="37" height="0"/>
+				<rect id="rollladen_arbeitszimmer_1_2" x="1465" y="434" fill="#C1C1C1" width="37" height="0"/>
+				<rect id="rollladen_arbeitszimmer_1_1" x="1423" y="434" fill="#C1C1C1" width="37" height="0"/>
+			</g>
+			<g id="wandthermostat_arbeitszimmer_1">
+				<rect x="1370" y="491" fill="#D7D7D7" width="12" height="12"/>
+				<circle fill="#FFFFFF" cx="1376" cy="501.5" r="2.5"/>
+				<rect x="1371" y="492" fill="#879674" width="10" height="5"/>
 			</g>
 			<g id="lichtkegel_arbeitstimmer_1">
-				<polygon id="lichtkegel_arbeitszimmer_1_x5F_1" opacity="0" fill="#FFF800" points="1520,317 1527,324 1531.3,324 1531.3,311.2
-					1495,274.9 1445.9,324 1513,324 				"/>
+				<polygon id="lichtkegel_arbeitszimmer_1_1" opacity="0" fill="#FFF800" points="1374,507 1408,521 1408,511.5 1447.8,511.5
+					1401,464.7 1293.7,572 1347.1,572 				"/>
 			</g>
-			<g id="lampe">
-				<rect x="1492" y="275" fill="#2A6C65" width="6" height="23"/>
-				<circle fill="#3D8E85" cx="1495" cy="309" r="12"/>
-				<polygon id="lampe_arbeitszimmer_1_x5F_1_1_" opacity="0.85" fill="#DBDBDB" points="1507.7,266 1495.5,266 1494.5,266
-					1482.3,266 1475.5,294 1494.5,294 1495.5,294 1514.5,294 				"/>
+			<g id="lampe_arbeitszimmer_1">
+				<rect x="1398" y="465" fill="#2A6C65" width="6" height="23"/>
+				<circle fill="#3D8E85" cx="1401" cy="499" r="12"/>
+				<polygon id="lampe_arbeitszimmer_1_1_1_" opacity="0.85" fill="#DBDBDB" points="1413.7,456 1401.5,456 1400.5,456 1388.3,456
+					1381.5,484 1400.5,484 1401.5,484 1420.5,484 				"/>
 			</g>
-			<g id="macbook">
-				<path fill="#DADADA" d="M1428.5,314h40.9c0.9,0,1.5-0.7,1.5-1.5v-21.9c0-0.9-0.7-1.5-1.5-1.5h-40.9c-0.9,0-1.5,0.7-1.5,1.5v21.9
-					C1427,313.3,1427.7,314,1428.5,314z"/>
-				<rect x="1429" y="291" width="40" height="21"/>
-				<rect x="1429" y="314" opacity="0.5" width="40" height="1"/>
-				<path fill="#DADADA" d="M1427,315h44v0.5c0,0.8-0.7,1.5-1.5,1.5h-41c-0.8,0-1.5-0.7-1.5-1.5V315z"/>
+			<g id="macbook_arbeitszimmer_1">
+				<path fill="#DADADA" d="M1419.5,504h40.9c0.9,0,1.5-0.7,1.5-1.5v-21.9c0-0.9-0.7-1.5-1.5-1.5h-40.9c-0.9,0-1.5,0.7-1.5,1.5v21.9
+					C1418,503.3,1418.7,504,1419.5,504z"/>
+				<rect x="1420" y="481" width="40" height="21"/>
+				<rect x="1420" y="504" opacity="0.5" width="40" height="1"/>
+				<path fill="#DADADA" d="M1418,505h44v0.5c0,0.8-0.7,1.5-1.5,1.5h-41c-0.8,0-1.5-0.7-1.5-1.5V505z"/>
 			</g>
 			<g id="tisch_arbeitszimmer_1">
-				<rect x="1476" y="323.5" fill="#9B815C" width="44" height="53"/>
-				<rect x="1412" y="323.5" fill="#9B815C" width="10" height="53"/>
-				<rect x="1412" y="317" fill="#D0AD7E" width="108" height="8"/>
+				<rect x="1369" y="513.5" fill="#9B815C" width="44" height="53"/>
+				<rect x="1467" y="513.5" fill="#9B815C" width="10" height="53"/>
+				<rect x="1369" y="507" fill="#D0AD7E" width="108" height="8"/>
 				<g id="schubladen">
 					<g id="schublade_3">
-						<rect x="1479" y="356" fill="#E1CEB5" width="38" height="10"/>
-						<rect x="1493" y="358" fill="#71736E" width="10" height="2"/>
+						<rect x="1372" y="546" fill="#E1CEB5" width="38" height="10"/>
+						<rect x="1386" y="548" fill="#71736E" width="10" height="2"/>
 					</g>
 					<g id="schublade_2">
-						<rect x="1479" y="342" fill="#E1CEB5" width="38" height="10"/>
-						<rect x="1493" y="344" fill="#71736E" width="10" height="2"/>
+						<rect x="1372" y="532" fill="#E1CEB5" width="38" height="10"/>
+						<rect x="1386" y="534" fill="#71736E" width="10" height="2"/>
 					</g>
 					<g id="schublade_1">
-						<rect x="1479" y="328" fill="#E1CEB5" width="38" height="10"/>
-						<rect x="1493" y="330" fill="#71736E" width="10" height="2"/>
+						<rect x="1372" y="518" fill="#E1CEB5" width="38" height="10"/>
+						<rect x="1386" y="520" fill="#71736E" width="10" height="2"/>
 					</g>
 				</g>
 			</g>
 			<g id="heizung_arbeitszimmer_1">
-				<rect x="1311" y="348" opacity="0.5" fill="#FFFFFF" width="90" height="11"/>
-				<rect x="1311" y="312" opacity="0.5" fill="#FFFFFF" width="90" height="10"/>
-				<path fill="#D7D7D7" d="M1317,312h-13c-2.8,0-5,2-5,5h18V312z"/>
-				<path fill="#B2B2B2" d="M1317,322h-13c-2.8,0-5-2-5-5h18V322z"/>
+				<rect x="1208" y="540" opacity="0.5" fill="#FFFFFF" width="90" height="11"/>
+				<rect x="1208" y="504" opacity="0.5" fill="#FFFFFF" width="90" height="10"/>
+				<path fill="#D7D7D7" d="M1292,504h13c2.8,0,5,2,5,5h-18V504z"/>
+				<path fill="#B2B2B2" d="M1292,514h13c2.8,0,5-2,5-5h-18V514z"/>
 				<g id="heizkoerper_7_">
 					<g id="heizkoerper_7_1_">
-						<path fill="#EDEDED" d="M1317,305v61c2.8,0,5-2.2,5-5v-51C1322,307.2,1319.8,305,1317,305z"/>
-						<path fill="#D7D7D7" d="M1312,310v51c0,2.8,2.2,5,5,5v-61C1314.2,305,1312,307.2,1312,310z"/>
+						<path fill="#EDEDED" d="M1214,497v61c3,0,5-2.2,5-5v-51C1219,499.2,1217,497,1214,497z"/>
+						<path fill="#D7D7D7" d="M1209,502v51c0,2.8,2.2,5,5,5v-61C1211.2,497,1209,499.2,1209,502z"/>
 					</g>
 					<g id="heizkoerper_6_1_">
-						<path fill="#EDEDED" d="M1330,305v61c2.8,0,5-2.2,5-5v-51C1335,307.2,1332.8,305,1330,305z"/>
-						<path fill="#D7D7D7" d="M1325,310v51c0,2.8,2.2,5,5,5v-61C1327.2,305,1325,307.2,1325,310z"/>
+						<path fill="#EDEDED" d="M1227,497v61c3,0,5-2.2,5-5v-51C1232,499.2,1230,497,1227,497z"/>
+						<path fill="#D7D7D7" d="M1222,502v51c0,2.8,2.2,5,5,5v-61C1224.2,497,1222,499.2,1222,502z"/>
 					</g>
 					<g id="heizkoerper_5_1_">
-						<path fill="#EDEDED" d="M1343,305v61c2.8,0,5-2.2,5-5v-51C1348,307.2,1345.8,305,1343,305z"/>
-						<path fill="#D7D7D7" d="M1338,310v51c0,2.8,2.2,5,5,5v-61C1340.2,305,1338,307.2,1338,310z"/>
+						<path fill="#EDEDED" d="M1240,497v61c3,0,5-2.2,5-5v-51C1245,499.2,1243,497,1240,497z"/>
+						<path fill="#D7D7D7" d="M1235,502v51c0,2.8,2.2,5,5,5v-61C1237.2,497,1235,499.2,1235,502z"/>
 					</g>
 					<g id="heizkoerper_4_1_">
-						<path fill="#EDEDED" d="M1356,305v61c2.8,0,5-2.2,5-5v-51C1361,307.2,1358.8,305,1356,305z"/>
-						<path fill="#D7D7D7" d="M1351,310v51c0,2.8,2.2,5,5,5v-61C1353.2,305,1351,307.2,1351,310z"/>
+						<path fill="#EDEDED" d="M1253,497v61c3,0,5-2.2,5-5v-51C1258,499.2,1256,497,1253,497z"/>
+						<path fill="#D7D7D7" d="M1248,502v51c0,2.8,2.2,5,5,5v-61C1250.2,497,1248,499.2,1248,502z"/>
 					</g>
 					<g id="heizkoerper_3_1_">
-						<path fill="#EDEDED" d="M1369,305v61c2.8,0,5-2.2,5-5v-51C1374,307.2,1371.8,305,1369,305z"/>
-						<path fill="#D7D7D7" d="M1364,310v51c0,2.8,2.2,5,5,5v-61C1366.2,305,1364,307.2,1364,310z"/>
+						<path fill="#EDEDED" d="M1266,497v61c3,0,5-2.2,5-5v-51C1271,499.2,1269,497,1266,497z"/>
+						<path fill="#D7D7D7" d="M1261,502v51c0,2.8,2.2,5,5,5v-61C1263.2,497,1261,499.2,1261,502z"/>
 					</g>
 					<g id="heizkoerper_2_1_">
-						<path fill="#EDEDED" d="M1382,305v61c2.8,0,5-2.2,5-5v-51C1387,307.2,1384.8,305,1382,305z"/>
-						<path fill="#D7D7D7" d="M1377,310v51c0,2.8,2.2,5,5,5v-61C1379.2,305,1377,307.2,1377,310z"/>
+						<path fill="#EDEDED" d="M1279,497v61c3,0,5-2.2,5-5v-51C1284,499.2,1282,497,1279,497z"/>
+						<path fill="#D7D7D7" d="M1274,502v51c0,2.8,2.2,5,5,5v-61C1276.2,497,1274,499.2,1274,502z"/>
 					</g>
 					<g id="heizkoerper_1_1_">
-						<path fill="#EDEDED" d="M1395,305v61c2.8,0,5-2.2,5-5v-51C1400,307.2,1397.8,305,1395,305z"/>
-						<path fill="#D7D7D7" d="M1390,310v51c0,2.8,2.2,5,5,5v-61C1392.2,305,1390,307.2,1390,310z"/>
+						<path fill="#EDEDED" d="M1292,497v61c3,0,5-2.2,5-5v-51C1297,499.2,1295,497,1292,497z"/>
+						<path fill="#D7D7D7" d="M1287,502v51c0,2.8,2.2,5,5,5v-61C1289.2,497,1287,499.2,1287,502z"/>
 					</g>
 				</g>
 			</g>
 			<g id="blume_arbeitszimmer_1">
-				<rect x="1241" y="315.9" fill="#A2B21D" width="4" height="32"/>
-				<polygon fill="#2ADF95" points="1255.7,375 1243.5,375 1242.5,375 1230.3,375 1223.5,347 1242.5,347 1243.5,347 1262.5,347
+				<rect x="1498" y="505.9" fill="#A2B21D" width="4" height="32"/>
+				<polygon fill="#2ADF95" points="1512.7,565 1500.5,565 1499.5,565 1487.3,565 1480.5,537 1499.5,537 1500.5,537 1519.5,537
 					"/>
-				<path fill="#A2B21D" d="M1250.1,329.1c-3,2.5-4.8,6-5.2,9.6c3.6,0.2,7.4-0.9,10.4-3.5c3-2.5,4.8-6,5.2-9.6
-					C1256.8,325.4,1253.1,326.5,1250.1,329.1z"/>
-				<path fill="#A2B21D" d="M1235.9,333.1c3,2.5,4.8,6,5.2,9.6c-3.6,0.2-7.4-0.9-10.4-3.5c-3-2.5-4.8-6-5.2-9.6
-					C1229.2,329.4,1232.9,330.5,1235.9,333.1z"/>
+				<path fill="#A2B21D" d="M1507.1,519.1c-3,2.5-4.8,6-5.2,9.6c3.6,0.2,7.4-0.9,10.4-3.5c3-2.5,4.8-6,5.2-9.6
+					C1513.8,515.4,1510.1,516.5,1507.1,519.1z"/>
+				<path fill="#A2B21D" d="M1492.9,523.1c3,2.5,4.8,6,5.2,9.6c-3.6,0.2-7.4-0.9-10.4-3.5c-3-2.5-4.8-6-5.2-9.6
+					C1486.2,519.4,1489.9,520.5,1492.9,523.1z"/>
 				<g>
-					<path fill="#F389B7" d="M1249.4,296.8c-2.5,0-4.8,1.1-6.4,2.9v23l2.1-1.9c7.3-6.6,12.1-11,12.1-16.3
-						C1257.2,300.2,1253.7,296.8,1249.4,296.8z"/>
-					<path fill="#E468A3" d="M1236.6,296.8c-4.4,0-7.8,3.4-7.8,7.8c0,5.3,4.8,9.7,12.1,16.3l2.1,1.9v-23
-						C1241.5,298,1239.1,296.8,1236.6,296.8z"/>
+					<path fill="#F389B7" d="M1506.4,486.8c-2.5,0-4.8,1.1-6.4,2.9v23l2.1-1.9c7.3-6.6,12.1-11,12.1-16.3
+						C1514.2,490.2,1510.7,486.8,1506.4,486.8z"/>
+					<path fill="#E468A3" d="M1493.6,486.8c-4.4,0-7.8,3.4-7.8,7.8c0,5.3,4.8,9.7,12.1,16.3l2.1,1.9v-23
+						C1498.5,488,1496.1,486.8,1493.6,486.8z"/>
 				</g>
 			</g>
-			<rect id="schatten_arbeitszimmer" x="1190.3" y="212.2" opacity="0.5" width="337.7" height="169.8"/>
+			<rect id="schatten_arbeitszimmer" x="1190.3" y="402.2" opacity="0.5" width="337.7" height="169.8"/>
 		</g>
 		<g id="kinderzimmer_1_">
 			<g id="lichtkegel_kinderzimmer_1">
-				<polygon id="lichtkegel_kinderzimmer_1_x5F_1_1_" opacity="0" fill="#FFF800" points="1216.4,106.8 1198.6,106.8 1094.6,210.8
-					1320.4,210.8 				"/>
+				<polygon id="lichtkegel_kinderzimmer_1_1" opacity="0" fill="#FFF800" points="1216.4,296.8 1198.6,296.8 1094.6,400.8
+					1320.4,400.8 				"/>
 			</g>
 			<g id="lampe_kinderzimmer_1">
-				<circle fill="#B57D00" cx="1207.5" cy="114.8" r="14"/>
-				<circle id="lampe_kinderzimmer_1_x5F_1" opacity="0.85" fill="#DCDCDC" cx="1207.5" cy="114.8" r="12"/>
+				<circle fill="#B57D00" cx="1207.5" cy="304.8" r="14"/>
+				<circle id="lampe_kinderzimmer_1_1" opacity="0.85" fill="#DCDCDC" cx="1207.5" cy="304.8" r="12"/>
 			</g>
 			<g id="bullauge_kinderzimmer_1">
-				<circle fill="#466A37" cx="1158" cy="94" r="20"/>
-				<circle fill="#EBFBFF" cx="1158" cy="94" r="16"/>
+				<circle fill="#466A37" cx="1158" cy="284" r="20"/>
+				<circle fill="#EBFBFF" cx="1158" cy="284" r="16"/>
 			</g>
 			<g id="schrank_kinderzimmer_1">
-				<rect x="1065" y="195" fill="#545454" width="10" height="6"/>
-				<rect x="1109" y="195" fill="#545454" width="10" height="6"/>
-				<rect x="1060" y="171" fill="#E1CEB5" width="64" height="14"/>
-				<rect x="1060" y="147" fill="#E1CEB5" width="64" height="14"/>
-				<rect x="1060" y="184" fill="#D0AD7E" width="64" height="12"/>
-				<rect x="1060" y="160" fill="#D0AD7E" width="64" height="12"/>
-				<rect x="1058" y="145" fill="#9B815C" width="68" height="3"/>
-				<circle fill="#71736E" cx="1115" cy="154" r="3"/>
-				<circle fill="#71736E" cx="1069" cy="154" r="3"/>
-				<circle fill="#71736E" cx="1115" cy="166" r="3"/>
-				<circle fill="#71736E" cx="1069" cy="166" r="3"/>
-				<circle fill="#71736E" cx="1115" cy="178" r="3"/>
-				<circle fill="#71736E" cx="1069" cy="178" r="3"/>
-				<circle fill="#71736E" cx="1115" cy="190" r="3"/>
-				<circle fill="#71736E" cx="1069" cy="190" r="3"/>
+				<rect x="1065" y="385" fill="#545454" width="10" height="6"/>
+				<rect x="1109" y="385" fill="#545454" width="10" height="6"/>
+				<rect x="1060" y="361" fill="#E1CEB5" width="64" height="14"/>
+				<rect x="1060" y="337" fill="#E1CEB5" width="64" height="14"/>
+				<rect x="1060" y="374" fill="#D0AD7E" width="64" height="12"/>
+				<rect x="1060" y="350" fill="#D0AD7E" width="64" height="12"/>
+				<rect x="1058" y="335" fill="#9B815C" width="68" height="3"/>
+				<circle fill="#71736E" cx="1115" cy="344" r="3"/>
+				<circle fill="#71736E" cx="1069" cy="344" r="3"/>
+				<circle fill="#71736E" cx="1115" cy="356" r="3"/>
+				<circle fill="#71736E" cx="1069" cy="356" r="3"/>
+				<circle fill="#71736E" cx="1115" cy="368" r="3"/>
+				<circle fill="#71736E" cx="1069" cy="368" r="3"/>
+				<circle fill="#71736E" cx="1115" cy="380" r="3"/>
+				<circle fill="#71736E" cx="1069" cy="380" r="3"/>
 			</g>
 			<g id="bett_kinderzimmer_1">
-				<rect x="1156" y="181" fill="#446436" width="103" height="8"/>
-				<rect x="1164" y="153" fill="#E6D1B4" width="3" height="35"/>
-				<rect x="1176" y="153" fill="#E6D1B4" width="3" height="35"/>
-				<rect x="1188" y="153" fill="#E6D1B4" width="3" height="35"/>
-				<rect x="1200" y="153" fill="#E6D1B4" width="3" height="35"/>
-				<rect x="1212" y="153" fill="#E6D1B4" width="3" height="35"/>
-				<rect x="1224" y="153" fill="#E6D1B4" width="3" height="35"/>
-				<rect x="1236" y="153" fill="#E6D1B4" width="3" height="35"/>
-				<rect x="1248" y="153" fill="#E6D1B4" width="3" height="35"/>
-				<rect x="1156" y="147" fill="#E6D1B4" width="103" height="7"/>
-				<rect x="1156" y="187" fill="#E6D1B4" width="103" height="7"/>
-				<path fill="#D0AD7E" d="M1265,205h-8v-68c0-2.2,1.8-4,4-4l0,0c2.2,0,4,1.8,4,4V205z"/>
-				<path fill="#D0AD7E" d="M1158,205h-8v-68c0-2.2,1.8-4,4-4l0,0c2.2,0,4,1.8,4,4V205z"/>
+				<rect x="1156" y="371" fill="#446436" width="103" height="8"/>
+				<rect x="1164" y="343" fill="#E6D1B4" width="3" height="35"/>
+				<rect x="1176" y="343" fill="#E6D1B4" width="3" height="35"/>
+				<rect x="1188" y="343" fill="#E6D1B4" width="3" height="35"/>
+				<rect x="1200" y="343" fill="#E6D1B4" width="3" height="35"/>
+				<rect x="1212" y="343" fill="#E6D1B4" width="3" height="35"/>
+				<rect x="1224" y="343" fill="#E6D1B4" width="3" height="35"/>
+				<rect x="1236" y="343" fill="#E6D1B4" width="3" height="35"/>
+				<rect x="1248" y="343" fill="#E6D1B4" width="3" height="35"/>
+				<rect x="1156" y="337" fill="#E6D1B4" width="103" height="7"/>
+				<rect x="1156" y="377" fill="#E6D1B4" width="103" height="7"/>
+				<path fill="#D0AD7E" d="M1265,395h-8v-68c0-2.2,1.8-4,4-4l0,0c2.2,0,4,1.8,4,4V395z"/>
+				<path fill="#D0AD7E" d="M1158,395h-8v-68c0-2.2,1.8-4,4-4l0,0c2.2,0,4,1.8,4,4V395z"/>
 			</g>
-			<polygon id="schatten_kinderzimmer" opacity="0.5" points="1513,205 1159,38 789.3,212.2 			"/>
+			<polygon id="schatten_kinderzimmer" opacity="0.5" points="1513,395 1159,228 789.3,402.2 			"/>
 		</g>
 	</g>
 	<g id="aussenwaende">
-		<rect x="774" y="375" fill="#FFFFFF" width="770" height="20"/>
-		<rect x="789.3" y="200" fill="#FFFFFF" width="738.2" height="20"/>
-		<rect x="1524" y="213" fill="#FFFFFF" width="20" height="357"/>
-		<rect x="774" y="211.7" fill="#FFFFFF" width="20" height="358.3"/>
-		<rect x="1103" y="392.5" fill="#FFFFFF" width="12" height="160"/>
-		<rect x="1186" y="217.5" fill="#FFFFFF" width="12" height="160"/>
-		<rect x="774" y="550" fill="#FFFFFF" width="770" height="20"/>
+		<rect x="774" y="565" fill="#FFFFFF" width="770" height="20"/>
+		<rect x="789.3" y="390" fill="#FFFFFF" width="738.2" height="20"/>
+		<rect x="1524" y="403" fill="#FFFFFF" width="20" height="357"/>
+		<rect x="774" y="401.7" fill="#FFFFFF" width="20" height="358.3"/>
+		<rect x="1103" y="582.5" fill="#FFFFFF" width="12" height="160"/>
+		<rect x="1186" y="407.5" fill="#FFFFFF" width="12" height="160"/>
+		<rect x="774" y="740" fill="#FFFFFF" width="770" height="20"/>
 		<g id="dach_1_">
-			<polygon fill="#6D6050" points="1186.1,39.1 1159.1,26.7 1159,26.7 1158.9,26.7 1131.9,39.1 1132.1,39.2 740.5,220 794.4,220
-				1159,51.6 1523.6,220 1577.5,220 1185.9,39.2 			"/>
+			<polygon fill="#6D6050" points="1186.1,229.1 1159.1,216.7 1159,216.7 1158.9,216.7 1131.9,229.1 1132.1,229.2 740.5,410
+				794.4,410 1159,241.6 1523.6,410 1577.5,410 1185.9,229.2 			"/>
+		</g>
+	</g>
+</g>
+<g id="icons">
+	<g id="feature_thermostat">
+		<g id="thermostat_kreis">
+
+				<image overflow="visible" opacity="0.25" width="106" height="106" xlink:href="data:image/png;base64,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" transform="matrix(1 0 0 1 1406 58)">
+			</image>
+			<g>
+				<circle fill="#E8E8E8" cx="1459" cy="106" r="50"/>
+			</g>
+		</g>
+	</g>
+	<g id="feature_heizung">
+		<g id="heizung_kreis">
+
+				<image overflow="visible" opacity="0.25" width="106" height="106" xlink:href="data:image/png;base64,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" transform="matrix(1 0 0 1 1286 58)">
+			</image>
+			<g>
+				<circle fill="#E8E8E8" cx="1339" cy="106" r="50"/>
+			</g>
+		</g>
+	</g>
+	<g id="feature_licht">
+		<g id="licht_kreis">
+
+				<image overflow="visible" opacity="0.25" width="106" height="106" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABqCAYAAABUIcSXAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAB/1JREFUeNrsnf9vFEUYxmdvetdr
+S4vWgvKtxoAGf4DEKISoqNG/GxKNYoIYEyERpUikiFIoFkqh17vr+r65Z7hh2bubu53dnW3fSd5M
+2932dvfT533fmdmZiVQ1SpSofZU4UQf/AEIGw1Yna6COPEJqk+2gjkMGFwV2LWlg2A6SHSZbIJvy
+cN0MokP2lGyN7AlgpYGLBVT/GmoA0IS9ATAMaI7sbbKTqKc9fW6L7AHZbdRbAMbgNsi2YQx0t2xg
+UQCA6oCxSHaE7BDZUbJTADOXUFTd0+e3E4raArAVsvtkD8n+IXuMY+0ygUUBAHqLbJnsfbLTZMfJ
+lgDpoOX+8o5RbQBjWI/I7pHdJLtFdpdsvUxgUSCAzqA+AbfXhIurW3Er76zPgGvB5bH7WwWo62UD
+iwIBtIyfzyXgFK34OAFtC2Dulg0s7wdhAB1wBFQLKBONAcAF2DMLWKVAGRXNIAl4j+yDigAaF9gf
+ZHeQlLzIS11RjiqaRxZ3luw82Ydk71YIkAuwv8h+I7tK9iuyxM081KU93wz/vVkAOg1AX5FdgJIO
+VRSS7SU0Ep15/NMtodnQwPEuMsmuT2Vpz5BmkF6fI/uG7CLc3XHcWBUBDQPWRPxdRHNiEce34Aa9
+wdKeIZ2AihjSp2i0LuGGdMUBDetRYS/xJu51Bq6PE4znvmBpz5CMks4jYTB9czW1d0tkqWsO9zyN
+9pg3WDoHSOfw/dweVJFLW3EW7tArLJ0TpNk9rqJhwKbygKUFUjVgaYFUDVhaIFUD1jigavjQ41YK
+LpAmg7WJdlbHFZYe4wMb6HGwU3CBND6sOiD9h4bxrk9QfB4P4nF/3ddozC4jBRdI7rBmAIwbxA8B
+q+WiKhdQxuWZXofPVa/fbkH57yvcD7CmEJ8Y0iPErJEuUDv8cePyPlG9Dtaz6Crx8TbQfoYVI1Y5
+uUDtoLgFy+VdQDLRFJeXqQejgcSCXSCPYz0e5QL1GAnERbi8eXF5mWFpqKqDWPUvXGB3ElC2mr4k
++0j1xpN8vgm032GZIREecFwfpirtGJs+U70XICXL8wfKuMEW3N9QVWlRU+nxyklVWtRUDVVpUVM1
+VKVFTdVQlRY1VUNVOvELDOQdUVPpqjLvB+6mgaoBCr859AXZx6KmwlXFhWeUrEJVO0ZVtcTJTcA5
+pnqzKgRScaDqeObHwKBpP/tayolH006UUggsI5SjSaHYiuJs77Dqz/SbFlCFg5rGsz8FFo1BijqI
+ExfE7ZXm/hbUq7MtoySoBpKJOXwtkMqBlcqhNoqklFJU9ZpnqyXi08mkb5RSeEllkaYoiU/hxKnX
+FJXXMjZSJofVGJSeKwEUHDCVTM+lBF4ElICS4tP9CaiKJBQCKkxI/M7fPNpRXE8JqHAbvbyGxQnU
+DQElyYSUDIVHdnmE9+VIr4AKr5j1bvmdiTXUHQEVLqxXFiIWUOEDkxglyYQUASWgpAQbn9JAxfJ8
+wsv4bFCpB6WUBol3OHiA+mV6PvCgPLfSeiW4oXsb9Y6tqNSDUsJW1BNRVBCwWoNiFKtoC7YjoMKB
+lJZMPJE4FZ7bS6bnJk6t4MSWgCoclNl8bCWZKyQVxVvxmE2utgVU4aC28ezvg0WqouwT/06eKKUQ
+t7eBZ/+aUHTKL5iZ8TzrjZd7m1bS1ZR34UnVPEDIO8B9r3obsvDIbncQKAPLzHzjGfJmNTF53Tk/
+NXEs4vUlfia7Qvan6i0QvDsMlDnIE6mOiKoKVdO3ZL+o3sqYHfukQYoSVQWkpkGgRFWBqWkYKFFV
+QGoaBkpUFZCaRoESVQWiplGg0lTF70HLCs1+1PTUVU0uoIyq6qq/8SJvWyBrnmeDxMrhLc5/gpru
+DFOTCyiF1nEXKuIei0W1v3ZbywvSNbLvyG6gF6Iz7BddQBl/ymbWQFgUFzhRXGojLjGkS4hPvDbf
+yJEKV1BdENeAtKRe3dddipuaeLyPN1i+TPaj6u2Q/UI57Hgzzo4AxgUymBm4wVmJVxPFpR9Ub8xp
+Uw3ZPWBSUPZwfRtp+wGBNTYkjkvXR2V5WUF1IdVn8KsCyw3SKiBdRnxyikuTgrJhPRdYY0O6hPqe
+a1zKAkpgZYO0qvp7yKu8QQmsgiFlATUK1owFa78Ai1MSBy+QsoIaBKtuqWpK9dcE3OsqMu9F3rMS
+By+QfIBKwjL7y7Zx8Rq9GXvZFRoVcY8Dd7JeRQp+zUoculk/RHuUvUndeXPFNdQK6tqLrjDp6q5B
+RfwW0Q2k4F4g+QRlLryDBrHZuvQ5FGVAaQtWVHFA3Ph/akG6hG6hFdx7a9wUvChQ9k20AGwTsNqA
+aPagqFUQmA1o03J1preBO1jv4pjz1uJlgUqLW8YVPlT9mSKqQsDSAP0OFfGg35U8XF2y5P1wasgC
+OWXngUfetpy3iD2Dehk/Nz3xIWWIsZXN8T/YOhRzS/X66m7h+3VkvG2frq5oUMpyd3UAcQFWlspi
+y1wAbVmA4rwfYlHFBRivT8e7vDTReLbHuyLP1xyn1GYSGb+gv4E2UKmAygDlAuy06m1xzgOTycXy
+fa7LnrYKgD2J7BGyuZtlAyoT1CBgPHLMbzqZ/ZPs7ZHM6vqHLXhZioGypvoz++xJZGaOGCcIj8sE
+FAKoJLApuLwm3J8NxbxbeNKCl6UYKLdVf3alDW8D7m8bqXZpgEICZV9LNMDNJRWVpUvKNMyTikpz
+h7EKZCJfqG2XtAQi7xiVlmAE90CqUPLO+oIu/wswAGibSTy10NTLAAAAAElFTkSuQmCC" transform="matrix(1 0 0 1 1166 58)">
+			</image>
+			<g>
+				<circle fill="#E8E8E8" cx="1219" cy="106" r="50"/>
+			</g>
+		</g>
+	</g>
+	<g id="feature_rolllade">
+		<g id="rollladen_kreis">
+
+				<image overflow="visible" opacity="0.25" width="106" height="106" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABqCAYAAABUIcSXAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAB/tJREFUeNrsnfFvEzcUx31xm6Yt
+LRAKG4xW2mDT9gOTJg2EpqGh7e8GadPGpI1pk5g0NoomtYxCIV2htDRN0sxP+XoxxkmcnO/O1z5L
+T4bcQRJ/8n3v2T7biShHSaw6VOladfQNEDMYsmllVdRJQEgtZQeouzGDSyL7LC4wZCeVnVO2qGwq
+wOcmEG1lL5VtKnsBWC5wXQbV/wwVAKjBTgEMAZpX9o6yS6hnAr1vU9lTZQ9R7wIYgdtWtg8joIdF
+A0siADQNGHVl55WdVXZB2WWAmbcUNR3o/VuWonYBbFXZY2XPlG0o28K1VpHAkggAnVG2ouxDZR8r
+u6hsCZBOGu4v6xjVAjCC9VzZI2X3lT1QtqasUSSwJBJAV1Avw+3V4OKmjbiVddanwTXh8sj9rQPU
+vaKBJZEAWsHr8xacvBXftaDtAsxa0cCybggN6IQnoEpEmWgXAHyAvTKAlQqUVtEskoD3lX1UEkDj
+AvtL2d9ISl5npS6ZkYqqSAQo5nyu7GtlN5R9puwDZHZlgGT+6CTi5gJ+ZO8iSz2D6wdI5TtZ9L9k
+BuDn8AUog7um7Kay61BSmQD5AltCt6GK6x1A64SEJQNDmkV6fVXZN1DRFby2UFJAw4DVEH/r6E7U
+cX0XbjAYLBkY0jJURJC+QKd1CV9IlhzQsBEV8hKn8V1nEc8owdgLBWsqMCStpKtQ0dwRUJBvTD4N
+lziF13RZN9RVmKIGQVrGr0wecUiuvuIc3OEMOs9BlCUzgjRn/aqOS0mgqOCwJEMqByzJkMoBSzKk
+csAaB1QFb3rRSMEZ0mSwdpAJtn1hyTHesIoRB62kawxpIljTgPQvOsaHIUHRfTR294nojdtRZ3YF
+KThD8oc1C2DUIX4GWE0fVfmA0i5Pjzp8KXrjdosim0Hdow5rCvGJID1HzBrpAqXHf65dHo2C31T2
+KYZKQjwNdJxhdRGrvFyg9FDcouHyriOZqLHLSzWCUUViQS6Q5rG2RrlAOUYCcQMub4FdXmpYEqpq
+I1Y9gQvsTALKVNNXojfpd1aEfRLouMPSUyL0WFpjmKoqQ/4jAkITY5dhZxhSUFBjta9kNRUer7xU
+VWE1lUNVktVUDlVVWE3lUJVkNZVDVRVHr7nOaipcVXV75McGVRP9Z/J40DW/UkFbr6Dtz4PFUFDk
+6t4TvVUVrKZ8VXUKbX92ECjzxguuG7nkAksL5YItFFNRNK53TvRX+s0wqNxBzaDtL4NFdZCiTuLG
+RXZ7hbm/RfHmasvEBlVFQJvHnxlSMbCcHCqjSHIpRFVvebaKFZ8u2b6RS+7FycKlKI5P8cSptxSV
+1TY2XCaHVR2UngsGFB0w4RqZ4BJxYVAMiktI98egSpJQMKg4IdFc1AL6UVRPMah4O700kbiMusqg
+OJngkqLQzi/03MQ66gMGFV/R+93SSo9N1G0GFS+sNzYiZlDxA+MYxckEFwbFoLhEG59coLrcPvFl
+fCYo50UuhUGiEw6eov4/PR94kdutsFEJ6ug+RH1gKsp5kUvcinrBiooCVnNQjCIV7cIOGFQ8kFzJ
+xAuOU/G5PTs913FqFTc2GVTuoPThY6t2rmArio7i0Ydc7TOo3EHto+0fg4VTUeaN/9g3csnF7W2j
+7d8SigsUrcqmk8jWxBg7NHJJVQ7R1mto+41RoGhmcQs+kqzBqspNTQ2j3beEtdmiHECXCi2kotXZ
+tInijOAB3CzVtAMlfavsV9HbGbNt3lTxoMuqyldNzvaWQyizqiJRkxjQ8KyqyNQ0TFGsqojUJIY0
+OqsqIjWNUpRLVfQcNO/QHEZNL33V5ANKn36pd78i90fHFvCe5+kg0SEqdMT5z8ruiN7xsHvDBhd8
+tsXuwEhFtEq7Lo7XaWtZQbqr7Dtlv8PttYf9Qx9Qeq6KTO+BUGcXOHFcegJIt5T9InrDRSNnKnxB
+dUBcAtKSePNcdy5+aqL5vj+U3Vb2o+iN7b0WHuOp45wIoF0ggZmFG5zjeDVRXPoBmd6O8DxNVI4p
+XT1d30Kf6gTDGhsSxaV7o7K8tKA6kOor+FWG5QdpHZBuIz55xaVJQZmw9hjW2JBuoX7kG5fSgGJY
+6SBNfMr1pMcLMawcIaUBNQrWrAHruADrOhKHIJDSghoEa9pQlT7gPjkGKtLPRT4yEocgkEKAsmHp
+82Vb+PASoxlH2RVqFdGIAw2y/oQU/K6ROHTSvokMKHudutPhipuoBdR1FF2h7eruQkXfi9743UYo
+SCFB6Q/eRodYH126B0VpUNKAlZQcEHX+XxqQbmFYaBXfvSkCPmonM/oSTQDbAawWIOqTXSolBGYC
+2jFcnR5toAHWNVzzPlq8KFCuuKVd4TPRXykiSgTMBehPqIgm/e5k4eryAmW7wi18wceAVgZgowDR
+wOpvojfp1wjt6uySR6Nod0dpO02N0EwxHb9DZ/peQb2C182pkyKgdQ1r4QfVgEt7IHqDqQ/w94bo
+D1AfioyfJcmzIXyA0f50dMpLDZ1nc74rCfyZu45aLyKj57630QcqFFARoHyA0SFXdMQ5TUzam+WH
+3JfdtQuAuYjsObK5+0UDKhLUIGA0c0xPOunzk8zjkfTu+ucMeGmKhrIp+iv7zEVkeo3YBuJrYYBi
+AGUDm4LLq8H9mVD0uUqXDHhpiobyUPRXV5rwtuH+9pEQFQYoJlDmZ0kGuDlbUWmGpHQ2aivK5Q67
+IpIHTmPtu7gSiKxjlCvBiK5BylCyzvqiLv8JMABaEE3Rg6JhQQAAAABJRU5ErkJggg==" transform="matrix(1 0 0 1 1046 58)">
+			</image>
+			<g>
+				<circle fill="#E8E8E8" cx="1099" cy="106" r="50"/>
+			</g>
+		</g>
+	</g>
+	<g id="feature_markise">
+		<g id="markise_kreis">
+
+				<image overflow="visible" opacity="0.25" width="106" height="106" xlink:href="data:image/png;base64,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" transform="matrix(1 0 0 1 926 58)">
+			</image>
+			<g>
+				<circle fill="#E8E8E8" cx="979" cy="106" r="50"/>
+			</g>
+		</g>
+	</g>
+	<g id="feature_fernseher">
+		<g id="fernseher_kreis">
+
+				<image overflow="visible" opacity="0.25" width="106" height="106" xlink:href="data:image/png;base64,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" transform="matrix(1 0 0 1 806 58)">
+			</image>
+			<g>
+				<circle fill="#E8E8E8" cx="859" cy="106" r="50"/>
+			</g>
+		</g>
+	</g>
+	<g id="feature_kamera">
+		<g>
+
+				<image overflow="visible" opacity="0.5" width="192" height="504" xlink:href="data:image/png;base64,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
+0UX4Kf4rwADR70RCTM0R9wAAAABJRU5ErkJggg==" transform="matrix(1 0 0 1 731 99)">
+			</image>
+			<g>
+				<line fill="#FFFFFF" x1="915" y1="596" x2="739" y2="106"/>
+				<line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" x1="915" y1="596" x2="739" y2="106"/>
+			</g>
+		</g>
+		<g id="kamera_kreis_1_">
+
+				<image overflow="visible" opacity="0.25" width="106" height="106" xlink:href="data:image/png;base64,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" transform="matrix(1 0 0 1 686 58)">
+			</image>
+			<g>
+				<circle fill="#E8E8E8" cx="739" cy="106" r="50"/>
+			</g>
+		</g>
+	</g>
+	<g id="feature_garagentor">
+		<g id="garagentor_kreis">
+
+				<image overflow="visible" opacity="0.25" width="106" height="106" xlink:href="data:image/png;base64,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" transform="matrix(1 0 0 1 566 58)">
+			</image>
+			<g>
+				<circle fill="#E8E8E8" cx="619" cy="106" r="50"/>
+			</g>
+		</g>
+	</g>
+	<g id="feature_cloudbox">
+		<g id="cloudbox_kreis">
+
+				<image overflow="visible" opacity="0.25" width="106" height="106" xlink:href="data:image/png;base64,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" transform="matrix(1 0 0 1 566 58)">
+			</image>
+			<g>
+				<circle fill="#E8E8E8" cx="619" cy="106" r="50"/>
+			</g>
 		</g>
 	</g>
 </g>
 </svg>
-		</div>
+        </div>
     </template>
     <script>
         Polymer({
             is: "everhome-house",
-			wohnzimmer_ein : function(){
-				$("#lichtkegel_wohnzimmer_1_x5F_1_1_").attr("class", "style-scope everhome-house active");
-				$("#lampe_wohnzimmer_1_x5F_1").attr("class", "style-scope everhome-house active");
-				$("#schatten_wohnzimmer_1_").attr("class", "style-scope everhome-house active");
+            wohnzimmer_ein: function () {
+                $("#lichtkegel_wohnzimmer_1_1").attr("class", "style-scope everhome-house active");
+                $("#lampe_wohnzimmer_1_1").attr("class", "style-scope everhome-house active");
+                $("#schatten_wohnzimmer_1_").attr("class", "style-scope everhome-house active");
+            },
+            wohnzimmer_aus: function () {
+                $("#lichtkegel_wohnzimmer_1_1").attr("class", "style-scope everhome-house");
+                $("#lampe_wohnzimmer_1_1").attr("class", "style-scope everhome-house");
+                $("#schatten_wohnzimmer_1_").attr("class", "style-scope everhome-house");
+            }, flur_ein: function () {
+                $("#lichtkegel_flur_1_1").attr("class", "style-scope everhome-house active");
+                $("#lampe_flur_1_1").attr("class", "style-scope everhome-house active");
+                $("#schatten_flur").attr("class", "style-scope everhome-house active");
+            },
+            flur_aus: function () {
+                $("#lichtkegel_flur_1").attr("class", "style-scope everhome-house");
+                $("#lampe_flur_1_1").attr("class", "style-scope everhome-house");
+                $("#schatten_flur").attr("class", "style-scope everhome-house");
+            }, arbeitszimmer_ein: function () {
+                $("#lichtkegel_arbeitszimmer_1_1").attr("class", "style-scope everhome-house active");
+                $("#lampe_arbeitszimmer_1_1_1_").attr("class", "style-scope everhome-house active");
+                $("#schatten_arbeitszimmer").attr("class", "style-scope everhome-house active");
+            },
+            arbeitszimmer_aus: function () {
+                $("#lichtkegel_arbeitszimmer_1_1").attr("class", "style-scope everhome-house");
+                $("#lampe_arbeitszimmer_1_1_1_").attr("class", "style-scope everhome-house");
+                $("#schatten_arbeitszimmer").attr("class", "style-scope everhome-house");
+            },
+            kueche_ein: function () {
+                $("#lichtkegel_kueche_1_1").attr("class", "style-scope everhome-house active");
+                $("#lampe_kueche_1_1").attr("class", "style-scope everhome-house active");
+                $("#schatten_kueche").attr("class", "style-scope everhome-house active");
+            },
+            kueche_aus: function () {
+                $("#lichtkegel_kueche_1_1").attr("class", "style-scope everhome-house");
+                $("#lampe_kueche_1_1").attr("class", "style-scope everhome-house");
+                $("#schatten_kueche").attr("class", "style-scope everhome-house");
+            },
+            kinderzimmer_ein: function () {
+                $("#lichtkegel_kinderzimmer_1_1").attr("class", "style-scope everhome-house active");
+                $("#lampe_kinderzimmer_1_1").attr("class", "style-scope everhome-house active");
+                $("#schatten_kinderzimmer").attr("class", "style-scope everhome-house active");
+            },
+            kinderzimmer_aus: function () {
+                $("#lichtkegel_kinderzimmer_1_1").attr("class", "style-scope everhome-house");
+                $("#lampe_kinderzimmer_1_1").attr("class", "style-scope everhome-house");
+                $("#schatten_kinderzimmer").attr("class", "style-scope everhome-house");
+            },
+			garage_ein: function () {
+				$("#lichtkegel_garage_1_1").attr("class", "style-scope everhome-house active");
+				$("#lampe_garage_1_1").attr("class", "style-scope everhome-house active");
+				$("#schatten_garage").attr("class", "style-scope everhome-house active");
 			},
-			wohnzimmer_aus : function(){
-				$("#lichtkegel_wohnzimmer_1_x5F_1_1_").attr("class", "style-scope everhome-house");
-				$("#lampe_wohnzimmer_1_x5F_1").attr("class", "style-scope everhome-house");
-				$("#schatten_wohnzimmer_1_").attr("class", "style-scope everhome-house");
-			},flur_ein : function(){
-				$("#lichtkegel_flur_1_x5F_1").attr("class", "style-scope everhome-house active");
-				$("#lampe_flur_1_x5F_1_1_").attr("class", "style-scope everhome-house active");
-				$("#schatten_flur").attr("class", "style-scope everhome-house active");
+			garage_aus: function () {
+				$("#lichtkegel_garage_1_1").attr("class", "style-scope everhome-house");
+				$("#lampe_garage_1_1").attr("class", "style-scope everhome-house");
+				$("#schatten_garage").attr("class", "style-scope everhome-house");
 			},
-			flur_aus : function(){
-				$("#lichtkegel_flur_1_x5F_1").attr("class", "style-scope everhome-house");
-				$("#lampe_flur_1_x5F_1_1_").attr("class", "style-scope everhome-house");
-				$("#schatten_flur").attr("class", "style-scope everhome-house");
-			},arbeitszimmer_ein : function(){
-				$("#lichtkegel_arbeitszimmer_1_x5F_1").attr("class", "style-scope everhome-house active");
-				$("#lampe_arbeitszimmer_1_x5F_1_1_").attr("class", "style-scope everhome-house active");
-				$("#schatten_arbeitszimmer").attr("class", "style-scope everhome-house active");
+			markise_rein: function () {
+				$("#markise_garten_1").attr("class", "style-scope everhome-house");
 			},
-			arbeitszimmer_aus : function(){
-				$("#lichtkegel_arbeitszimmer_1_x5F_1").attr("class", "style-scope everhome-house");
-				$("#lampe_arbeitszimmer_1_x5F_1_1_").attr("class", "style-scope everhome-house");
-				$("#schatten_arbeitszimmer").attr("class", "style-scope everhome-house");
-			},
-			kueche_ein : function(){
-				$("#lichtkegel_kueche_1_x5F_1_1_").attr("class", "style-scope everhome-house active");
-				$("#lampe_kueche_1_x5F_1").attr("class", "style-scope everhome-house active");
-				$("#schatten_kueche").attr("class", "style-scope everhome-house active");
-			},
-			kueche_aus : function(){
-				$("#lichtkegel_kueche_1_x5F_1_1_").attr("class", "style-scope everhome-house");
-				$("#lampe_kueche_1_x5F_1").attr("class", "style-scope everhome-house");
-				$("#schatten_kueche").attr("class", "style-scope everhome-house");
-			},
-			kinderzimmer_ein : function(){
-				$("#lichtkegel_kinderzimmer_1_x5F_1_1_").attr("class", "style-scope everhome-house active");
-				$("#lampe_kinderzimmer_1_x5F_1").attr("class", "style-scope everhome-house active");
-				$("#schatten_kinderzimmer").attr("class", "style-scope everhome-house active");
-			},
-			kinderzimmer_aus : function(){
-				$("#lichtkegel_kinderzimmer_1_x5F_1_1_").attr("class", "style-scope everhome-house");
-				$("#lampe_kinderzimmer_1_x5F_1").attr("class", "style-scope everhome-house");
-				$("#schatten_kinderzimmer").attr("class", "style-scope everhome-house");
+			markise_raus: function () {
+				$("#markise_garten_1").attr("class", "style-scope everhome-house active");
 			}
         });
     </script>

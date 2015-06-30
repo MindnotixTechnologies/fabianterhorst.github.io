@@ -3,6 +3,14 @@
     <style>
         .marvel-device {
             margin-right: 15px;
+            position: absolute;
+            bottom:0px;
+            left: 0px;
+        }
+
+        .marvel-device.nexus5.nexus-5 {
+            width: 225px;
+            height: 400px;
         }
 
     </style>
@@ -13,7 +21,10 @@
             <div class="volume"></div>
             <div class="camera"></div>
             <div class="screen">
+                <mat-list>
+                    <everhome-device deviceid="1" name="Wohnzimmer Lampe" roomname="Wohnzimmer" buttons='[{"actionid":"1","icon": "ai:on"}]'></everhome-device>
 
+                </mat-list>
             </div>
         </div>
     </template>

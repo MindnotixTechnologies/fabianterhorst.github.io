@@ -60,7 +60,7 @@
 
     <style is="custom-style">
 
-        paper-item > .label{
+        paper-item > .label {
             display: block;
             padding: 0;
             font-size: inherit;
@@ -71,6 +71,10 @@
             white-space: inherit;
             vertical-align: inherit;
             border-radius: inherit;
+        }
+
+        paper-item > .label.white {
+            color: white;
         }
 
         body {
@@ -144,7 +148,7 @@
         }
 
         /*Responsive Toolbar*/
-        @media (max-width: 1080px) {
+        @media (max-width: 1300px) {
             #paperToggle {
                 display: block;
             }
@@ -224,7 +228,7 @@
                 </paper-item>
             </paper-menu>
         </paper-header-panel>
-        <paper-header-panel main mode="waterfall"><!--waterfall-tall-->
+        <paper-header-panel main mode="waterfall">
 
             <!-- Main Toolbar -->
             <paper-toolbar id="mainToolbar">
@@ -238,17 +242,25 @@
                     <paper-tab>Online Shop</paper-tab>
                     <paper-tab>Sensoren und Aktoren</paper-tab>
                     <paper-tab>Forum</paper-tab>
-                    <paper-tab>Hilfe</paper-tab>
+                    <paper-tab style="padding: 0;">
+                        <mat-menu-label-button target="hilfeMenu" label="Hilfe"
+                                               color="white"></mat-menu-label-button>
+                    </paper-tab>
                 </paper-tabs>
-                <paper-button class="login btn-success" onclick="document.getElementById('login-dialog').open()" raised>
+                <mat-menu id="hilfeMenu">
+                    <paper-item href="#">
+                        <div class="label" fit>
+                            <iron-icon icon="home"></iron-icon>
+                            Test
+                        </div>
+                        <paper-ripple></paper-ripple>
+                    </paper-item>
+                    <mat-option label="Abmelden"></mat-option>
+                </mat-menu>
+                <paper-button class="login btn-success" onclick="document.getElementById('login-dialog').toggle()"
+                              raised>
                     Anmelden
                 </paper-button>
-                <!-- <paper-dialog id="login-dialog" modal>
-                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                     <div class="buttons">
-                         <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
-                     </div>
-                 </paper-dialog>-->
                 <paper-dialog elevation="1" id="login-dialog" entry-animation="slide-down-animation"
                               exit-animation="fade-out-animation">
                     <h2>Anmelden</h2>
@@ -267,7 +279,8 @@
                   </div>
                   <paper-ripple></paper-ripple>
                 </paper-item>-->
-                <mat-menu-button id="menuButton" target="accountMenu" color="white"></mat-menu-button>
+                <mat-menu-label-button target="accountMenu" label="fabian.terhorst@gmail.com"
+                                       color="white"></mat-menu-label-button>
                 <mat-menu id="accountMenu">
                     <paper-item href="#">
                         <div class="label" fit>

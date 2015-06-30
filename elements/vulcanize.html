@@ -13727,7 +13727,775 @@ n=0):t=+t||0,r||n%1||t%1){var i=No();return Co(n+i*(t-n+parseFloat("1e-"+((i+"")
             }
         }
     };
+</script><script>
+    Polymer.XPInputBehavior = {
+
+        /**
+         * Fired when the input's model changes.
+         *
+         * @event xp-input-change
+         * @param {Element} firer
+         * @param {boolean} isChanged
+         * @param {*} model
+         * @bubbles
+         */
+
+        /*********************************************************************/
+
+        /**
+         * Blurs the input.
+         *
+         * @method focus
+         * @abstract
+         */
+        blur: XP.mock(),
+
+        /**
+         * Focuses the input.
+         *
+         * @method focus
+         * @abstract
+         */
+        focus: XP.mock(),
+
+        /**
+         * Selects the input.
+         *
+         * @method select
+         * @abstract
+         */
+        select: XP.mock(),
+
+        /*********************************************************************/
+
+        /**
+         * The operation used to reflect input's element's `value` onto input.
+         *
+         * @method _commitFrom
+         * @abstract
+         * @private
+         */
+        _commitFrom: XP.mock(),
+
+        /**
+         * The operation used to reflect input's `value` onto input's element.
+         *
+         * @method _commitTo
+         * @abstract
+         * @private
+         */
+        _commitTo: XP.mock(),
+
+        /**
+         * The operation used to reflect input's `tabIndex` onto input's element.
+         *
+         * @method _index
+         * @abstract
+         * @private
+         */
+        _index: XP.mock(),
+
+        /**
+         * The operation used to inject the input element.
+         *
+         * @method _inject
+         * @abstract
+         * @private
+         */
+        _inject: XP.mock(),
+
+        /**
+         * The operation used to sanitize input's `value`.
+         *
+         * @method _sanitize
+         * @abstract
+         * @private
+         */
+        _sanitize: XP.mock(),
+
+        /**
+         * The operation used to update input's element's attributes.
+         *
+         * @method _update
+         * @abstract
+         * @private
+         */
+        _update: XP.mock(),
+
+        /**
+         * The operation used to validate input's `value`.
+         *
+         * @method _validate
+         * @abstract
+         * @private
+         */
+        _validate: XP.mock(),
+
+        /*********************************************************************/
+
+        /**
+         * Finds the label.
+         *
+         * @method findLabel
+         * @returns {Element}
+         */
+        findLabel: function () {
+            var self = this, label = (self.id && XP.getElement('label[for="' + self.id + '"]'));
+            return label || XP.findParentElement(Polymer.dom(self), 'label') || null;
+        },
+
+        /**
+         * Resets the input.
+         *
+         * @method reset
+         * @returns {Element}
+         */
+        reset: function () {
+            return XP.assign(this, this.initial);
+        },
+
+        /**
+         * Toggles the checked state.
+         *
+         * @method toggle
+         * @returns {Element}
+         */
+        toggle: function () {
+            var self = this;
+            if (self.primitive === 'boolean' && !self.disabled) { self.checked = !self.checked; }
+            return self;
+        },
+
+        /*********************************************************************/
+
+        /**
+         * Refreshes the element.
+         *
+         * @method _refresh
+         * @returns {Element}
+         * @private
+         */
+        _refresh: function () {
+
+            // Vars
+            var self = this;
+
+            // Checking
+            if (!self.injected) { return self; }
+
+            // Updating
+            self._update();
+
+            // Sanitizing
+            self._sanitize();
+
+            // Validating
+            if (self.value || !self.required) { self._validate(); }
+
+            return self;
+        },
+
+        /**
+         * Returns model representation of input's plain value.
+         *
+         * @method _toModel
+         * @param {*} value
+         * @returns {boolean | number | string}
+         * @private
+         */
+        _toModel: function (value) {
+            var self = this, from = XP.isPrimitive(value) ? value : null;
+            if (self.primitive === 'boolean') { return XP.toBoolean(from); }
+            if (self.primitive === 'number') { return XP.toNumber(from); }
+            return XP.toString(from);
+        },
+
+        /**
+         * Returns primitive representation of input's type
+         *
+         * @method _toPrimitive
+         * @param {string} type
+         * @returns {string}
+         * @private
+         */
+        _toPrimitive: function (type) {
+            if (type === 'checkbox') { return 'boolean'; }
+            if (type === 'number') { return 'number'; }
+            return 'string';
+        },
+
+        /**
+         * Returns plain value representation of input's model.
+         *
+         * @method _toValue
+         * @param {*} model
+         * @returns {boolean | string}
+         * @private
+         */
+        _toValue: function (model) {
+            var self = this, from = XP.isPrimitive(model) ? model : null;
+            if (self.primitive === 'boolean') { return XP.toBoolean(from, true); }
+            return XP.toString(from, true);
+        },
+
+        /*********************************************************************/
+
+        // LISTENERS
+        listeners: {
+            click: '_clickHandler'
+        },
+
+        // OBSERVERS
+        observers: [
+            '_refresh(disabled, injected, name, readonly, required)'
+        ],
+
+        // PROPERTIES
+        properties: {
+
+            /**
+             * If set to true, the input will focus on attach.
+             *
+             * @attribute auto-focus
+             * @type boolean
+             * @default false
+             */
+            autoFocus: {
+                reflectToAttribute: true,
+                type: Boolean,
+                value: false
+            },
+
+            /**
+             * If set to true, the input's model is changed.
+             *
+             * @attribute changed
+             * @type boolean
+             * @default false
+             * @notifies
+             * @readonly
+             */
+            changed: {
+                notify: true,
+                readOnly: true,
+                reflectToAttribute: true,
+                type: Boolean,
+                value: false
+            },
+
+            /**
+             * The input's character counter.
+             *
+             * @attribute chars
+             * @type number
+             * @default 0
+             * @notifies
+             * @readonly
+             */
+            chars: {
+                notify: true,
+                readOnly: true,
+                type: Number,
+                value: 0
+            },
+
+            /**
+             * If set to true, the input is checked.
+             *
+             * @attribute checked
+             * @type boolean
+             * @notifies
+             */
+            checked: {
+                notify: true,
+                observer: '_checkedChanged',
+                reflectToAttribute: true,
+                type: Boolean
+            },
+
+            /**
+             * If set to true, the input is disabled.
+             *
+             * @attribute disabled
+             * @type boolean
+             * @default false
+             */
+            disabled: {
+                reflectToAttribute: true,
+                type: Boolean,
+                value: false
+            },
+
+            /**
+             * If set to true, the input is empty.
+             *
+             * @attribute empty
+             * @type boolean
+             * @default false
+             * @notifies
+             * @readonly
+             */
+            empty: {
+                notify: true,
+                readOnly: true,
+                reflectToAttribute: true,
+                type: Boolean,
+                value: false
+            },
+
+            /**
+             * If set to true, the label is hidden.
+             *
+             * @attribute empty-label
+             * @type boolean
+             * @default false
+             * @notifies
+             * @readonly
+             */
+            emptyLabel: {
+                computed: '_computeEmptyLabel(label)',
+                notify: true,
+                reflectToAttribute: true,
+                type: Boolean
+            },
+
+            /**
+             * The input's custom error message, used instead of `invalidMessage`.
+             *
+             * @attribute error
+             * @type string
+             */
+            error: {
+                reflectToAttribute: true,
+                type: String,
+                value: null
+            },
+
+            /**
+             * If set to true, the input is focused.
+             *
+             * @attribute focused
+             * @type boolean
+             * @default false
+             * @notifies
+             * @readonly
+             */
+            focused: {
+                notify: true,
+                observer: '_focusedChanged',
+                readOnly: true,
+                reflectToAttribute: true,
+                type: Boolean,
+                value: false
+            },
+
+            /**
+             * The input's form.
+             *
+             * @attribute form
+             * @type Element
+             * @readonly
+             */
+            form: {
+                observer: '_formChanged',
+                readOnly: true,
+                value: null
+            },
+
+            /**
+             * The initial state.
+             *
+             * @attribute initial
+             * @type Object
+             * @readonly
+             */
+            initial: {
+                readOnly: true,
+                value: function () { return {}; }
+            },
+
+            /**
+             * The appended input's element.
+             *
+             * @attribute injected
+             * @type Element
+             * @readonly
+             */
+            injected: {
+                observer: '_injectedChanged',
+                readOnly: true,
+                value: null
+            },
+
+            /**
+             * If set to true, the input's value is not valid.
+             *
+             * @attribute invalid
+             * @type boolean
+             * @default false
+             * @notifies
+             * @readonly
+             */
+            invalid: {
+                notify: true,
+                readOnly: true,
+                reflectToAttribute: true,
+                type: Boolean,
+                value: false
+            },
+
+            /**
+             * The input's system error message.
+             *
+             * @attribute invalid-message
+             * @type string
+             * @notifies
+             * @readonly
+             */
+            invalidMessage: {
+                notify: true,
+                readOnly: true,
+                reflectToAttribute: true,
+                type: String,
+                value: null
+            },
+
+            /**
+             * The input's label.
+             *
+             * @attribute label
+             * @type string
+             */
+            label: {
+                reflectToAttribute: true,
+                type: String,
+                value: null
+            },
+
+            /**
+             * The input's model.
+             *
+             * @attribute model
+             * @type *
+             * @notifies
+             */
+            model: {
+                notify: true,
+                observer: '_modelChanged'
+            },
+
+            /**
+             * The input's name.
+             *
+             * @attribute name
+             * @type string
+             */
+            name: {
+                reflectToAttribute: true,
+                type: String,
+                value: null
+            },
+
+            /**
+             * The input's primitive type.
+             *
+             * @attribute primitive
+             * @type "boolean" | "number" | "string"
+             * @default "string"
+             * @readonly
+             */
+            primitive: {
+                readOnly: true,
+                type: String,
+                value: 'string'
+            },
+
+            /**
+             * If set to true, the input is readonly.
+             *
+             * @attribute readonly
+             * @type boolean
+             * @default false
+             */
+            readonly: {
+                reflectToAttribute: true,
+                type: Boolean,
+                value: false
+            },
+
+            /**
+             * If set to true, the input is required.
+             *
+             * @attribute required
+             * @type boolean
+             * @default false
+             */
+            required: {
+                reflectToAttribute: true,
+                type: Boolean,
+                value: false
+            },
+
+            /**
+             * The input's type.
+             *
+             * @attribute type
+             * @type string
+             * @default "text"
+             */
+            type: {
+                observer: '_typeChanged',
+                reflectToAttribute: true,
+                type: String,
+                value: 'text'
+            },
+
+            /**
+             * The input's plain value.
+             *
+             * @attribute value
+             * @type string
+             * @notify
+             */
+            value: {
+                notify: true,
+                observer: '_valueChanged',
+                type: String
+            }
+        },
+
+        /**
+         * The list of primitives.
+         *
+         * @property primitives
+         * @type Array
+         * @default ["boolean", "number", "string"]
+         * @readonly
+         */
+        primitives: ['boolean', 'number', 'string'],
+
+        /*********************************************************************/
+
+        // COMPUTER
+        _computeEmptyLabel: function (label) {
+            return !label;
+        },
+
+        /*********************************************************************/
+
+        // OBSERVER
+        _checkedChanged: function (post) {
+
+            // Vars
+            var self = this;
+
+            // Checking
+            if (!self.injected) { return; }
+
+            // Setting
+            self._setChanged(self.initial.checked !== post);
+            self.model = self.changed ? self._toModel(post) : self.initial.model;
+
+            // Committing
+            self._commitTo();
+
+            // Firing
+            self.fire('xp-input-change', {firer: self, isChanged: self.changed, model: self.model});
+        },
+
+        // OBSERVER
+        _focusedChanged: function (post) {
+
+            // Vars
+            var self = this;
+
+            // Propagating
+            XP.setAttribute(self.findLabel(), 'focused', post);
+
+            // Validating
+            if (self.injected && !post) { self._validate(); }
+        },
+
+        // OBSERVER
+        _formChanged: function (post, pre) {
+
+            // Vars
+            var self = this;
+
+            // Checking
+            if (arguments.length < 2) { return; }
+
+            // Listening
+            if (pre) { self.unlisten(pre, 'reset', '_changeHandler'); }
+            if (post) { self.listen(post, 'reset', '_changeHandler'); }
+
+            // Refreshing
+            self._refresh();
+        },
+
+        // OBSERVER
+        _injectedChanged: function (post, pre) {
+
+            // Vars
+            var self = this;
+
+            // Checking
+            if (arguments.length < 2) { return; }
+
+            // Listening
+            if (XP.isElement(pre)) { self.unlisten(pre, 'blur', '_blurHandler'); self.unlisten(pre, 'change', '_changeHandler'); self.unlisten(pre, 'focus', '_focusHandler'); }
+            if (XP.isElement(post)) { self.listen(post, 'blur', '_blurHandler'); self.listen(post, 'change', '_changeHandler'); self.listen(post, 'focus', '_focusHandler'); }
+
+            // Mutating
+            Polymer.XPInputBehavior.mutated.apply(self);
+
+            // Refreshing
+            self._refresh();
+        },
+
+        // OBSERVER
+        _modelChanged: function () {
+
+            // Casting
+            this[this.primitive === 'boolean' ? 'checked' : 'value'] = this._toValue(this.model);
+        },
+
+        // OBSERVER
+        _typeChanged: function (post) {
+
+            // Vars
+            var self = this;
+
+            // Setting
+            self._setPrimitive(self._toPrimitive(post));
+
+            // Refreshing
+            self._refresh();
+        },
+
+        // OBSERVER
+        _valueChanged: function (post) {
+
+            // Vars
+            var self = this;
+
+            // Checking
+            if (!self.injected) { return; }
+
+            // Sanitizing
+            self._sanitize();
+
+            // Checking
+            if (self.value !== post) { return; }
+
+            // Setting
+            self._setChanged(self.initial.value !== post);
+            self._setEmpty(!self.value);
+            self.model = self.changed ? self._toModel(post) : self.initial.model;
+
+            // Committing
+            self._commitTo();
+
+            // Validating
+            self._validate();
+
+            // Firing
+            self.fire('xp-input-change', {firer: self, isChanged: self.changed, model: self.model});
+        },
+
+        /*********************************************************************/
+
+        // LISTENER
+        attached: function () {
+
+            // Vars
+            var self = this;
+
+            // Setting
+            self._setForm(XP.findParentElement(Polymer.dom(self), 'form'));
+            self._setInvalid(false);
+
+            // Focusing
+            if (self.autoFocus) { XP.delay(function () { self.focus(); }); }
+        },
+
+        // LISTENER
+        detached: function () {
+
+            // Vars
+            var self = this;
+
+            // Setting
+            self._setForm(null);
+        },
+
+        // LISTENER
+        mutated: function () {
+
+            // Vars
+            var self = this;
+
+            // Disconnecting
+            if (self.indexObserver) { self.indexObserver.disconnect(); }
+
+            // Indexing
+            self.async(function () { self._index(Math.max(self.tabIndex, 0)); });
+
+            // Setting
+            self.removeAttribute(self.injected ? 'tabindex' : '');
+
+            // Observing
+            self.indexObserver = XP.onMutation(self, Polymer.XPInputBehavior.mutated.bind(self), {attributes: true, attributeFilter: ['tabindex']});
+        },
+
+        // LISTENER
+        ready: function () {
+
+            // Vars
+            var self = this;
+
+            // Setting
+            self.set('initial.checked', self.checked = self.model && self.primitive === 'boolean' ? true : self.checked || false);
+            self.set('initial.value', self.value = self.model && self.primitive !== 'boolean' ? self._toValue(self.model) : self.value || '');
+            self.set('initial.model', self.model = self.checked || (self.value ? self._toModel(self.value) : self.model || null));
+            self._setEmpty(self.primitive !== 'boolean' && !self.value);
+
+            // Injecting
+            self._inject();
+
+            // Committing
+            self._commitTo();
+        },
+
+        /*********************************************************************/
+
+        // HANDLER
+        _blurHandler: function () {
+            this._setFocused(false);
+        },
+
+        // HANDLER
+        _changeHandler: function () {
+            this._commitFrom();
+        },
+
+        // HANDLER
+        _clickHandler: function () {
+            this.focus();
+        },
+
+        // HANDLER
+        _focusHandler: function () {
+            this._setFocused(!this.disabled);
+        }
+    };
 </script><style>
+    html [inset] mat-item:not([inset]) #matItemText {
+        padding-left: 72px;
+    }
+</style>
+
+<style>
     html [cascade] mat-option {
         height: 32px;
     }
@@ -14543,6 +15311,8 @@ n=0):t=+t||0,r||n%1||t%1){var i=No();return Co(n+i*(t-n+parseFloat("1e-"+((i+"")
   });
 
 </script>
+
+
 
 
 
@@ -17631,7 +18401,6 @@ iron-selector:not(.narrow-layout) #main ::content [paper-drawer-toggle] {
 
     #topBar {
       position: relative;
-      z-index: 1;
     }
 
     /* middle bar */
@@ -17640,7 +18409,6 @@ iron-selector:not(.narrow-layout) #main ::content [paper-drawer-toggle] {
       top: 0;
       right: 0;
       left: 0;
-      z-index: 2;
     }
 
     :host(.tall) #middleBar,
@@ -17655,7 +18423,6 @@ iron-selector:not(.narrow-layout) #main ::content [paper-drawer-toggle] {
       right: 0;
       bottom: 0;
       left: 0;
-      z-index: 1;
     }
 
     /*
@@ -17673,6 +18440,7 @@ iron-selector:not(.narrow-layout) #main ::content [paper-drawer-toggle] {
       @apply(--paper-font-title);
       @apply(--layout-flex);
 
+      pointer-events: none;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -17692,12 +18460,7 @@ iron-selector:not(.narrow-layout) #main ::content [paper-drawer-toggle] {
      * Work in progress.
      */
     .toolbar-tools > ::content paper-icon-button[icon=menu] {
-      margin-left: -8px;
       margin-right: 24px;
-    }
-
-    .toolbar-tools > ::content paper-icon-button + paper-icon-button {
-      margin-right: -8px;
     }
 
     .toolbar-tools > ::content > .title,
@@ -22811,6 +23574,1656 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
     </script>
 
+</dom-module><dom-module id="mat-avatar" assetpath="../bower_components/mat-avatar/">
+
+    <style>
+:host {
+    cursor: pointer;
+    display: inline-block;
+    outline: 0;
+    overflow: visible;
+    position: relative;
+    text-align: left;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+:host([disabled]) {
+    cursor: default !important;
+    pointer-events: none !important;
+}
+</style>
+
+    <style>
+        :host {
+            border-radius: 50%;
+            height: 40px;
+            margin: 4px;
+            width: 40px;
+        }
+
+        :host([big]) {
+            height: 64px;
+            margin: 0;
+            width: 64px;
+        }
+
+        :host([empty]) {
+            display: none !important;
+        }
+
+        :host #matAvatarWrapper,
+        :host #matAvatarMain {
+            border-radius: inherit;
+            height: 100%;
+            overflow: visible;
+        }
+
+        :host #matAvatarMain {
+            @apply(--layout-horizontal);
+            @apply(--layout-center-center);
+        }
+
+        :host([raster]) #matAvatarWrapper {
+            background: transparent !important;
+        }
+
+        :host #matAvatarAnchor {
+            border-radius: inherit;
+            display: block;
+            height: 100%;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        :host(:not([big])) #matAvatarAnchor:after {
+            bottom: -4px;
+            content: "";
+            left: -4px;
+            position: absolute;
+            right: -4px;
+            top: -4px;
+        }
+
+        :host #matAvatarIcon {
+            display: block;
+            position: relative;
+        }
+
+        :host([raster]) #matAvatarIcon {
+            border-radius: inherit;
+            height: 100%;
+            width: 100%;
+        }
+
+        :host([raster]) #matAvatarIcon::shadow #matIconAdaptee [icon] {
+            box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.12) inset;
+        }
+    </style>
+
+    <template>
+        <mat-paper id="matAvatarWrapper" background="[[_computeCurrentBackground(active, activeBackground, background)]]" brightness="placeholder" disabled="[[disabled]]" pressable="">
+            <a id="matAvatarAnchor">
+                <div id="matAvatarMain">
+                    <mat-icon id="matAvatarIcon" color="[[_computeCurrentColor(active, activeColor, color)]]" disabled="[[disabled]]" empty="{{empty}}" name="[[icon]]" raster="{{raster}}" src="[[iconSrc]]"></mat-icon>
+                </div>
+            </a>
+            <mat-ripple context="[[self]]" id="matAvatarRipple" color="[[_computeCurrentColor(active, activeColor, color)]]" auto-center=""></mat-ripple>
+        </mat-paper>
+    </template>
+
+    <script>
+        Polymer({
+
+            // ELEMENT
+            is: 'mat-avatar',
+
+            // BEHAVIORS
+            behaviors: [
+                Polymer.XPAnchorBehavior,
+                Polymer.XPPressedBehavior,
+                Polymer.XPReferralBehavior
+            ],
+
+            /*********************************************************************/
+
+            // PROPERTIES
+            properties: {
+
+                /**
+                 * The paper's active background color.
+                 *
+                 * @attribute active-background
+                 * @type string
+                 */
+                activeBackground: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The ink's active color.
+                 *
+                 * @attribute active-color
+                 * @type string
+                 */
+                activeColor: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The paper's background color.
+                 *
+                 * @attribute background
+                 * @type string
+                 */
+                background: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * If set to true, the element has 64px diameter instead of 40px.
+                 *
+                 * @attribute big
+                 * @type boolean
+                 * @default false
+                 */
+                big: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * The ink's color.
+                 *
+                 * @attribute color
+                 * @type string
+                 */
+                color: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The element's data.
+                 *
+                 * @attribute data
+                 * @type *
+                 * @notifies
+                 */
+                data: {
+                    notify: true,
+                    value: null
+                },
+
+                /**
+                 * If set to true, the element is hidden.
+                 *
+                 * @attribute empty
+                 * @type boolean
+                 * @notifies
+                 * @readonly
+                 */
+                empty: {
+                    notify: true,
+                    reflectToAttribute: true,
+                    type: Boolean
+                },
+
+                /**
+                 * The button's icon.
+                 *
+                 * @attribute icon
+                 * @type string
+                 */
+                icon: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The button's icon's src.
+                 *
+                 * @attribute icon-src
+                 * @type string
+                 */
+                iconSrc: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * If set to true, the icon is a raster one instead of svg.
+                 *
+                 * @attribute raster
+                 * @type boolean
+                 * @default false
+                 * @notifies
+                 */
+                raster: {
+                    notify: true,
+                    reflectToAttribute: true,
+                    type: Boolean
+                }
+            },
+
+            /*********************************************************************/
+
+            // COMPUTER
+            _computeCurrentBackground: function (active, activeBackground, background) {
+                return (active && activeBackground) || background;
+            },
+
+            // COMPUTER
+            _computeCurrentColor: function (active, activeColor, color) {
+                return (active && activeColor) || color;
+            },
+
+            /*********************************************************************/
+
+            // LISTENER
+            ready: function () {
+                this._setAnchor(this.$.matAvatarAnchor);
+            }
+        });
+    </script>
+
+</dom-module><xp-iconset name="toggle">
+    <svg>
+        <defs>
+            <g id="check-box"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></g>
+            <g id="check-box-outline-blank"><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path></g>
+            <g id="radio-button-off"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path></g>
+            <g id="radio-button-on"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path></g>
+            <g id="star"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></g>
+            <g id="star-half"><path d="M22 9.74l-7.19-.62L12 2.5 9.19 9.13 2 9.74l5.46 4.73-1.64 7.03L12 17.77l6.18 3.73-1.63-7.03L22 9.74zM12 15.9V6.6l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.9z"></path></g>
+            <g id="star-outline"><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path></g>
+        </defs>
+    </svg>
+</xp-iconset><dom-module id="mat-checkbox" assetpath="../bower_components/mat-checkbox/">
+
+    <style>
+        :host {
+            @apply(--mat-font-subhead);
+            cursor: pointer;
+            display: block;
+            height: 48px;
+            line-height: 48px !important; /* override */
+            overflow: visible;
+            text-overflow: ellipsis !important; /* override */
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+            white-space: nowrap !important; /* override */
+        }
+
+        :host([disabled]) {
+            cursor: not-allowed !important;
+            pointer-events: none !important;
+        }
+
+        :host([empty-label]) {
+            height: 40px;
+            margin: 4px;
+            width: 40px;
+        }
+
+        :host([flip]) {
+            margin-right: -12px;
+            text-align: right;
+        }
+
+        :host(:not([flip])) {
+            margin-left: -12px;
+            text-align: left;
+        }
+
+        :host ::content input {
+            display: none !important;
+        }
+
+        :host #matCheckboxWrapper {
+            height: 100%;
+            position: relative;
+        }
+
+        :host([disabled]) #matCheckboxToggle[active]::shadow #matIconButtonIcon {
+            display: none !important;
+        }
+
+        :host([empty-label]) #matCheckboxToggle {
+            margin: 0;
+        }
+
+        :host(:not([empty-label])[flip]) #matCheckboxToggle {
+            right: 0;
+            position: absolute;
+        }
+
+        :host(:not([empty-label]):not([flip])) #matCheckboxToggle {
+            left: 0;
+            position: absolute;
+        }
+
+        :host #matCheckboxLabel {
+            height: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        :host([flip]) #matCheckboxLabel {
+            padding-right: 64px;
+        }
+
+        :host(:not([flip])) #matCheckboxLabel {
+            padding-left: 64px;
+        }
+
+        /* ANIMATION */
+
+        :host #matCheckboxToggle::shadow #matIconButtonIcon {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            transition-delay: -0.05s;
+        }
+
+        :host #matCheckboxToggle[active]::shadow #matIconButtonIcon {
+            opacity: 0;
+            transition-delay: 0.1s;
+        }
+
+        :host #matCheckboxToggle::shadow #matIconButtonIcon #matIconWrapper {
+            transition: color 0.4s;
+        }
+    </style>
+
+    <template>
+        <div id="matCheckboxWrapper">
+            <mat-icon-button id="matCheckboxToggle" active="{{checked}}" active-color="teal" active-icon="toggle:check-box" disabled="[[disabled]]" focused="{{focused}}" icon="toggle:check-box-outline-blank" toggleable=""></mat-icon-button>
+            <template is="dom-if" if="[[label]]"><mat-ink id="matCheckboxLabel" disabled="[[disabled]]" on-click="_handleToggle">{{label}}</mat-ink></template>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+
+            // ELEMENT
+            is: 'mat-checkbox',
+
+            // BEHAVIORS
+            behaviors: [
+                Polymer.XPInputBehavior
+            ],
+
+            /*********************************************************************/
+
+            /**
+             * Blurs the input.
+             *
+             * @method blur
+             * @returns {Element}
+             */
+            blur: function () {
+                var self = this;
+                self.$.matCheckboxToggle.blur();
+                return self;
+            },
+
+            /**
+             * Focuses the input
+             *
+             * @method focus
+             * @returns {Element}
+             */
+            focus: function () {
+                var self = this;
+                self.$.matCheckboxToggle.focus();
+                return self;
+            },
+
+            /*********************************************************************/
+
+            /**
+             * Commits from input's value.
+             *
+             * @method _commitFrom
+             * @returns {Element}
+             * @private
+             */
+            _commitFrom: function () {
+                var self = this;
+                self.checked = self.injected.checked;
+                return self;
+            },
+
+            /**
+             * Commits to input's value.
+             *
+             * @method _commitTo
+             * @returns {Element}
+             * @private
+             */
+            _commitTo: function () {
+                var self = this;
+                if (self.checked !== self.injected.checked) { self.injected.checked = self.checked; }
+                return self;
+            },
+
+            /**
+             * Indexes the input.
+             *
+             * @method _index
+             * @param {number} value
+             * @returns {Element}
+             * @private
+             */
+            _index: function (value) {
+                var self = this;
+                self.$.matCheckboxToggle.tabIndex = value;
+                return self;
+            },
+
+            /**
+             * Injects the input element.
+             *
+             * @method _inject
+             * @returns {Element}
+             * @private
+             */
+            _inject: function () {
+                var self = this;
+                self._setInjected(XP.appendChild(Polymer.dom(self), XP.createElement('input', {attributes: {type: self.type, checked: self.checked}})));
+                return self;
+            },
+
+            /**
+             * Updates the input.
+             *
+             * @method _updateInput
+             * @returns {Element}
+             * @private
+             */
+            _update: function () {
+                var self = this;
+                XP.setAttribute(self.injected, 'disabled', self.disabled);
+                XP.setAttribute(self.injected, 'name', self.name);
+                return self;
+            },
+
+            /*********************************************************************/
+
+            // LISTENERS
+            listeners: {
+                'keyup': '_handleToggle'
+            },
+
+            // PROPERTIES
+            properties: {
+
+                /**
+                 * If set to true, the check is right floated.
+                 *
+                 * @attribute flip
+                 * @type boolean
+                 * @default false
+                 */
+                flip: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * The input's type.
+                 *
+                 * TODO Temporary webcomponents polyfill's fix for `hostAttributes`.
+                 *
+                 * @attribute type
+                 * @type string
+                 * @default "checkbox"
+                 */
+                type: {
+                    observer: '_typeChanged',
+                    reflectToAttribute: true,
+                    type: String,
+                    value: 'checkbox'
+                }
+            },
+
+            /*********************************************************************/
+
+            // HANDLER
+            _handleToggle: function (event) {
+                if (!event.button && (!event.keyCode || event.keyCode === 32)) { this.toggle(); }
+            }
+        });
+    </script>
+
+</dom-module><dom-module id="mat-divider" assetpath="../bower_components/mat-divider/">
+
+    <style>
+        :host {
+            display: block;
+            margin: 7px 0 8px 0;
+            overflow: hidden;
+            transition: margin 0.33s cubic-bezier(0.55, 0, 0.01, 1);
+            will-change: margin;
+        }
+
+        :host([baseline]),
+        :host([cap]) {
+            left: 0;
+            margin: 0;
+            position: absolute;
+            right: 0;
+        }
+
+        :host([baseline]) {
+            bottom: 0;
+        }
+
+        :host([cap]) {
+            top: 0;
+        }
+
+        :host #matDividerWrapper {
+            border-top: 1px solid currentColor;
+        }
+
+        :host([inset]) #matDividerWrapper {
+            margin-left: 72px;
+        }
+    </style>
+
+    <template>
+        <mat-ink id="matDividerWrapper" opacity="divider"></mat-ink>
+    </template>
+
+    <script>
+        Polymer({
+
+            // ELEMENT
+            is: 'mat-divider',
+
+            /*********************************************************************/
+
+            // PROPERTIES
+            properties: {
+
+                /**
+                 * If set to true, the divider is aligned baseline.
+                 *
+                 * @attribute baseline
+                 * @type boolean
+                 * @default false
+                 */
+                baseline: {
+                    observer: '_baselineChanged',
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * If set to true, the divider is aligned cap.
+                 *
+                 * @attribute cap
+                 * @type boolean
+                 * @default false
+                 */
+                cap: {
+                    observer: '_capChanged',
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * If set to true, the element is indented.
+                 *
+                 * @attribute inset
+                 * @type boolean
+                 * @default false
+                 */
+                inset: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                }
+            },
+
+            /*********************************************************************/
+
+            // OBSERVER
+            _baselineChanged: function (post) {
+                this.cap = this.cap && !post;
+            },
+
+            // OBSERVER
+            _capChanged: function (post) {
+                this.baseline = this.baseline && !post;
+            }
+        });
+    </script>
+
+</dom-module><dom-module id="mat-item" assetpath="../bower_components/mat-item/">
+
+    <style>
+:host {
+    cursor: pointer;
+    display: inline-block;
+    outline: 0;
+    overflow: visible;
+    position: relative;
+    text-align: left;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+:host([disabled]) {
+    cursor: default !important;
+    pointer-events: none !important;
+}
+</style>
+
+    <style>
+        :host {
+            display: block;
+            min-height: 48px;
+            text-align: left;
+        }
+
+        :host [action] {
+            margin: 4px 8px;
+        }
+
+        :host mat-avatar[action] {
+            margin: 8px 16px;
+        }
+
+        :host [primary][action] {
+            pointer-events: none;
+        }
+
+        :host(:not([empty-body])) [action] {
+            margin-top: 8px;
+        }
+
+        :host(:not([empty-body])) mat-avatar[action] {
+            margin-top: 16px;
+        }
+
+        :host(:not([empty-body])) [primary][action] {
+            @apply(--layout-self-start);
+        }
+
+        :host #matItemWrapper,
+        :host #matItemMain {
+            @apply(--layout-horizontal);
+            @apply(--layout-center);
+        }
+
+        :host #matItemPrimary {
+            @apply(--layout-flex);
+            overflow: hidden;
+        }
+
+        :host #matItemPrimary mat-avatar[action] {
+            margin-right: 0;
+        }
+
+        :host #matItemAnchor {
+            display: block;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        :host #matItemAnchor[href]:hover {
+            text-decoration: underline;
+        }
+
+        :host #matItemText {
+            @apply(--layout-flex);
+            overflow: hidden;
+            padding: 11px 16px 13px 16px;
+        }
+
+        :host([empty-body]:not([empty-description])) #matItemText {
+            padding: 15px 16px 13px 16px;
+        }
+
+        :host #matItemLabel {
+            @apply(--mat-font-subhead);
+            overflow: hidden;
+            text-overflow: ellipsis !important; /* override */
+            white-space: nowrap !important; /* override */
+        }
+
+        :host #matItemDescription {
+            @apply(--mat-font-body);
+            overflow: hidden;
+            text-overflow: ellipsis !important; /* override */
+            white-space: nowrap !important; /* override */
+        }
+
+        :host #matItemBody {
+            @apply(--mat-font-body);
+        }
+
+        :host([empty-body]) #matItemBody {
+            display: none !important;
+        }
+
+        :host #matItemSecondary {
+            text-align: right;
+        }
+
+        :host([empty-secondary]) #matItemSecondary {
+            display: none !important;
+        }
+
+        :host([secondary-no-tap]) #matItemSecondary {
+            pointer-events: none !important;
+        }
+
+        :host([secondary-text]:not([secondary-text=""])) #matItemSecondary,
+        :host(:not([empty-body])) #matItemSecondary {
+            @apply(--layout-self-start);
+        }
+
+        :host #matItemSecondary [action] {
+            margin-left: -8px;
+        }
+
+        :host #matItemSecondary mat-avatar[action] {
+            margin-left: 0;
+        }
+
+        :host #matItemSecondaryText {
+            @apply(--mat-font-caption);
+            margin: 14px 16px 0 0;
+        }
+
+        :host([secondary-text=""]) #matItemSecondaryText,
+        :host(:not([secondary-text])) #matItemSecondaryText {
+            display: none !important;
+        }
+
+        :host([empty-body][primary-type="avatar"]) #matItemSecondaryText {
+            margin-top: 18px;
+        }
+
+        :host #matItemDivider {
+            display: none;
+        }
+    </style>
+
+    <template>
+        <mat-ink id="matItemWrapper" disabled="[[disabled]]">
+            <mat-divider id="matItemDivider" inset="[[inset]]" baseline=""></mat-divider>
+            <div id="matItemPrimary" on-xp-active="_handleStop" on-xp-activate="_handleStop" on-xp-input-change="_handleStop">
+                <a id="matItemAnchor">
+                    <div id="matItemMain">
+                        <template is="dom-if" if="[[inset]]" restamp="">
+                            <template is="dom-if" if="[[_isPrimaryAvatar(primaryType)]]" restamp=""><mat-avatar background="[[_computePrimaryBackground(active, primaryActiveBackground, primaryBackground)]]" color="[[_computePrimaryColor(active, primaryActiveColor, primaryColor)]]" icon="[[primaryIcon]]" icon-src="[[primaryIconSrc]]" tabindex="-1" primary="" action=""></mat-avatar></template>
+                            <template is="dom-if" if="[[_isPrimaryButton(primaryType)]]" restamp=""><mat-icon-button active="[[active]]" active-icon="[[primaryActiveIcon]]" active-icon-src="[[primaryActiveIconSrc]]" color="[[_computePrimaryColor(active, primaryActiveColor, primaryColor)]]" icon="[[primaryIcon]]" icon-src="[[primaryIconSrc]]" tabindex="-1" toggleable="" primary="" action=""></mat-icon-button></template>
+                            <template is="dom-if" if="[[_isPrimaryCheckbox(primaryType)]]" restamp=""><mat-checkbox model="[[active]]" tabindex="-1" primary="" action=""></mat-checkbox></template>
+                        </template>
+                        <div id="matItemText">
+                            <template is="dom-if" if="[[label]]" restamp=""><div id="matItemLabel">{{label}}</div></template>
+                            <template is="dom-if" if="[[description]]" restamp=""><mat-ink id="matItemDescription" opacity="secondary">{{description}}</mat-ink></template>
+                            <div id="matItemBody"><content id="content"></content></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div id="matItemSecondary" on-xp-active="_handleSecondary" on-xp-activate="_handleSecondary" on-xp-input-change="_handleSecondary">
+                <template is="dom-if" if="[[!emptySecondary]]" restamp="">
+                    <template is="dom-if" if="[[secondaryText]]" restamp=""><div id="matItemSecondaryText">{{secondaryText}}</div></template>
+                    <template is="dom-if" if="[[secondaryMenu]]" restamp=""><mat-menu-button color="[[secondaryColor]]" data="[[data]]" disabled="[[secondaryDisabled]]" target="{{secondaryMenu}}" tabindex="{{bindableTabIndex}}" on-down="_handleStop" on-click="_handleStop" on-up="_handleStop" secondary="" action=""></mat-menu-button></template>
+                    <template is="dom-if" if="[[_isSecondaryAvatar(secondaryMenu, secondaryType)]]" restamp=""><mat-avatar active="{{secondaryActive}}" background="[[_computeSecondaryBackground(secondaryActive, secondaryActiveBackground, secondaryBackground)]]" color="[[_computeSecondaryColor(secondaryActive, secondaryActiveColor, secondaryColor)]]" data="[[data]]" disabled="[[secondaryDisabled]]" icon="[[secondaryIcon]]" icon-src="[[secondaryIconSrc]]" target="{{secondaryTarget}}" tabindex="{{bindableTabIndex}}" toggleable="[[secondaryToggleable]]" on-down="_handleStop" on-click="_handleStop" on-up="_handleStop" secondary="" action=""></mat-avatar></template>
+                    <template is="dom-if" if="[[_isSecondaryButton(secondaryMenu, secondaryType)]]" restamp=""><mat-icon-button active="{{secondaryActive}}" active-icon="[[secondaryActiveIcon]]" active-icon-src="[[secondaryActiveIconSrc]]" color="[[_computeSecondaryColor(secondaryActive, secondaryActiveColor, secondaryColor)]]" data="[[data]]" disabled="[[secondaryDisabled]]" icon="[[secondaryIcon]]" icon-src="[[secondaryIconSrc]]" tabindex="[[bindableTabIndex]]" target="{{secondaryTarget}}" toggleable="[[secondaryToggleable]]" on-down="_handleStop" on-click="_handleStop" on-up="_handleStop" secondary="" action=""></mat-icon-button></template>
+                    <template is="dom-if" if="[[_isSecondaryCheckbox(secondaryMenu, secondaryType)]]" restamp=""><mat-checkbox changed="{{secondaryChanged}}" disabled="[[secondaryDisabled]]" model="{{secondaryValue}}" tabindex="{{bindableTabIndex}}" on-down="_handleStop" on-click="_handleStop" on-up="_handleStop" secondary="" action=""></mat-checkbox></template>
+                </template>
+            </div>
+            <mat-ripple context="[[self]]" id="matItemRipple"></mat-ripple>
+        </mat-ink>
+    </template>
+
+    <script>
+        Polymer({
+
+            // ELEMENT
+            is: 'mat-item',
+
+            // BEHAVIORS
+            behaviors: [
+                Polymer.XPAnchorBehavior,
+                Polymer.XPPressedBehavior,
+                Polymer.XPReferralBehavior
+            ],
+
+            /*********************************************************************/
+
+            // PROPERTIES
+            properties: {
+
+                /**
+                 * The element's data.
+                 *
+                 * @attribute data
+                 * @type *
+                 * @notifies
+                 */
+                data: {
+                    notify: true,
+                    value: null
+                },
+
+                /**
+                 * The item's description.
+                 *
+                 * @attribute description
+                 * @type string
+                 */
+                description: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * If set to true, the body is hidden.
+                 *
+                 * @attribute empty-body
+                 * @type boolean
+                 * @default false
+                 * @notifies
+                 * @readonly
+                 */
+                emptyBody: {
+                    notify: true,
+                    readOnly: true,
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * If set to true, the description is hidden.
+                 *
+                 * @attribute empty-description
+                 * @type boolean
+                 * @notifies
+                 * @readonly
+                 */
+                emptyDescription: {
+                    computed: '_computeEmptyDescription(description)',
+                    notify: true,
+                    reflectToAttribute: true,
+                    type: Boolean
+                },
+
+                /**
+                 * If set to true, the label is hidden.
+                 *
+                 * @attribute empty-label
+                 * @type boolean
+                 * @notifies
+                 * @readonly
+                 */
+                emptyLabel: {
+                    computed: '_computeEmptyLabel(label)',
+                    notify: true,
+                    reflectToAttribute: true,
+                    type: Boolean
+                },
+
+                /**
+                 * If set to true, the secondary is hidden.
+                 *
+                 * @attribute empty-secondary
+                 * @type boolean
+                 * @notifies
+                 * @readonly
+                 */
+                emptySecondary: {
+                    computed: '_computeEmptySecondary(secondaryType, secondaryIcon, secondaryIconSrc, secondaryMenu, secondaryText)',
+                    notify: true,
+                    reflectToAttribute: true,
+                    type: Boolean
+                },
+
+                /**
+                 * If set to true, the element is indented.
+                 *
+                 * @attribute inset
+                 * @type boolean
+                 * @notifies
+                 * @readonly
+                 */
+                inset: {
+                    computed: '_computeInset(primaryActiveIcon, primaryActiveIconSrc, primaryIcon, primaryIconSrc, primaryType)',
+                    notify: true,
+                    reflectToAttribute: true,
+                    type: Boolean
+                },
+
+                /**
+                 * The item's label.
+                 *
+                 * @attribute label
+                 * @type string
+                 */
+                label: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's primary active background.
+                 *
+                 * @attribute primary-active-background
+                 * @type string
+                 */
+                primaryActiveBackground: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's primary active color.
+                 *
+                 * @attribute primary-active-color
+                 * @type string
+                 */
+                primaryActiveColor: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's primary active icon.
+                 *
+                 * @attribute primary-active-icon
+                 * @type string
+                 */
+                primaryActiveIcon: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's primary active icon's src.
+                 *
+                 * @attribute primary-active-icon-src
+                 * @type string
+                 */
+                primaryActiveIconSrc: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's primary background.
+                 *
+                 * @attribute primary-background
+                 * @type string
+                 */
+                primaryBackground: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's primary color.
+                 *
+                 * @attribute primary-color
+                 * @type string
+                 */
+                primaryColor: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's primary icon.
+                 *
+                 * @attribute primary-icon
+                 * @type string
+                 */
+                primaryIcon: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's primary icon's src.
+                 *
+                 * @attribute primary-icon-src
+                 * @type string
+                 */
+                primaryIconSrc: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's primary type.
+                 *
+                 * @attribute primary-type
+                 * @type string
+                 * @default "button"
+                 */
+                primaryType: {
+                    observer: '_primaryTypeChanged',
+                    reflectToAttribute: true,
+                    type: String,
+                    value: 'button'
+                },
+
+                /**
+                 * If set to true, the secondary is active.
+                 *
+                 * @attribute secondary-active
+                 * @type boolean
+                 * @default false
+                 */
+                secondaryActive: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * The item's secondary active background.
+                 *
+                 * @attribute secondary-active-background
+                 * @type string
+                 */
+                secondaryActiveBackground: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's secondary active color.
+                 *
+                 * @attribute secondary-active-color
+                 * @type string
+                 */
+                secondaryActiveColor: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's secondary active icon.
+                 *
+                 * @attribute secondary-active-icon
+                 * @type string
+                 */
+                secondaryActiveIcon: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's secondary active icon's src.
+                 *
+                 * @attribute secondary-active-icon-src
+                 * @type string
+                 */
+                secondaryActiveIconSrc: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's secondary background.
+                 *
+                 * @attribute secondary-background
+                 * @type string
+                 */
+                secondaryBackground: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * If set to true, the secondary action is changed.
+                 *
+                 * @attribute secondary-changed
+                 * @type boolean
+                 * @default false
+                 */
+                secondaryChanged: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * If set to true, the secondary action is checked.
+                 *
+                 * @attribute secondary-value
+                 * @type boolean
+                 * @default false
+                 */
+                secondaryChecked: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * The item's secondary background.
+                 *
+                 * @attribute secondary-color
+                 * @type string
+                 */
+                secondaryColor: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * If set to true, the secondary action is disabled.
+                 *
+                 * @attribute secondary-disabled
+                 * @type boolean
+                 * @default false
+                 */
+                secondaryDisabled: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * The item's secondary icon.
+                 *
+                 * @attribute secondary-icon
+                 * @type string
+                 */
+                secondaryIcon: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's secondary icon's src.
+                 *
+                 * @attribute secondary-icon-src
+                 * @type string
+                 */
+                secondaryIconSrc: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The menu to toggle on secondary press.
+                 *
+                 * @attribute secondary-menu
+                 * @type Element | string
+                 * @notifies
+                 */
+                secondaryMenu: {
+                    notify: true,
+                    value: null
+                },
+
+                /**
+                 * If set to true, the secondary action has pointer events disabled.
+                 *
+                 * @attribute secondary-no-tap
+                 * @type boolean
+                 * @default false
+                 */
+                secondaryNoTap: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * The `id` of the secondary targeted element or the element itself.
+                 *
+                 * @attribute secondary-target
+                 * @type Element | string
+                 * @notifies
+                 */
+                secondaryTarget: {
+                    notify: true,
+                    value: null
+                },
+
+                /**
+                 * If set to true, the secondary action is toggleable.
+                 *
+                 * @attribute secondary-toggleable
+                 * @type boolean
+                 * @default false
+                 */
+                secondaryToggleable: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * The item's secondary text.
+                 *
+                 * @attribute secondary-text
+                 * @type string
+                 */
+                secondaryText: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The item's secondary type.
+                 *
+                 * @attribute secondary-type
+                 * @type string
+                 * @default "button"
+                 */
+                secondaryType: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: 'button'
+                }
+            },
+
+            /**
+             * The bindable tabIndex.
+             *
+             * @property bindableTabIndex
+             * @type number
+             * @default -1
+             * @readonly
+             */
+            bindableTabIndex: -1,
+
+            /**
+             * The list of types.
+             *
+             * @property types
+             * @type Array
+             * @default ["avatar", "button", "checkbox"]
+             * @readonly
+             */
+            types: ['avatar', 'button', 'checkbox'],
+
+            /*********************************************************************/
+
+            // COMPUTER
+            _computeEmptyDescription: function (description) {
+                return !description;
+            },
+
+            // COMPUTER
+            _computeEmptyLabel: function (label) {
+                return !label;
+            },
+
+            // COMPUTER
+            _computeEmptySecondary: function (secondaryType, secondaryIcon, secondaryIconSrc, secondaryMenu, secondaryText) {
+                return secondaryType !== 'checkbox' && !secondaryIcon && !secondaryIconSrc && !secondaryMenu && !secondaryText;
+            },
+
+            // COMPUTER
+            _computeInset: function (primaryActiveIcon, primaryActiveIconSrc, primaryIcon, primaryIconSrc, primaryType) {
+                return !!primaryActiveIcon || !!primaryActiveIconSrc || !!primaryIcon || !!primaryIconSrc || primaryType === "checkbox";
+            },
+
+            // COMPUTER
+            _computePrimaryBackground: function (active, primaryActiveBackground, primaryBackground) {
+                return (active && primaryActiveBackground) || primaryBackground;
+            },
+
+            // COMPUTER
+            _computePrimaryColor: function (active, primaryActiveColor, primaryColor) {
+                return (active && primaryActiveColor) || primaryColor;
+            },
+
+            // COMPUTER
+            _computeSecondaryBackground: function (secondaryActive, secondaryActiveBackground, secondaryBackground) {
+                return (secondaryActive && secondaryActiveBackground) || secondaryBackground;
+            },
+
+            // COMPUTER
+            _computeSecondaryColor: function (secondaryActive, secondaryActiveColor, secondaryColor) {
+                return (secondaryActive && secondaryActiveColor) || secondaryColor;
+            },
+
+            // COMPUTER
+            _isPrimaryAvatar: function (primaryType) {
+                return primaryType === 'avatar';
+            },
+
+            // COMPUTER
+            _isPrimaryButton: function (primaryType) {
+                return primaryType !== 'avatar' && primaryType !== 'checkbox';
+            },
+
+            // COMPUTER
+            _isPrimaryCheckbox: function (primaryType) {
+                return primaryType === 'checkbox';
+            },
+
+            // COMPUTER
+            _isSecondaryAvatar: function (secondaryMenu, secondaryType) {
+                return !secondaryMenu && secondaryType === 'avatar';
+            },
+
+            // COMPUTER
+            _isSecondaryButton: function (secondaryMenu, secondaryType) {
+                return !secondaryMenu && secondaryType !== 'avatar' && secondaryType !== 'checkbox';
+            },
+
+            // COMPUTER
+            _isSecondaryCheckbox: function (secondaryMenu, secondaryType) {
+                return !secondaryMenu && secondaryType === 'checkbox';
+            },
+
+            /*********************************************************************/
+
+            // OBSERVER
+            _primaryTypeChanged: function (post) {
+                if (post === 'checkbox') { this.toggleable = true; }
+            },
+
+            /*********************************************************************/
+
+            // LISTENER
+            attached: function () {
+                this.mutated();
+            },
+
+            // LISTENER
+            mutated: function () {
+
+                // Vars
+                var self = this;
+
+                // Setting
+                self._setEmptyBody(!XP.isContent(Polymer.dom(self.$.content), true));
+                self.bindableTabIndex = self.tabIndex;
+
+                // Observing
+                XP.onMutation(self, self.mutated.bind(self), {attributes: true, childList: true, subtree: true, attributeFilter: ['tabindex']});
+            },
+
+            /*********************************************************************/
+
+            // LISTENER
+            ready: function () {
+                this._setAnchor(this.$.matItemAnchor);
+            },
+
+            /*********************************************************************/
+
+            // HANDLER
+            _handleSecondary: function (event) {
+                var self = this;
+                if (XP.matches(event.detail.firer, '[secondary][action]')) { event.stopPropagation(); } else { return; }
+                if (self.fire(event.type, XP.assign(event.detail, {firer: self, isSecondary: true}), {cancelable: true}).defaultPrevented) { event.preventDefault(); }
+            },
+
+            // HANDLER
+            _handleStop: function (event) {
+                event.stopPropagation();
+            }
+        });
+    </script>
+
+</dom-module><dom-module id="mat-menu-label-button" assetpath="../bower_components/mat-menu-label-button/">
+
+    <style>
+        :host {
+            display: inline-block;
+            margin: 4px;
+            overflow: visible;
+        }
+
+        :host #matMenuButtonAdaptee {
+            display: block;
+            margin: 0 -4px;
+        }
+
+        .label {
+            font-size: 20px;
+        }
+        .label.white{
+            color: white;
+        }
+        mat-item{
+            min-height: 45px;
+        }
+    </style>
+
+    <template>
+        
+           
+        <mat-item target="{{target}}" data="[[data]]" disabled="[[disabled]]" empty="{{empty}}" focused="{{focused}}" pressed="{{pressed}}" raster="{{raster}}" primary-color="white">
+        <div class="label white" fit=""><span>{{label}}</span> <iron-icon style="top: 5px;vertical-align: inherit;" icon="arrow-drop-down-circle"></iron-icon></div>
+            <mat-ripple color="#FFFFFF"></mat-ripple>
+        </mat-item>
+    </template>
+
+    <script>
+        Polymer({
+            // ELEMENT
+            is: 'mat-menu-label-button',
+            // BEHAVIORS
+            behaviors: [
+                Polymer.XPTargeterBehavior
+            ],
+            /*********************************************************************/
+            /**
+             * Hides the menu.
+             *
+             * @method hide
+             * @returns {Element}
+             */
+            hide: function () {
+                var self = this, target = self.findTarget();
+                if (target && target.hide) {
+                    target.hide();
+                }
+                return self;
+            },
+            /**
+             * Shows the menu.
+             *
+             * @method show
+             * @returns {Element}
+             */
+            show: function () {
+                var self = this, target = self.findTarget();
+                if (target && target.show) {
+                    target.show(self, self.data);
+                }
+                return self;
+            },
+            /**
+             * Toggles the menu.
+             *
+             * @method toggle
+             * @returns {Element}
+             */
+            toggle: function () {
+                var self = this, target = self.findTarget();
+                if (target && target.toggle) {
+                    target.toggle(self, self.data);
+                }
+                return self;
+            },
+            /*********************************************************************/
+            // LISTENERS
+            listeners: {
+                'xp-activate': '_handleActivate'
+            },
+            // PROPERTIES
+            properties: {
+                /**
+                 * The ink's color.
+                 *
+                 * @attribute color
+                 * @type string
+                 */
+                color: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+                /**
+                 * The element's data.
+                 *
+                 * @attribute data
+                 * @type *
+                 * @notifies
+                 */
+                data: {
+                    notify: true,
+                    value: null
+                },
+                /**
+                 * If set to true, the element is disabled.
+                 *
+                 * @attribute disabled
+                 * @type boolean
+                 * @default false
+                 */
+                disabled: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+                /**
+                 * If set to true, the element is focused.
+                 *
+                 * @attribute focused
+                 * @type boolean
+                 * @notifies
+                 * @readonly
+                 */
+                focused: {
+                    notify: true,
+                    reflectToAttribute: true,
+                    type: Boolean
+                },
+                /**
+                 * If set to true, the element is hidden.
+                 *
+                 * @attribute empty
+                 * @type boolean
+                 * @notifies
+                 * @readonly
+                 */
+                empty: {
+                    notify: true,
+                    reflectToAttribute: true,
+                    type: Boolean
+                },
+                /**
+                 * The button's icon.
+                 *
+                 * @attribute icon
+                 * @type string
+                 * @default "navigation:more-vert"
+                 */
+                label: {
+                    /*reflectToAttribute: true,*/
+                    type: String
+                    /* value: ''*/
+                },
+                /**
+                 * The button's icon's src.
+                 *
+                 * @attribute icon-src
+                 * @type string
+                 */
+                iconSrc: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+                /**
+                 * If set to true, the element is pressed.
+                 *
+                 * @attribute pressed
+                 * @type boolean
+                 * @notifies
+                 * @readonly
+                 */
+                pressed: {
+                    notify: true,
+                    reflectToAttribute: true,
+                    type: Boolean
+                },
+                /**
+                 * If set to true, the icon is a raster one instead of svg.
+                 *
+                 * @attribute raster
+                 * @type boolean
+                 * @notifies
+                 * @readonly
+                 */
+                raster: {
+                    notify: true,
+                    reflectToAttribute: true,
+                    type: Boolean
+                }
+            },
+            /*********************************************************************/
+            // HANDLER
+            _handleActivate: function (event) {
+                var self = this;
+                XP.delay(function () {
+                    return !event.defaultPrevented && self.show();
+                });
+            }
+        });
+    </script>
+
 </dom-module><dom-module id="mat-option" assetpath="../bower_components/mat-option/">
 
     <style>
@@ -23312,74 +25725,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   });
 
 </script>
-<dom-module id="nexus-5" assetpath="nexus-5/">
-    <style>
-.marvel-device{display:inline-block;position:relative}.marvel-device .screen{width:100%;position:relative;height:100%;color:white;z-index:2;text-align:center;display:block;-webkit-border-radius:1px;border-radius:1px;-webkit-box-shadow:0 0 0 3px #111;box-shadow:0 0 0 3px #111}.marvel-device .top-bar,.marvel-device .bottom-bar{height:3px;background:black;width:100%;display:block}.marvel-device .middle-bar{width:3px;height:4px;top:0px;left:90px;background:black;position:absolute}.marvel-device.iphone6{width:375px;height:667px;padding:105px 24px;background:#d9dbdc;-webkit-border-radius:56px;border-radius:56px;-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.2);box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.2)}.marvel-device.iphone6:before{width:calc(100% - 12px);height:calc(100% - 12px);position:absolute;top:6px;content:'';left:6px;-webkit-border-radius:50px;border-radius:50px;background:#f8f8f8;z-index:1}.marvel-device.iphone6:after{width:calc(100% - 16px);height:calc(100% - 16px);position:absolute;top:8px;content:'';left:8px;-webkit-border-radius:48px;border-radius:48px;-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #fff;box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #fff;z-index:2}.marvel-device.iphone6 .home{-webkit-border-radius:100%;border-radius:100%;width:68px;height:68px;position:absolute;left:50%;margin-left:-34px;bottom:22px;z-index:3;background:#303233;background:-moz-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:-webkit-gradient(linear, left top, right bottom, color-stop(0%, #303233), color-stop(50%, #b5b7b9), color-stop(69%, #f0f2f2), color-stop(100%, #303233));background:-webkit-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:-o-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:-ms-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:linear-gradient(135deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#303233', endColorstr='#303233',GradientType=1 )}.marvel-device.iphone6 .home:before{background:#f8f8f8;position:absolute;content:'';-webkit-border-radius:100%;border-radius:100%;width:calc(100% - 8px);height:calc(100% - 8px);top:4px;left:4px}.marvel-device.iphone6 .top-bar{height:14px;background:#bfbfc0;position:absolute;top:68px;left:0}.marvel-device.iphone6 .bottom-bar{height:14px;background:#bfbfc0;position:absolute;bottom:68px;left:0}.marvel-device.iphone6 .sleep{position:absolute;top:190px;right:-4px;width:4px;height:66px;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px;background:#d9dbdc}.marvel-device.iphone6 .volume{position:absolute;left:-4px;top:188px;z-index:0;height:66px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:#d9dbdc}.marvel-device.iphone6 .volume:before{position:absolute;left:2px;top:-78px;height:40px;width:2px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone6 .volume:after{position:absolute;left:0px;top:82px;height:66px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone6 .camera{background:#3c3d3d;width:12px;height:12px;position:absolute;top:24px;left:50%;margin-left:-6px;-webkit-border-radius:100%;border-radius:100%;z-index:3}.marvel-device.iphone6 .sensor{background:#3c3d3d;width:16px;height:16px;position:absolute;top:49px;left:134px;z-index:3;-webkit-border-radius:100%;border-radius:100%}.marvel-device.iphone6 .speaker{background:#292728;width:70px;height:6px;position:absolute;top:54px;left:50%;margin-left:-35px;-webkit-border-radius:6px;border-radius:6px;z-index:3}.marvel-device.iphone6.gold{background:#f9e7d3}.marvel-device.iphone6.gold .top-bar,.marvel-device.iphone6.gold .bottom-bar{background:white}.marvel-device.iphone6.gold .sleep,.marvel-device.iphone6.gold .volume{background:#f9e7d3}.marvel-device.iphone6.gold .home{background:#cebba9;background:-moz-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:-webkit-gradient(linear, left top, right bottom, color-stop(0%, #cebba9), color-stop(50%, #f9e7d3), color-stop(100%, #cebba9));background:-webkit-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:-o-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:-ms-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:linear-gradient(135deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#cebba9', endColorstr='#cebba9',GradientType=1 )}.marvel-device.iphone6.black{background:#464646;-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.7);box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.7)}.marvel-device.iphone6.black:before{background:#080808}.marvel-device.iphone6.black:after{-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #212121;box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #212121}.marvel-device.iphone6.black .top-bar,.marvel-device.iphone6.black .bottom-bar{background:#212121}.marvel-device.iphone6.black .volume,.marvel-device.iphone6.black .sleep{background:#464646}.marvel-device.iphone6.black .camera{background:#080808}.marvel-device.iphone6.black .home{background:#080808;background:-moz-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:-webkit-gradient(linear, left top, right bottom, color-stop(0%, #080808), color-stop(50%, #464646), color-stop(100%, #080808));background:-webkit-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:-o-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:-ms-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:linear-gradient(135deg, #080808 0%, #464646 50%, #080808 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#080808', endColorstr='#080808',GradientType=1 )}.marvel-device.iphone6.black .home:before{background:#080808}.marvel-device.iphone6.landscape{padding:24px 105px;height:375px;width:667px}.marvel-device.iphone6.landscape .sleep{top:100%;-webkit-border-radius:0px 0px 2px 2px;border-radius:0px 0px 2px 2px;right:190px;height:4px;width:66px}.marvel-device.iphone6.landscape .volume{width:66px;height:4px;top:-4px;left:calc(100% - 188px - 66px);-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone6.landscape .volume:before{width:40px;height:2px;top:2px;right:-78px;left:auto;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone6.landscape .volume:after{left:-82px;width:66px;height:4px;top:0;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone6.landscape .top-bar{width:14px;height:100%;left:calc(100% - 68px -  14px);top:0}.marvel-device.iphone6.landscape .bottom-bar{width:14px;height:100%;left:68px;top:0}.marvel-device.iphone6.landscape .home{top:50%;margin-top:-34px;margin-left:0;left:22px}.marvel-device.iphone6.landscape .sensor{top:134px;left:calc(100% - 49px - 16px)}.marvel-device.iphone6.landscape .speaker{height:70px;width:6px;left:calc(100% - 54px - 6px);top:50%;margin-left:0px;margin-top:-35px}.marvel-device.iphone6.landscape .camera{left:calc(100% - 32px);top:50%;margin-left:0px;margin-top:-5px}.marvel-device.iphone6plus{width:414px;height:736px;padding:112px 26px;background:#d9dbdc;-webkit-border-radius:56px;border-radius:56px;-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.2);box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.2)}.marvel-device.iphone6plus:before{width:calc(100% - 12px);height:calc(100% - 12px);position:absolute;top:6px;content:'';left:6px;-webkit-border-radius:50px;border-radius:50px;background:#f8f8f8;z-index:1}.marvel-device.iphone6plus:after{width:calc(100% - 16px);height:calc(100% - 16px);position:absolute;top:8px;content:'';left:8px;-webkit-border-radius:48px;border-radius:48px;-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #fff;box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #fff;z-index:2}.marvel-device.iphone6plus .home{-webkit-border-radius:100%;border-radius:100%;width:68px;height:68px;position:absolute;left:50%;margin-left:-34px;bottom:24px;z-index:3;background:#303233;background:-moz-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:-webkit-gradient(linear, left top, right bottom, color-stop(0%, #303233), color-stop(50%, #b5b7b9), color-stop(69%, #f0f2f2), color-stop(100%, #303233));background:-webkit-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:-o-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:-ms-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:linear-gradient(135deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#303233', endColorstr='#303233',GradientType=1 )}.marvel-device.iphone6plus .home:before{background:#f8f8f8;position:absolute;content:'';-webkit-border-radius:100%;border-radius:100%;width:calc(100% - 8px);height:calc(100% - 8px);top:4px;left:4px}.marvel-device.iphone6plus .top-bar{height:14px;background:#bfbfc0;position:absolute;top:68px;left:0}.marvel-device.iphone6plus .bottom-bar{height:14px;background:#bfbfc0;position:absolute;bottom:68px;left:0}.marvel-device.iphone6plus .sleep{position:absolute;top:190px;right:-4px;width:4px;height:66px;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px;background:#d9dbdc}.marvel-device.iphone6plus .volume{position:absolute;left:-4px;top:188px;z-index:0;height:66px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:#d9dbdc}.marvel-device.iphone6plus .volume:before{position:absolute;left:2px;top:-78px;height:40px;width:2px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone6plus .volume:after{position:absolute;left:0px;top:82px;height:66px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone6plus .camera{background:#3c3d3d;width:12px;height:12px;position:absolute;top:29px;left:50%;margin-left:-6px;-webkit-border-radius:100%;border-radius:100%;z-index:3}.marvel-device.iphone6plus .sensor{background:#3c3d3d;width:16px;height:16px;position:absolute;top:54px;left:154px;z-index:3;-webkit-border-radius:100%;border-radius:100%}.marvel-device.iphone6plus .speaker{background:#292728;width:70px;height:6px;position:absolute;top:59px;left:50%;margin-left:-35px;-webkit-border-radius:6px;border-radius:6px;z-index:3}.marvel-device.iphone6plus.gold{background:#f9e7d3}.marvel-device.iphone6plus.gold .top-bar,.marvel-device.iphone6plus.gold .bottom-bar{background:white}.marvel-device.iphone6plus.gold .sleep,.marvel-device.iphone6plus.gold .volume{background:#f9e7d3}.marvel-device.iphone6plus.gold .home{background:#cebba9;background:-moz-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:-webkit-gradient(linear, left top, right bottom, color-stop(0%, #cebba9), color-stop(50%, #f9e7d3), color-stop(100%, #cebba9));background:-webkit-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:-o-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:-ms-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:linear-gradient(135deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#cebba9', endColorstr='#cebba9',GradientType=1 )}.marvel-device.iphone6plus.black{background:#464646;-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.7);box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.7)}.marvel-device.iphone6plus.black:before{background:#080808}.marvel-device.iphone6plus.black:after{-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #212121;box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #212121}.marvel-device.iphone6plus.black .top-bar,.marvel-device.iphone6plus.black .bottom-bar{background:#212121}.marvel-device.iphone6plus.black .volume,.marvel-device.iphone6plus.black .sleep{background:#464646}.marvel-device.iphone6plus.black .camera{background:#080808}.marvel-device.iphone6plus.black .home{background:#080808;background:-moz-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:-webkit-gradient(linear, left top, right bottom, color-stop(0%, #080808), color-stop(50%, #464646), color-stop(100%, #080808));background:-webkit-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:-o-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:-ms-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:linear-gradient(135deg, #080808 0%, #464646 50%, #080808 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#080808', endColorstr='#080808',GradientType=1 )}.marvel-device.iphone6plus.black .home:before{background:#080808}.marvel-device.iphone6plus.landscape{padding:26px 112px;height:414px;width:736px}.marvel-device.iphone6plus.landscape .sleep{top:100%;-webkit-border-radius:0px 0px 2px 2px;border-radius:0px 0px 2px 2px;right:190px;height:4px;width:66px}.marvel-device.iphone6plus.landscape .volume{width:66px;height:4px;top:-4px;left:calc(100% - 188px - 66px);-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone6plus.landscape .volume:before{width:40px;height:2px;top:2px;right:-78px;left:auto;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone6plus.landscape .volume:after{left:-82px;width:66px;height:4px;top:0;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone6plus.landscape .top-bar{width:14px;height:100%;left:calc(100% - 68px -  14px);top:0}.marvel-device.iphone6plus.landscape .bottom-bar{width:14px;height:100%;left:68px;top:0}.marvel-device.iphone6plus.landscape .home{top:50%;margin-top:-34px;margin-left:0;left:24px}.marvel-device.iphone6plus.landscape .sensor{top:154px;left:calc(100% - 54px - 16px)}.marvel-device.iphone6plus.landscape .speaker{height:70px;width:6px;left:calc(100% - 59px - 6px);top:50%;margin-left:0px;margin-top:-35px}.marvel-device.iphone6plus.landscape .camera{left:calc(100% - 29px);top:50%;margin-left:0px;margin-top:-5px}.marvel-device.iphone5s,.marvel-device.iphone5c{padding:105px 22px;background:#2c2b2c;width:320px;height:568px;-webkit-border-radius:50px;border-radius:50px}.marvel-device.iphone5s:before,.marvel-device.iphone5c:before{width:calc(100% - 8px);height:calc(100% - 8px);position:absolute;top:4px;content:'';left:4px;-webkit-border-radius:46px;border-radius:46px;background:#1e1e1e;z-index:1}.marvel-device.iphone5s .sleep,.marvel-device.iphone5c .sleep{position:absolute;top:-4px;right:60px;width:60px;height:4px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px;background:#282727}.marvel-device.iphone5s .volume,.marvel-device.iphone5c .volume{position:absolute;left:-4px;top:180px;z-index:0;height:27px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:#282727}.marvel-device.iphone5s .volume:before,.marvel-device.iphone5c .volume:before{position:absolute;left:0px;top:-75px;height:35px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone5s .volume:after,.marvel-device.iphone5c .volume:after{position:absolute;left:0px;bottom:-64px;height:27px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone5s .camera,.marvel-device.iphone5c .camera{background:#3c3d3d;width:10px;height:10px;position:absolute;top:32px;left:50%;margin-left:-5px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;z-index:3}.marvel-device.iphone5s .sensor,.marvel-device.iphone5c .sensor{background:#3c3d3d;width:10px;height:10px;position:absolute;top:60px;left:160px;z-index:3;margin-left:-32px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}.marvel-device.iphone5s .speaker,.marvel-device.iphone5c .speaker{background:#292728;width:64px;height:10px;position:absolute;top:60px;left:50%;margin-left:-32px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;z-index:3}.marvel-device.iphone5s.landscape,.marvel-device.iphone5c.landscape{padding:22px 105px;height:320px;width:568px}.marvel-device.iphone5s.landscape .sleep,.marvel-device.iphone5c.landscape .sleep{right:-4px;top:calc(100% - 120px);height:60px;width:4px;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px}.marvel-device.iphone5s.landscape .volume,.marvel-device.iphone5c.landscape .volume{width:27px;height:4px;top:-4px;left:calc(100% - 180px);-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone5s.landscape .volume:before,.marvel-device.iphone5c.landscape .volume:before{width:35px;height:4px;top:0px;right:-75px;left:auto;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone5s.landscape .volume:after,.marvel-device.iphone5c.landscape .volume:after{bottom:0px;left:-64px;z-index:999;height:4px;width:27px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone5s.landscape .sensor,.marvel-device.iphone5c.landscape .sensor{top:160px;left:calc(100% - 60px);margin-left:0px;margin-top:-32px}.marvel-device.iphone5s.landscape .speaker,.marvel-device.iphone5c.landscape .speaker{height:64px;width:10px;left:calc(100% - 60px);top:50%;margin-left:0px;margin-top:-32px}.marvel-device.iphone5s.landscape .camera,.marvel-device.iphone5c.landscape .camera{left:calc(100% - 32px);top:50%;margin-left:0px;margin-top:-5px}.marvel-device.iphone5s .home{-moz-border-radius:36px;-webkit-border-radius:36px;border-radius:36px;width:68px;-webkit-box-shadow:inset 0 0 0 4px #2c2b2c;box-shadow:inset 0 0 0 4px #2c2b2c;height:68px;position:absolute;left:50%;margin-left:-34px;bottom:19px;z-index:3}.marvel-device.iphone5s .top-bar{top:70px;position:absolute;left:0}.marvel-device.iphone5s .bottom-bar{bottom:70px;position:absolute;left:0}.marvel-device.iphone5s.landscape .home{left:19px;bottom:50%;margin-bottom:-34px;margin-left:0px}.marvel-device.iphone5s.landscape .top-bar{left:70px;top:0px;width:3px;height:100%}.marvel-device.iphone5s.landscape .bottom-bar{right:70px;left:auto;bottom:0px;width:3px;height:100%}.marvel-device.iphone5s.silver{background:#bcbcbc}.marvel-device.iphone5s.silver:before{background:#fcfcfc}.marvel-device.iphone5s.silver .volume,.marvel-device.iphone5s.silver .sleep{background:#d6d6d6}.marvel-device.iphone5s.silver .top-bar,.marvel-device.iphone5s.silver .bottom-bar{background:#eaebec}.marvel-device.iphone5s.silver .home{-webkit-box-shadow:inset 0 0 0 4px #bcbcbc;box-shadow:inset 0 0 0 4px #bcbcbc}.marvel-device.iphone5s.gold{background:#f9e7d3}.marvel-device.iphone5s.gold:before{background:#fcfcfc}.marvel-device.iphone5s.gold .volume,.marvel-device.iphone5s.gold .sleep{background:#f9e7d3}.marvel-device.iphone5s.gold .top-bar,.marvel-device.iphone5s.gold .bottom-bar{background:white}.marvel-device.iphone5s.gold .home{-webkit-box-shadow:inset 0 0 0 4px #f9e7d3;box-shadow:inset 0 0 0 4px #f9e7d3}.marvel-device.iphone5c{background:white;-webkit-box-shadow:0 1px 2px 0 rgba(0,0,0,0.2);box-shadow:0 1px 2px 0 rgba(0,0,0,0.2)}.marvel-device.iphone5c .top-bar,.marvel-device.iphone5c .bottom-bar{display:none}.marvel-device.iphone5c .home{background:#242324;-moz-border-radius:36px;-webkit-border-radius:36px;border-radius:36px;width:68px;height:68px;z-index:3;position:absolute;left:50%;margin-left:-34px;bottom:19px}.marvel-device.iphone5c .home:after{width:20px;height:20px;border:1px solid rgba(255,255,255,0.1);-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;position:absolute;display:block;content:'';top:50%;left:50%;margin-top:-11px;margin-left:-11px}.marvel-device.iphone5c.landscape .home{left:19px;bottom:50%;margin-bottom:-34px;margin-left:0px}.marvel-device.iphone5c .volume,.marvel-device.iphone5c .sleep{background:#dddddd}.marvel-device.iphone5c.red{background:#f96b6c}.marvel-device.iphone5c.red .volume,.marvel-device.iphone5c.red .sleep{background:#ed5758}.marvel-device.iphone5c.yellow{background:#f2dc60}.marvel-device.iphone5c.yellow .volume,.marvel-device.iphone5c.yellow .sleep{background:#e5ce4c}.marvel-device.iphone5c.green{background:#97e563}.marvel-device.iphone5c.green .volume,.marvel-device.iphone5c.green .sleep{background:#85d94d}.marvel-device.iphone5c.blue{background:#33a2db}.marvel-device.iphone5c.blue .volume,.marvel-device.iphone5c.blue .sleep{background:#2694cd}.marvel-device.iphone4s{padding:129px 27px;width:320px;height:480px;background:#686868;-webkit-border-radius:54px;border-radius:54px}.marvel-device.iphone4s:before{content:'';width:calc(100% - 8px);height:calc(100% - 8px);position:absolute;top:4px;left:4px;z-index:1;-webkit-border-radius:50px;border-radius:50px;background:#1e1e1e}.marvel-device.iphone4s .top-bar{top:60px;position:absolute;left:0}.marvel-device.iphone4s .bottom-bar{bottom:90px;position:absolute;left:0}.marvel-device.iphone4s .camera{background:#3c3d3d;width:10px;height:10px;position:absolute;top:72px;left:134px;z-index:3;margin-left:-5px;-webkit-border-radius:100%;border-radius:100%}.marvel-device.iphone4s .speaker{background:#292728;width:64px;height:10px;position:absolute;top:72px;left:50%;z-index:3;margin-left:-32px;-webkit-border-radius:5px;border-radius:5px}.marvel-device.iphone4s .sensor{background:#292728;width:40px;height:10px;position:absolute;top:36px;left:50%;z-index:3;margin-left:-20px;-webkit-border-radius:5px;border-radius:5px}.marvel-device.iphone4s .home{background:#242324;-webkit-border-radius:100%;border-radius:100%;width:72px;height:72px;z-index:3;position:absolute;left:50%;margin-left:-36px;bottom:30px}.marvel-device.iphone4s .home:after{width:20px;height:20px;border:1px solid rgba(255,255,255,0.1);-webkit-border-radius:4px;border-radius:4px;position:absolute;display:block;content:'';top:50%;left:50%;margin-top:-11px;margin-left:-11px}.marvel-device.iphone4s .sleep{position:absolute;top:-4px;right:60px;width:60px;height:4px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px;background:#4D4D4D}.marvel-device.iphone4s .volume{position:absolute;left:-4px;top:160px;height:27px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:#4D4D4D}.marvel-device.iphone4s .volume:before{position:absolute;left:0px;top:-70px;height:35px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone4s .volume:after{position:absolute;left:0px;bottom:-64px;height:27px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone4s.landscape{padding:27px 129px;height:320px;width:480px}.marvel-device.iphone4s.landscape .bottom-bar{left:90px;bottom:0px;height:100%;width:3px}.marvel-device.iphone4s.landscape .top-bar{left:calc(100% - 60px);top:0px;height:100%;width:3px}.marvel-device.iphone4s.landscape .camera{top:134px;left:calc(100% - 72px);margin-left:0}.marvel-device.iphone4s.landscape .speaker{top:50%;margin-left:0;margin-top:-32px;left:calc(100% - 72px);width:10px;height:64px}.marvel-device.iphone4s.landscape .sensor{height:40px;width:10px;left:calc(100% - 36px);top:50%;margin-left:0;margin-top:-20px}.marvel-device.iphone4s.landscape .home{left:30px;bottom:50%;margin-left:0;margin-bottom:-36px}.marvel-device.iphone4s.landscape .sleep{height:60px;width:4px;right:-4px;top:calc(100% - 120px);-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px}.marvel-device.iphone4s.landscape .volume{top:-4px;left:calc(100% - 187px);height:4px;width:27px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone4s.landscape .volume:before{right:-70px;left:auto;top:0px;width:35px;height:4px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone4s.landscape .volume:after{width:27px;height:4px;bottom:0px;left:-64px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone4s.silver{background:#bcbcbc}.marvel-device.iphone4s.silver:before{background:#fcfcfc}.marvel-device.iphone4s.silver .home{background:#fcfcfc;-webkit-box-shadow:inset 0 0 0 1px #bcbcbc;box-shadow:inset 0 0 0 1px #bcbcbc}.marvel-device.iphone4s.silver .home:after{border:1px solid rgba(0,0,0,0.2)}.marvel-device.iphone4s.silver .volume,.marvel-device.iphone4s.silver .sleep{background:#d6d6d6}.marvel-device.nexus5{padding:50px 15px 50px 15px;width:320px;height:568px;background:#1e1e1e;-webkit-border-radius:20px;border-radius:20px}.marvel-device.nexus5:before{-webkit-border-radius:600px / 50px;border-radius:600px / 50px;background:inherit;content:'';top:0;position:absolute;height:103.1%;width:calc(100% - 26px);top:50%;left:50%;-moz-transform:translateX(-50%) translateY(-50%);-webkit-transform:translateX(-50%) translateY(-50%);-o-transform:translateX(-50%) translateY(-50%);-ms-transform:translateX(-50%) translateY(-50%);transform:translateX(-50%) translateY(-50%)}.marvel-device.nexus5 .top-bar{width:calc(100% - 8px);height:calc(100% - 6px);position:absolute;top:3px;left:4px;-webkit-border-radius:20px;border-radius:20px;background:#181818}.marvel-device.nexus5 .top-bar:before{-webkit-border-radius:600px / 50px;border-radius:600px / 50px;background:inherit;content:'';top:0;position:absolute;height:103.0%;width:calc(100% - 26px);top:50%;left:50%;-moz-transform:translateX(-50%) translateY(-50%);-webkit-transform:translateX(-50%) translateY(-50%);-o-transform:translateX(-50%) translateY(-50%);-ms-transform:translateX(-50%) translateY(-50%);transform:translateX(-50%) translateY(-50%)}.marvel-device.nexus5 .bottom-bar{display:none}.marvel-device.nexus5 .sleep{width:3px;position:absolute;left:-3px;top:110px;height:100px;background:inherit;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px}.marvel-device.nexus5 .volume{width:3px;position:absolute;right:-3px;top:70px;height:45px;background:inherit;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px}.marvel-device.nexus5 .camera{background:#3c3d3d;width:10px;height:10px;position:absolute;top:18px;left:50%;z-index:3;margin-left:-5px;-webkit-border-radius:100%;border-radius:100%}.marvel-device.nexus5 .camera:before{background:#3c3d3d;width:6px;height:6px;content:'';display:block;position:absolute;top:2px;left:-100px;z-index:3;-webkit-border-radius:100%;border-radius:100%}.marvel-device.nexus5.landscape{padding:15px 50px 15px 50px;height:320px;width:568px}.marvel-device.nexus5.landscape:before{width:103.1%;height:calc(100% - 26px);-webkit-border-radius:50px / 600px;border-radius:50px / 600px}.marvel-device.nexus5.landscape .top-bar{left:3px;top:4px;height:calc(100% - 8px);width:calc(100% - 6px)}.marvel-device.nexus5.landscape .top-bar:before{width:103%;height:calc(100% - 26px);-webkit-border-radius:50px / 600px;border-radius:50px / 600px}.marvel-device.nexus5.landscape .sleep{height:3px;width:100px;left:calc(100% - 210px);top:-3px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.nexus5.landscape .volume{height:3px;width:45px;right:70px;top:100%;-webkit-border-radius:0px 0px 2px 2px;border-radius:0px 0px 2px 2px}.marvel-device.nexus5.landscape .camera{top:50%;left:calc(100% - 18px);margin-left:0;margin-top:-5px}.marvel-device.nexus5.landscape .camera:before{top:-100px;left:2px}.marvel-device.s5{padding:60px 18px;-webkit-border-radius:42px;border-radius:42px;width:320px;height:568px;background:#bcbcbc}.marvel-device.s5:before,.marvel-device.s5:after{width:calc(100% - 52px);content:'';display:block;height:26px;background:inherit;position:absolute;-webkit-border-radius:500px / 40px;border-radius:500px / 40px;left:50%;-moz-transform:translateX(-50%);-webkit-transform:translateX(-50%);-o-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%)}.marvel-device.s5:before{top:-7px}.marvel-device.s5:after{bottom:-7px}.marvel-device.s5 .bottom-bar{display:none}.marvel-device.s5 .top-bar{-webkit-border-radius:37px;border-radius:37px;width:calc(100% - 10px);height:calc(100% - 10px);top:5px;left:5px;background:radial-gradient(rgba(0,0,0,0.02) 20%, transparent 60%) 0 0,radial-gradient(rgba(0,0,0,0.02) 20%, transparent 60%) 3px 3px;background-color:white;background-size:4px 4px;background-position:center;z-index:2;position:absolute}.marvel-device.s5 .top-bar:before,.marvel-device.s5 .top-bar:after{width:calc(100% - 48px);content:'';display:block;height:26px;background:inherit;position:absolute;-webkit-border-radius:500px / 40px;border-radius:500px / 40px;left:50%;-moz-transform:translateX(-50%);-webkit-transform:translateX(-50%);-o-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%)}.marvel-device.s5 .top-bar:before{top:-7px}.marvel-device.s5 .top-bar:after{bottom:-7px}.marvel-device.s5 .sleep{width:3px;position:absolute;left:-3px;top:100px;height:100px;background:#cecece;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px}.marvel-device.s5 .speaker{width:68px;height:8px;position:absolute;top:20px;display:block;z-index:3;left:50%;margin-left:-34px;background-color:#bcbcbc;background-position:top left;-webkit-border-radius:4px;border-radius:4px}.marvel-device.s5 .sensor{display:block;position:absolute;top:20px;right:110px;background:#3c3d3d;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;width:8px;height:8px;z-index:3}.marvel-device.s5 .sensor:after{display:block;content:'';position:absolute;top:0px;right:12px;background:#3c3d3d;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;width:8px;height:8px;z-index:3}.marvel-device.s5 .camera{display:block;position:absolute;top:24px;right:42px;background:black;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;width:10px;height:10px;z-index:3}.marvel-device.s5 .camera:before{width:4px;height:4px;background:#3c3d3d;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;position:absolute;content:'';top:50%;left:50%;margin-top:-2px;margin-left:-2px}.marvel-device.s5 .home{position:absolute;z-index:3;bottom:17px;left:50%;width:70px;height:20px;background:white;-webkit-border-radius:18px;border-radius:18px;display:block;margin-left:-35px;border:2px solid black}.marvel-device.s5.landscape{padding:18px 60px;height:320px;width:568px}.marvel-device.s5.landscape:before,.marvel-device.s5.landscape:after{height:calc(100% - 52px);width:26px;-webkit-border-radius:40px / 500px;border-radius:40px / 500px;-moz-transform:translateY(-50%);-webkit-transform:translateY(-50%);-o-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}.marvel-device.s5.landscape:before{top:50%;left:-7px}.marvel-device.s5.landscape:after{top:50%;left:auto;right:-7px}.marvel-device.s5.landscape .top-bar:before,.marvel-device.s5.landscape .top-bar:after{width:26px;height:calc(100% - 48px);-webkit-border-radius:40px / 500px;border-radius:40px / 500px;-moz-transform:translateY(-50%);-webkit-transform:translateY(-50%);-o-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}.marvel-device.s5.landscape .top-bar:before{right:-7px;top:50%;left:auto}.marvel-device.s5.landscape .top-bar:after{left:-7px;top:50%;right:auto}.marvel-device.s5.landscape .sleep{height:3px;width:100px;left:calc(100% - 200px);top:-3px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.s5.landscape .speaker{height:68px;width:8px;left:calc(100% - 20px);top:50%;margin-left:0;margin-top:-34px}.marvel-device.s5.landscape .sensor{right:20px;top:calc(100% - 110px)}.marvel-device.s5.landscape .sensor:after{left:-12px;right:0px}.marvel-device.s5.landscape .camera{top:calc(100% - 42px);right:24px}.marvel-device.s5.landscape .home{width:20px;height:70px;bottom:50%;margin-bottom:-35px;margin-left:0;left:17px}.marvel-device.s5.black{background:#1e1e1e}.marvel-device.s5.black .speaker{background:black}.marvel-device.s5.black .sleep{background:#1e1e1e}.marvel-device.s5.black .top-bar{background:radial-gradient(rgba(0,0,0,0.05) 20%, transparent 60%) 0 0,radial-gradient(rgba(0,0,0,0.05) 20%, transparent 60%) 3px 3px;background-color:#2c2b2c;background-size:4px 4px}.marvel-device.s5.black .home{background:#2c2b2c}.marvel-device.lumia920{padding:80px 35px 125px 35px;background:#ffdd00;width:320px;height:533px;-moz-border-radius:40px / 3px;-webkit-border-radius:40px / 3px;border-radius:40px / 3px}.marvel-device.lumia920 .bottom-bar{display:none}.marvel-device.lumia920 .top-bar{width:calc(100% - 24px);height:calc(100% - 32px);position:absolute;top:16px;left:12px;-moz-border-radius:24px;-webkit-border-radius:24px;border-radius:24px;background:black;z-index:1}.marvel-device.lumia920 .top-bar:before{background:#1e1e1e;display:block;content:'';width:calc(100% - 4px);height:calc(100% - 4px);top:2px;left:2px;position:absolute;-moz-border-radius:22px;-webkit-border-radius:22px;border-radius:22px}.marvel-device.lumia920 .volume{width:3px;position:absolute;top:130px;height:100px;background:#1e1e1e;right:-3px;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px}.marvel-device.lumia920 .volume:before{width:3px;position:absolute;top:190px;content:'';display:block;height:50px;background:inherit;right:0px;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px}.marvel-device.lumia920 .volume:after{width:3px;position:absolute;top:460px;content:'';display:block;height:50px;background:inherit;right:0px;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px}.marvel-device.lumia920 .camera{background:#3c3d3d;width:10px;height:10px;position:absolute;top:34px;right:130px;z-index:5;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}.marvel-device.lumia920 .speaker{background:#292728;width:64px;height:10px;position:absolute;top:38px;left:50%;margin-left:-32px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;z-index:3}.marvel-device.lumia920.landscape{padding:35px 80px 35px 125px;height:320px;width:568px;-moz-border-radius:2px / 100px;-webkit-border-radius:2px / 100px;border-radius:2px / 100px}.marvel-device.lumia920.landscape .top-bar{height:calc(100% - 24px);width:calc(100% - 32px);left:16px;top:12px}.marvel-device.lumia920.landscape .volume{height:3px;right:130px;width:100px;top:100%;-webkit-border-radius:0px 0px 2px 2px;border-radius:0px 0px 2px 2px}.marvel-device.lumia920.landscape .volume:before{height:3px;right:190px;top:0px;width:50px;-webkit-border-radius:0px 0px 2px 2px;border-radius:0px 0px 2px 2px}.marvel-device.lumia920.landscape .volume:after{height:3px;right:430px;top:0px;width:50px;-webkit-border-radius:0px 0px 2px 2px;border-radius:0px 0px 2px 2px}.marvel-device.lumia920.landscape .camera{right:30px;top:calc(100% - 140px)}.marvel-device.lumia920.landscape .speaker{width:10px;height:64px;top:50%;margin-left:0;margin-top:-32px;left:calc(100% - 48px)}.marvel-device.lumia920.black{background:black}.marvel-device.lumia920.white{background:white;-webkit-box-shadow:0 1px 2px 0 rgba(0,0,0,0.2);box-shadow:0 1px 2px 0 rgba(0,0,0,0.2)}.marvel-device.lumia920.blue{background:#00acdd}.marvel-device.lumia920.red{background:#CC3E32}.marvel-device.htc-one{padding:72px 25px 100px 25px;width:320px;height:568px;background:#bebebe;-webkit-border-radius:34px;border-radius:34px}.marvel-device.htc-one:before{content:'';display:block;width:calc(100% - 4px);height:calc(100% - 4px);position:absolute;top:2px;left:2px;background:#adadad;-webkit-border-radius:32px;border-radius:32px}.marvel-device.htc-one:after{content:'';display:block;width:calc(100% - 8px);height:calc(100% - 8px);position:absolute;top:4px;left:4px;background:#eeeeee;-webkit-border-radius:30px;border-radius:30px}.marvel-device.htc-one .top-bar{width:calc(100% - 4px);height:635px;position:absolute;background:#424242;top:50px;z-index:1;left:2px}.marvel-device.htc-one .top-bar:before{content:'';position:absolute;width:calc(100% - 4px);height:100%;position:absolute;background:black;top:0px;z-index:1;left:2px}.marvel-device.htc-one .bottom-bar{display:none}.marvel-device.htc-one .speaker{height:16px;width:216px;display:block;position:absolute;top:22px;z-index:2;left:50%;margin-left:-108px;background:radial-gradient(#343434 25%, transparent 50%) 0 0,radial-gradient(#343434 25%, transparent 50%) 4px 4px;background-size:4px 4px;background-position:top left}.marvel-device.htc-one .speaker:after{content:'';height:16px;width:216px;display:block;position:absolute;top:676px;z-index:2;left:50%;margin-left:-108px;background:inherit}.marvel-device.htc-one .camera{display:block;position:absolute;top:18px;right:38px;background:#3c3d3d;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;width:24px;height:24px;z-index:3}.marvel-device.htc-one .camera:before{width:8px;height:8px;background:black;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;position:absolute;content:'';top:50%;left:50%;margin-top:-4px;margin-left:-4px}.marvel-device.htc-one .sensor{display:block;position:absolute;top:29px;left:60px;background:#3c3d3d;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;width:8px;height:8px;z-index:3}.marvel-device.htc-one .sensor:after{display:block;content:'';position:absolute;top:0px;right:12px;background:#3c3d3d;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;width:8px;height:8px;z-index:3}.marvel-device.htc-one.landscape{padding:25px 72px 25px 100px;height:320px;width:568px}.marvel-device.htc-one.landscape .top-bar{height:calc(100% - 4px);width:635px;left:calc(100% - 685px);top:2px}.marvel-device.htc-one.landscape .speaker{width:16px;height:216px;left:calc(100% - 38px);top:50%;margin-left:0px;margin-top:-108px}.marvel-device.htc-one.landscape .speaker:after{width:16px;height:216px;left:calc(100% - 692px);top:50%;margin-left:0;margin-top:-108px}.marvel-device.htc-one.landscape .camera{right:18px;top:calc(100% - 38px)}.marvel-device.htc-one.landscape .sensor{left:calc(100% - 29px);top:60px}.marvel-device.htc-one.landscape .sensor :after{right:0;top:-12px}.marvel-device.ipad{width:576px;height:768px;padding:90px 25px;background:#242324;-webkit-border-radius:44px;border-radius:44px}.marvel-device.ipad:before{width:calc(100% - 8px);height:calc(100% - 8px);position:absolute;content:'';display:block;top:4px;left:4px;-webkit-border-radius:40px;border-radius:40px;background:#1e1e1e}.marvel-device.ipad .camera{background:#3c3d3d;width:10px;height:10px;position:absolute;top:44px;left:50%;margin-left:-5px;-webkit-border-radius:100%;border-radius:100%}.marvel-device.ipad .top-bar,.marvel-device.ipad .bottom-bar{display:none}.marvel-device.ipad .home{background:#242324;-webkit-border-radius:36px;border-radius:36px;width:50px;height:50px;position:absolute;left:50%;margin-left:-25px;bottom:22px}.marvel-device.ipad .home:after{width:15px;height:15px;margin-top:-8px;margin-left:-8px;border:1px solid rgba(255,255,255,0.1);-webkit-border-radius:4px;border-radius:4px;position:absolute;display:block;content:'';top:50%;left:50%}.marvel-device.ipad.landscape{height:576px;width:768px;padding:25px 90px}.marvel-device.ipad.landscape .camera{left:calc(100% - 44px);top:50%;margin-left:0;margin-top:-5px}.marvel-device.ipad.landscape .home{top:50%;left:22px;margin-left:0;margin-top:-25px}.marvel-device.ipad.silver{background:#bcbcbc}.marvel-device.ipad.silver:before{background:#fcfcfc}.marvel-device.ipad.silver .home{background:#fcfcfc;-webkit-box-shadow:inset 0 0 0 1px #bcbcbc;box-shadow:inset 0 0 0 1px #bcbcbc}.marvel-device.ipad.silver .home:after{border:1px solid rgba(0,0,0,0.2)}
-</style>
-    <style>
-        .marvel-device {
-            margin-right: 15px;
-        }
-
-    </style>
-    <template>
-        <div class="marvel-device nexus5">
-            <div class="top-bar"></div>
-            <div class="sleep"></div>
-            <div class="volume"></div>
-            <div class="camera"></div>
-            <div class="screen">
-
-            </div>
-        </div>
-    </template>
-    <script>
-        Polymer({
-            is: "nexus-5",
-            properties: {
-                items: {
-                    type: Array,
-                    notify: true,
-                }
-            }
-        });
-    </script>
-</dom-module><dom-module id="iphone-5c" assetpath="iphone-5c/">
-    <style>
-.marvel-device{display:inline-block;position:relative}.marvel-device .screen{width:100%;position:relative;height:100%;color:white;z-index:2;text-align:center;display:block;-webkit-border-radius:1px;border-radius:1px;-webkit-box-shadow:0 0 0 3px #111;box-shadow:0 0 0 3px #111}.marvel-device .top-bar,.marvel-device .bottom-bar{height:3px;background:black;width:100%;display:block}.marvel-device .middle-bar{width:3px;height:4px;top:0px;left:90px;background:black;position:absolute}.marvel-device.iphone6{width:375px;height:667px;padding:105px 24px;background:#d9dbdc;-webkit-border-radius:56px;border-radius:56px;-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.2);box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.2)}.marvel-device.iphone6:before{width:calc(100% - 12px);height:calc(100% - 12px);position:absolute;top:6px;content:'';left:6px;-webkit-border-radius:50px;border-radius:50px;background:#f8f8f8;z-index:1}.marvel-device.iphone6:after{width:calc(100% - 16px);height:calc(100% - 16px);position:absolute;top:8px;content:'';left:8px;-webkit-border-radius:48px;border-radius:48px;-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #fff;box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #fff;z-index:2}.marvel-device.iphone6 .home{-webkit-border-radius:100%;border-radius:100%;width:68px;height:68px;position:absolute;left:50%;margin-left:-34px;bottom:22px;z-index:3;background:#303233;background:-moz-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:-webkit-gradient(linear, left top, right bottom, color-stop(0%, #303233), color-stop(50%, #b5b7b9), color-stop(69%, #f0f2f2), color-stop(100%, #303233));background:-webkit-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:-o-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:-ms-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:linear-gradient(135deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#303233', endColorstr='#303233',GradientType=1 )}.marvel-device.iphone6 .home:before{background:#f8f8f8;position:absolute;content:'';-webkit-border-radius:100%;border-radius:100%;width:calc(100% - 8px);height:calc(100% - 8px);top:4px;left:4px}.marvel-device.iphone6 .top-bar{height:14px;background:#bfbfc0;position:absolute;top:68px;left:0}.marvel-device.iphone6 .bottom-bar{height:14px;background:#bfbfc0;position:absolute;bottom:68px;left:0}.marvel-device.iphone6 .sleep{position:absolute;top:190px;right:-4px;width:4px;height:66px;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px;background:#d9dbdc}.marvel-device.iphone6 .volume{position:absolute;left:-4px;top:188px;z-index:0;height:66px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:#d9dbdc}.marvel-device.iphone6 .volume:before{position:absolute;left:2px;top:-78px;height:40px;width:2px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone6 .volume:after{position:absolute;left:0px;top:82px;height:66px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone6 .camera{background:#3c3d3d;width:12px;height:12px;position:absolute;top:24px;left:50%;margin-left:-6px;-webkit-border-radius:100%;border-radius:100%;z-index:3}.marvel-device.iphone6 .sensor{background:#3c3d3d;width:16px;height:16px;position:absolute;top:49px;left:134px;z-index:3;-webkit-border-radius:100%;border-radius:100%}.marvel-device.iphone6 .speaker{background:#292728;width:70px;height:6px;position:absolute;top:54px;left:50%;margin-left:-35px;-webkit-border-radius:6px;border-radius:6px;z-index:3}.marvel-device.iphone6.gold{background:#f9e7d3}.marvel-device.iphone6.gold .top-bar,.marvel-device.iphone6.gold .bottom-bar{background:white}.marvel-device.iphone6.gold .sleep,.marvel-device.iphone6.gold .volume{background:#f9e7d3}.marvel-device.iphone6.gold .home{background:#cebba9;background:-moz-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:-webkit-gradient(linear, left top, right bottom, color-stop(0%, #cebba9), color-stop(50%, #f9e7d3), color-stop(100%, #cebba9));background:-webkit-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:-o-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:-ms-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:linear-gradient(135deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#cebba9', endColorstr='#cebba9',GradientType=1 )}.marvel-device.iphone6.black{background:#464646;-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.7);box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.7)}.marvel-device.iphone6.black:before{background:#080808}.marvel-device.iphone6.black:after{-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #212121;box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #212121}.marvel-device.iphone6.black .top-bar,.marvel-device.iphone6.black .bottom-bar{background:#212121}.marvel-device.iphone6.black .volume,.marvel-device.iphone6.black .sleep{background:#464646}.marvel-device.iphone6.black .camera{background:#080808}.marvel-device.iphone6.black .home{background:#080808;background:-moz-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:-webkit-gradient(linear, left top, right bottom, color-stop(0%, #080808), color-stop(50%, #464646), color-stop(100%, #080808));background:-webkit-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:-o-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:-ms-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:linear-gradient(135deg, #080808 0%, #464646 50%, #080808 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#080808', endColorstr='#080808',GradientType=1 )}.marvel-device.iphone6.black .home:before{background:#080808}.marvel-device.iphone6.landscape{padding:24px 105px;height:375px;width:667px}.marvel-device.iphone6.landscape .sleep{top:100%;-webkit-border-radius:0px 0px 2px 2px;border-radius:0px 0px 2px 2px;right:190px;height:4px;width:66px}.marvel-device.iphone6.landscape .volume{width:66px;height:4px;top:-4px;left:calc(100% - 188px - 66px);-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone6.landscape .volume:before{width:40px;height:2px;top:2px;right:-78px;left:auto;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone6.landscape .volume:after{left:-82px;width:66px;height:4px;top:0;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone6.landscape .top-bar{width:14px;height:100%;left:calc(100% - 68px -  14px);top:0}.marvel-device.iphone6.landscape .bottom-bar{width:14px;height:100%;left:68px;top:0}.marvel-device.iphone6.landscape .home{top:50%;margin-top:-34px;margin-left:0;left:22px}.marvel-device.iphone6.landscape .sensor{top:134px;left:calc(100% - 49px - 16px)}.marvel-device.iphone6.landscape .speaker{height:70px;width:6px;left:calc(100% - 54px - 6px);top:50%;margin-left:0px;margin-top:-35px}.marvel-device.iphone6.landscape .camera{left:calc(100% - 32px);top:50%;margin-left:0px;margin-top:-5px}.marvel-device.iphone6plus{width:414px;height:736px;padding:112px 26px;background:#d9dbdc;-webkit-border-radius:56px;border-radius:56px;-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.2);box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.2)}.marvel-device.iphone6plus:before{width:calc(100% - 12px);height:calc(100% - 12px);position:absolute;top:6px;content:'';left:6px;-webkit-border-radius:50px;border-radius:50px;background:#f8f8f8;z-index:1}.marvel-device.iphone6plus:after{width:calc(100% - 16px);height:calc(100% - 16px);position:absolute;top:8px;content:'';left:8px;-webkit-border-radius:48px;border-radius:48px;-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #fff;box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #fff;z-index:2}.marvel-device.iphone6plus .home{-webkit-border-radius:100%;border-radius:100%;width:68px;height:68px;position:absolute;left:50%;margin-left:-34px;bottom:24px;z-index:3;background:#303233;background:-moz-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:-webkit-gradient(linear, left top, right bottom, color-stop(0%, #303233), color-stop(50%, #b5b7b9), color-stop(69%, #f0f2f2), color-stop(100%, #303233));background:-webkit-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:-o-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:-ms-linear-gradient(-45deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);background:linear-gradient(135deg, #303233 0%, #b5b7b9 50%, #f0f2f2 69%, #303233 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#303233', endColorstr='#303233',GradientType=1 )}.marvel-device.iphone6plus .home:before{background:#f8f8f8;position:absolute;content:'';-webkit-border-radius:100%;border-radius:100%;width:calc(100% - 8px);height:calc(100% - 8px);top:4px;left:4px}.marvel-device.iphone6plus .top-bar{height:14px;background:#bfbfc0;position:absolute;top:68px;left:0}.marvel-device.iphone6plus .bottom-bar{height:14px;background:#bfbfc0;position:absolute;bottom:68px;left:0}.marvel-device.iphone6plus .sleep{position:absolute;top:190px;right:-4px;width:4px;height:66px;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px;background:#d9dbdc}.marvel-device.iphone6plus .volume{position:absolute;left:-4px;top:188px;z-index:0;height:66px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:#d9dbdc}.marvel-device.iphone6plus .volume:before{position:absolute;left:2px;top:-78px;height:40px;width:2px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone6plus .volume:after{position:absolute;left:0px;top:82px;height:66px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone6plus .camera{background:#3c3d3d;width:12px;height:12px;position:absolute;top:29px;left:50%;margin-left:-6px;-webkit-border-radius:100%;border-radius:100%;z-index:3}.marvel-device.iphone6plus .sensor{background:#3c3d3d;width:16px;height:16px;position:absolute;top:54px;left:154px;z-index:3;-webkit-border-radius:100%;border-radius:100%}.marvel-device.iphone6plus .speaker{background:#292728;width:70px;height:6px;position:absolute;top:59px;left:50%;margin-left:-35px;-webkit-border-radius:6px;border-radius:6px;z-index:3}.marvel-device.iphone6plus.gold{background:#f9e7d3}.marvel-device.iphone6plus.gold .top-bar,.marvel-device.iphone6plus.gold .bottom-bar{background:white}.marvel-device.iphone6plus.gold .sleep,.marvel-device.iphone6plus.gold .volume{background:#f9e7d3}.marvel-device.iphone6plus.gold .home{background:#cebba9;background:-moz-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:-webkit-gradient(linear, left top, right bottom, color-stop(0%, #cebba9), color-stop(50%, #f9e7d3), color-stop(100%, #cebba9));background:-webkit-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:-o-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:-ms-linear-gradient(-45deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);background:linear-gradient(135deg, #cebba9 0%, #f9e7d3 50%, #cebba9 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#cebba9', endColorstr='#cebba9',GradientType=1 )}.marvel-device.iphone6plus.black{background:#464646;-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.7);box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.7)}.marvel-device.iphone6plus.black:before{background:#080808}.marvel-device.iphone6plus.black:after{-webkit-box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #212121;box-shadow:inset 0 0 3px 0 rgba(0,0,0,0.1),inset 0 0 6px 3px #212121}.marvel-device.iphone6plus.black .top-bar,.marvel-device.iphone6plus.black .bottom-bar{background:#212121}.marvel-device.iphone6plus.black .volume,.marvel-device.iphone6plus.black .sleep{background:#464646}.marvel-device.iphone6plus.black .camera{background:#080808}.marvel-device.iphone6plus.black .home{background:#080808;background:-moz-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:-webkit-gradient(linear, left top, right bottom, color-stop(0%, #080808), color-stop(50%, #464646), color-stop(100%, #080808));background:-webkit-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:-o-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:-ms-linear-gradient(-45deg, #080808 0%, #464646 50%, #080808 100%);background:linear-gradient(135deg, #080808 0%, #464646 50%, #080808 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#080808', endColorstr='#080808',GradientType=1 )}.marvel-device.iphone6plus.black .home:before{background:#080808}.marvel-device.iphone6plus.landscape{padding:26px 112px;height:414px;width:736px}.marvel-device.iphone6plus.landscape .sleep{top:100%;-webkit-border-radius:0px 0px 2px 2px;border-radius:0px 0px 2px 2px;right:190px;height:4px;width:66px}.marvel-device.iphone6plus.landscape .volume{width:66px;height:4px;top:-4px;left:calc(100% - 188px - 66px);-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone6plus.landscape .volume:before{width:40px;height:2px;top:2px;right:-78px;left:auto;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone6plus.landscape .volume:after{left:-82px;width:66px;height:4px;top:0;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone6plus.landscape .top-bar{width:14px;height:100%;left:calc(100% - 68px -  14px);top:0}.marvel-device.iphone6plus.landscape .bottom-bar{width:14px;height:100%;left:68px;top:0}.marvel-device.iphone6plus.landscape .home{top:50%;margin-top:-34px;margin-left:0;left:24px}.marvel-device.iphone6plus.landscape .sensor{top:154px;left:calc(100% - 54px - 16px)}.marvel-device.iphone6plus.landscape .speaker{height:70px;width:6px;left:calc(100% - 59px - 6px);top:50%;margin-left:0px;margin-top:-35px}.marvel-device.iphone6plus.landscape .camera{left:calc(100% - 29px);top:50%;margin-left:0px;margin-top:-5px}.marvel-device.iphone5s,.marvel-device.iphone5c{padding:105px 22px;background:#2c2b2c;width:320px;height:568px;-webkit-border-radius:50px;border-radius:50px}.marvel-device.iphone5s:before,.marvel-device.iphone5c:before{width:calc(100% - 8px);height:calc(100% - 8px);position:absolute;top:4px;content:'';left:4px;-webkit-border-radius:46px;border-radius:46px;background:#1e1e1e;z-index:1}.marvel-device.iphone5s .sleep,.marvel-device.iphone5c .sleep{position:absolute;top:-4px;right:60px;width:60px;height:4px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px;background:#282727}.marvel-device.iphone5s .volume,.marvel-device.iphone5c .volume{position:absolute;left:-4px;top:180px;z-index:0;height:27px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:#282727}.marvel-device.iphone5s .volume:before,.marvel-device.iphone5c .volume:before{position:absolute;left:0px;top:-75px;height:35px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone5s .volume:after,.marvel-device.iphone5c .volume:after{position:absolute;left:0px;bottom:-64px;height:27px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone5s .camera,.marvel-device.iphone5c .camera{background:#3c3d3d;width:10px;height:10px;position:absolute;top:32px;left:50%;margin-left:-5px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;z-index:3}.marvel-device.iphone5s .sensor,.marvel-device.iphone5c .sensor{background:#3c3d3d;width:10px;height:10px;position:absolute;top:60px;left:160px;z-index:3;margin-left:-32px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}.marvel-device.iphone5s .speaker,.marvel-device.iphone5c .speaker{background:#292728;width:64px;height:10px;position:absolute;top:60px;left:50%;margin-left:-32px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;z-index:3}.marvel-device.iphone5s.landscape,.marvel-device.iphone5c.landscape{padding:22px 105px;height:320px;width:568px}.marvel-device.iphone5s.landscape .sleep,.marvel-device.iphone5c.landscape .sleep{right:-4px;top:calc(100% - 120px);height:60px;width:4px;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px}.marvel-device.iphone5s.landscape .volume,.marvel-device.iphone5c.landscape .volume{width:27px;height:4px;top:-4px;left:calc(100% - 180px);-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone5s.landscape .volume:before,.marvel-device.iphone5c.landscape .volume:before{width:35px;height:4px;top:0px;right:-75px;left:auto;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone5s.landscape .volume:after,.marvel-device.iphone5c.landscape .volume:after{bottom:0px;left:-64px;z-index:999;height:4px;width:27px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone5s.landscape .sensor,.marvel-device.iphone5c.landscape .sensor{top:160px;left:calc(100% - 60px);margin-left:0px;margin-top:-32px}.marvel-device.iphone5s.landscape .speaker,.marvel-device.iphone5c.landscape .speaker{height:64px;width:10px;left:calc(100% - 60px);top:50%;margin-left:0px;margin-top:-32px}.marvel-device.iphone5s.landscape .camera,.marvel-device.iphone5c.landscape .camera{left:calc(100% - 32px);top:50%;margin-left:0px;margin-top:-5px}.marvel-device.iphone5s .home{-moz-border-radius:36px;-webkit-border-radius:36px;border-radius:36px;width:68px;-webkit-box-shadow:inset 0 0 0 4px #2c2b2c;box-shadow:inset 0 0 0 4px #2c2b2c;height:68px;position:absolute;left:50%;margin-left:-34px;bottom:19px;z-index:3}.marvel-device.iphone5s .top-bar{top:70px;position:absolute;left:0}.marvel-device.iphone5s .bottom-bar{bottom:70px;position:absolute;left:0}.marvel-device.iphone5s.landscape .home{left:19px;bottom:50%;margin-bottom:-34px;margin-left:0px}.marvel-device.iphone5s.landscape .top-bar{left:70px;top:0px;width:3px;height:100%}.marvel-device.iphone5s.landscape .bottom-bar{right:70px;left:auto;bottom:0px;width:3px;height:100%}.marvel-device.iphone5s.silver{background:#bcbcbc}.marvel-device.iphone5s.silver:before{background:#fcfcfc}.marvel-device.iphone5s.silver .volume,.marvel-device.iphone5s.silver .sleep{background:#d6d6d6}.marvel-device.iphone5s.silver .top-bar,.marvel-device.iphone5s.silver .bottom-bar{background:#eaebec}.marvel-device.iphone5s.silver .home{-webkit-box-shadow:inset 0 0 0 4px #bcbcbc;box-shadow:inset 0 0 0 4px #bcbcbc}.marvel-device.iphone5s.gold{background:#f9e7d3}.marvel-device.iphone5s.gold:before{background:#fcfcfc}.marvel-device.iphone5s.gold .volume,.marvel-device.iphone5s.gold .sleep{background:#f9e7d3}.marvel-device.iphone5s.gold .top-bar,.marvel-device.iphone5s.gold .bottom-bar{background:white}.marvel-device.iphone5s.gold .home{-webkit-box-shadow:inset 0 0 0 4px #f9e7d3;box-shadow:inset 0 0 0 4px #f9e7d3}.marvel-device.iphone5c{background:white;-webkit-box-shadow:0 1px 2px 0 rgba(0,0,0,0.2);box-shadow:0 1px 2px 0 rgba(0,0,0,0.2)}.marvel-device.iphone5c .top-bar,.marvel-device.iphone5c .bottom-bar{display:none}.marvel-device.iphone5c .home{background:#242324;-moz-border-radius:36px;-webkit-border-radius:36px;border-radius:36px;width:68px;height:68px;z-index:3;position:absolute;left:50%;margin-left:-34px;bottom:19px}.marvel-device.iphone5c .home:after{width:20px;height:20px;border:1px solid rgba(255,255,255,0.1);-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;position:absolute;display:block;content:'';top:50%;left:50%;margin-top:-11px;margin-left:-11px}.marvel-device.iphone5c.landscape .home{left:19px;bottom:50%;margin-bottom:-34px;margin-left:0px}.marvel-device.iphone5c .volume,.marvel-device.iphone5c .sleep{background:#dddddd}.marvel-device.iphone5c.red{background:#f96b6c}.marvel-device.iphone5c.red .volume,.marvel-device.iphone5c.red .sleep{background:#ed5758}.marvel-device.iphone5c.yellow{background:#f2dc60}.marvel-device.iphone5c.yellow .volume,.marvel-device.iphone5c.yellow .sleep{background:#e5ce4c}.marvel-device.iphone5c.green{background:#97e563}.marvel-device.iphone5c.green .volume,.marvel-device.iphone5c.green .sleep{background:#85d94d}.marvel-device.iphone5c.blue{background:#33a2db}.marvel-device.iphone5c.blue .volume,.marvel-device.iphone5c.blue .sleep{background:#2694cd}.marvel-device.iphone4s{padding:129px 27px;width:320px;height:480px;background:#686868;-webkit-border-radius:54px;border-radius:54px}.marvel-device.iphone4s:before{content:'';width:calc(100% - 8px);height:calc(100% - 8px);position:absolute;top:4px;left:4px;z-index:1;-webkit-border-radius:50px;border-radius:50px;background:#1e1e1e}.marvel-device.iphone4s .top-bar{top:60px;position:absolute;left:0}.marvel-device.iphone4s .bottom-bar{bottom:90px;position:absolute;left:0}.marvel-device.iphone4s .camera{background:#3c3d3d;width:10px;height:10px;position:absolute;top:72px;left:134px;z-index:3;margin-left:-5px;-webkit-border-radius:100%;border-radius:100%}.marvel-device.iphone4s .speaker{background:#292728;width:64px;height:10px;position:absolute;top:72px;left:50%;z-index:3;margin-left:-32px;-webkit-border-radius:5px;border-radius:5px}.marvel-device.iphone4s .sensor{background:#292728;width:40px;height:10px;position:absolute;top:36px;left:50%;z-index:3;margin-left:-20px;-webkit-border-radius:5px;border-radius:5px}.marvel-device.iphone4s .home{background:#242324;-webkit-border-radius:100%;border-radius:100%;width:72px;height:72px;z-index:3;position:absolute;left:50%;margin-left:-36px;bottom:30px}.marvel-device.iphone4s .home:after{width:20px;height:20px;border:1px solid rgba(255,255,255,0.1);-webkit-border-radius:4px;border-radius:4px;position:absolute;display:block;content:'';top:50%;left:50%;margin-top:-11px;margin-left:-11px}.marvel-device.iphone4s .sleep{position:absolute;top:-4px;right:60px;width:60px;height:4px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px;background:#4D4D4D}.marvel-device.iphone4s .volume{position:absolute;left:-4px;top:160px;height:27px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:#4D4D4D}.marvel-device.iphone4s .volume:before{position:absolute;left:0px;top:-70px;height:35px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone4s .volume:after{position:absolute;left:0px;bottom:-64px;height:27px;width:4px;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px;background:inherit;content:'';display:block}.marvel-device.iphone4s.landscape{padding:27px 129px;height:320px;width:480px}.marvel-device.iphone4s.landscape .bottom-bar{left:90px;bottom:0px;height:100%;width:3px}.marvel-device.iphone4s.landscape .top-bar{left:calc(100% - 60px);top:0px;height:100%;width:3px}.marvel-device.iphone4s.landscape .camera{top:134px;left:calc(100% - 72px);margin-left:0}.marvel-device.iphone4s.landscape .speaker{top:50%;margin-left:0;margin-top:-32px;left:calc(100% - 72px);width:10px;height:64px}.marvel-device.iphone4s.landscape .sensor{height:40px;width:10px;left:calc(100% - 36px);top:50%;margin-left:0;margin-top:-20px}.marvel-device.iphone4s.landscape .home{left:30px;bottom:50%;margin-left:0;margin-bottom:-36px}.marvel-device.iphone4s.landscape .sleep{height:60px;width:4px;right:-4px;top:calc(100% - 120px);-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px}.marvel-device.iphone4s.landscape .volume{top:-4px;left:calc(100% - 187px);height:4px;width:27px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone4s.landscape .volume:before{right:-70px;left:auto;top:0px;width:35px;height:4px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone4s.landscape .volume:after{width:27px;height:4px;bottom:0px;left:-64px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.iphone4s.silver{background:#bcbcbc}.marvel-device.iphone4s.silver:before{background:#fcfcfc}.marvel-device.iphone4s.silver .home{background:#fcfcfc;-webkit-box-shadow:inset 0 0 0 1px #bcbcbc;box-shadow:inset 0 0 0 1px #bcbcbc}.marvel-device.iphone4s.silver .home:after{border:1px solid rgba(0,0,0,0.2)}.marvel-device.iphone4s.silver .volume,.marvel-device.iphone4s.silver .sleep{background:#d6d6d6}.marvel-device.nexus5{padding:50px 15px 50px 15px;width:320px;height:568px;background:#1e1e1e;-webkit-border-radius:20px;border-radius:20px}.marvel-device.nexus5:before{-webkit-border-radius:600px / 50px;border-radius:600px / 50px;background:inherit;content:'';top:0;position:absolute;height:103.1%;width:calc(100% - 26px);top:50%;left:50%;-moz-transform:translateX(-50%) translateY(-50%);-webkit-transform:translateX(-50%) translateY(-50%);-o-transform:translateX(-50%) translateY(-50%);-ms-transform:translateX(-50%) translateY(-50%);transform:translateX(-50%) translateY(-50%)}.marvel-device.nexus5 .top-bar{width:calc(100% - 8px);height:calc(100% - 6px);position:absolute;top:3px;left:4px;-webkit-border-radius:20px;border-radius:20px;background:#181818}.marvel-device.nexus5 .top-bar:before{-webkit-border-radius:600px / 50px;border-radius:600px / 50px;background:inherit;content:'';top:0;position:absolute;height:103.0%;width:calc(100% - 26px);top:50%;left:50%;-moz-transform:translateX(-50%) translateY(-50%);-webkit-transform:translateX(-50%) translateY(-50%);-o-transform:translateX(-50%) translateY(-50%);-ms-transform:translateX(-50%) translateY(-50%);transform:translateX(-50%) translateY(-50%)}.marvel-device.nexus5 .bottom-bar{display:none}.marvel-device.nexus5 .sleep{width:3px;position:absolute;left:-3px;top:110px;height:100px;background:inherit;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px}.marvel-device.nexus5 .volume{width:3px;position:absolute;right:-3px;top:70px;height:45px;background:inherit;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px}.marvel-device.nexus5 .camera{background:#3c3d3d;width:10px;height:10px;position:absolute;top:18px;left:50%;z-index:3;margin-left:-5px;-webkit-border-radius:100%;border-radius:100%}.marvel-device.nexus5 .camera:before{background:#3c3d3d;width:6px;height:6px;content:'';display:block;position:absolute;top:2px;left:-100px;z-index:3;-webkit-border-radius:100%;border-radius:100%}.marvel-device.nexus5.landscape{padding:15px 50px 15px 50px;height:320px;width:568px}.marvel-device.nexus5.landscape:before{width:103.1%;height:calc(100% - 26px);-webkit-border-radius:50px / 600px;border-radius:50px / 600px}.marvel-device.nexus5.landscape .top-bar{left:3px;top:4px;height:calc(100% - 8px);width:calc(100% - 6px)}.marvel-device.nexus5.landscape .top-bar:before{width:103%;height:calc(100% - 26px);-webkit-border-radius:50px / 600px;border-radius:50px / 600px}.marvel-device.nexus5.landscape .sleep{height:3px;width:100px;left:calc(100% - 210px);top:-3px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.nexus5.landscape .volume{height:3px;width:45px;right:70px;top:100%;-webkit-border-radius:0px 0px 2px 2px;border-radius:0px 0px 2px 2px}.marvel-device.nexus5.landscape .camera{top:50%;left:calc(100% - 18px);margin-left:0;margin-top:-5px}.marvel-device.nexus5.landscape .camera:before{top:-100px;left:2px}.marvel-device.s5{padding:60px 18px;-webkit-border-radius:42px;border-radius:42px;width:320px;height:568px;background:#bcbcbc}.marvel-device.s5:before,.marvel-device.s5:after{width:calc(100% - 52px);content:'';display:block;height:26px;background:inherit;position:absolute;-webkit-border-radius:500px / 40px;border-radius:500px / 40px;left:50%;-moz-transform:translateX(-50%);-webkit-transform:translateX(-50%);-o-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%)}.marvel-device.s5:before{top:-7px}.marvel-device.s5:after{bottom:-7px}.marvel-device.s5 .bottom-bar{display:none}.marvel-device.s5 .top-bar{-webkit-border-radius:37px;border-radius:37px;width:calc(100% - 10px);height:calc(100% - 10px);top:5px;left:5px;background:radial-gradient(rgba(0,0,0,0.02) 20%, transparent 60%) 0 0,radial-gradient(rgba(0,0,0,0.02) 20%, transparent 60%) 3px 3px;background-color:white;background-size:4px 4px;background-position:center;z-index:2;position:absolute}.marvel-device.s5 .top-bar:before,.marvel-device.s5 .top-bar:after{width:calc(100% - 48px);content:'';display:block;height:26px;background:inherit;position:absolute;-webkit-border-radius:500px / 40px;border-radius:500px / 40px;left:50%;-moz-transform:translateX(-50%);-webkit-transform:translateX(-50%);-o-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%)}.marvel-device.s5 .top-bar:before{top:-7px}.marvel-device.s5 .top-bar:after{bottom:-7px}.marvel-device.s5 .sleep{width:3px;position:absolute;left:-3px;top:100px;height:100px;background:#cecece;-webkit-border-radius:2px 0px 0px 2px;border-radius:2px 0px 0px 2px}.marvel-device.s5 .speaker{width:68px;height:8px;position:absolute;top:20px;display:block;z-index:3;left:50%;margin-left:-34px;background-color:#bcbcbc;background-position:top left;-webkit-border-radius:4px;border-radius:4px}.marvel-device.s5 .sensor{display:block;position:absolute;top:20px;right:110px;background:#3c3d3d;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;width:8px;height:8px;z-index:3}.marvel-device.s5 .sensor:after{display:block;content:'';position:absolute;top:0px;right:12px;background:#3c3d3d;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;width:8px;height:8px;z-index:3}.marvel-device.s5 .camera{display:block;position:absolute;top:24px;right:42px;background:black;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;width:10px;height:10px;z-index:3}.marvel-device.s5 .camera:before{width:4px;height:4px;background:#3c3d3d;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;position:absolute;content:'';top:50%;left:50%;margin-top:-2px;margin-left:-2px}.marvel-device.s5 .home{position:absolute;z-index:3;bottom:17px;left:50%;width:70px;height:20px;background:white;-webkit-border-radius:18px;border-radius:18px;display:block;margin-left:-35px;border:2px solid black}.marvel-device.s5.landscape{padding:18px 60px;height:320px;width:568px}.marvel-device.s5.landscape:before,.marvel-device.s5.landscape:after{height:calc(100% - 52px);width:26px;-webkit-border-radius:40px / 500px;border-radius:40px / 500px;-moz-transform:translateY(-50%);-webkit-transform:translateY(-50%);-o-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}.marvel-device.s5.landscape:before{top:50%;left:-7px}.marvel-device.s5.landscape:after{top:50%;left:auto;right:-7px}.marvel-device.s5.landscape .top-bar:before,.marvel-device.s5.landscape .top-bar:after{width:26px;height:calc(100% - 48px);-webkit-border-radius:40px / 500px;border-radius:40px / 500px;-moz-transform:translateY(-50%);-webkit-transform:translateY(-50%);-o-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}.marvel-device.s5.landscape .top-bar:before{right:-7px;top:50%;left:auto}.marvel-device.s5.landscape .top-bar:after{left:-7px;top:50%;right:auto}.marvel-device.s5.landscape .sleep{height:3px;width:100px;left:calc(100% - 200px);top:-3px;-webkit-border-radius:2px 2px 0px 0px;border-radius:2px 2px 0px 0px}.marvel-device.s5.landscape .speaker{height:68px;width:8px;left:calc(100% - 20px);top:50%;margin-left:0;margin-top:-34px}.marvel-device.s5.landscape .sensor{right:20px;top:calc(100% - 110px)}.marvel-device.s5.landscape .sensor:after{left:-12px;right:0px}.marvel-device.s5.landscape .camera{top:calc(100% - 42px);right:24px}.marvel-device.s5.landscape .home{width:20px;height:70px;bottom:50%;margin-bottom:-35px;margin-left:0;left:17px}.marvel-device.s5.black{background:#1e1e1e}.marvel-device.s5.black .speaker{background:black}.marvel-device.s5.black .sleep{background:#1e1e1e}.marvel-device.s5.black .top-bar{background:radial-gradient(rgba(0,0,0,0.05) 20%, transparent 60%) 0 0,radial-gradient(rgba(0,0,0,0.05) 20%, transparent 60%) 3px 3px;background-color:#2c2b2c;background-size:4px 4px}.marvel-device.s5.black .home{background:#2c2b2c}.marvel-device.lumia920{padding:80px 35px 125px 35px;background:#ffdd00;width:320px;height:533px;-moz-border-radius:40px / 3px;-webkit-border-radius:40px / 3px;border-radius:40px / 3px}.marvel-device.lumia920 .bottom-bar{display:none}.marvel-device.lumia920 .top-bar{width:calc(100% - 24px);height:calc(100% - 32px);position:absolute;top:16px;left:12px;-moz-border-radius:24px;-webkit-border-radius:24px;border-radius:24px;background:black;z-index:1}.marvel-device.lumia920 .top-bar:before{background:#1e1e1e;display:block;content:'';width:calc(100% - 4px);height:calc(100% - 4px);top:2px;left:2px;position:absolute;-moz-border-radius:22px;-webkit-border-radius:22px;border-radius:22px}.marvel-device.lumia920 .volume{width:3px;position:absolute;top:130px;height:100px;background:#1e1e1e;right:-3px;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px}.marvel-device.lumia920 .volume:before{width:3px;position:absolute;top:190px;content:'';display:block;height:50px;background:inherit;right:0px;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px}.marvel-device.lumia920 .volume:after{width:3px;position:absolute;top:460px;content:'';display:block;height:50px;background:inherit;right:0px;-webkit-border-radius:0px 2px 2px 0px;border-radius:0px 2px 2px 0px}.marvel-device.lumia920 .camera{background:#3c3d3d;width:10px;height:10px;position:absolute;top:34px;right:130px;z-index:5;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}.marvel-device.lumia920 .speaker{background:#292728;width:64px;height:10px;position:absolute;top:38px;left:50%;margin-left:-32px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;z-index:3}.marvel-device.lumia920.landscape{padding:35px 80px 35px 125px;height:320px;width:568px;-moz-border-radius:2px / 100px;-webkit-border-radius:2px / 100px;border-radius:2px / 100px}.marvel-device.lumia920.landscape .top-bar{height:calc(100% - 24px);width:calc(100% - 32px);left:16px;top:12px}.marvel-device.lumia920.landscape .volume{height:3px;right:130px;width:100px;top:100%;-webkit-border-radius:0px 0px 2px 2px;border-radius:0px 0px 2px 2px}.marvel-device.lumia920.landscape .volume:before{height:3px;right:190px;top:0px;width:50px;-webkit-border-radius:0px 0px 2px 2px;border-radius:0px 0px 2px 2px}.marvel-device.lumia920.landscape .volume:after{height:3px;right:430px;top:0px;width:50px;-webkit-border-radius:0px 0px 2px 2px;border-radius:0px 0px 2px 2px}.marvel-device.lumia920.landscape .camera{right:30px;top:calc(100% - 140px)}.marvel-device.lumia920.landscape .speaker{width:10px;height:64px;top:50%;margin-left:0;margin-top:-32px;left:calc(100% - 48px)}.marvel-device.lumia920.black{background:black}.marvel-device.lumia920.white{background:white;-webkit-box-shadow:0 1px 2px 0 rgba(0,0,0,0.2);box-shadow:0 1px 2px 0 rgba(0,0,0,0.2)}.marvel-device.lumia920.blue{background:#00acdd}.marvel-device.lumia920.red{background:#CC3E32}.marvel-device.htc-one{padding:72px 25px 100px 25px;width:320px;height:568px;background:#bebebe;-webkit-border-radius:34px;border-radius:34px}.marvel-device.htc-one:before{content:'';display:block;width:calc(100% - 4px);height:calc(100% - 4px);position:absolute;top:2px;left:2px;background:#adadad;-webkit-border-radius:32px;border-radius:32px}.marvel-device.htc-one:after{content:'';display:block;width:calc(100% - 8px);height:calc(100% - 8px);position:absolute;top:4px;left:4px;background:#eeeeee;-webkit-border-radius:30px;border-radius:30px}.marvel-device.htc-one .top-bar{width:calc(100% - 4px);height:635px;position:absolute;background:#424242;top:50px;z-index:1;left:2px}.marvel-device.htc-one .top-bar:before{content:'';position:absolute;width:calc(100% - 4px);height:100%;position:absolute;background:black;top:0px;z-index:1;left:2px}.marvel-device.htc-one .bottom-bar{display:none}.marvel-device.htc-one .speaker{height:16px;width:216px;display:block;position:absolute;top:22px;z-index:2;left:50%;margin-left:-108px;background:radial-gradient(#343434 25%, transparent 50%) 0 0,radial-gradient(#343434 25%, transparent 50%) 4px 4px;background-size:4px 4px;background-position:top left}.marvel-device.htc-one .speaker:after{content:'';height:16px;width:216px;display:block;position:absolute;top:676px;z-index:2;left:50%;margin-left:-108px;background:inherit}.marvel-device.htc-one .camera{display:block;position:absolute;top:18px;right:38px;background:#3c3d3d;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;width:24px;height:24px;z-index:3}.marvel-device.htc-one .camera:before{width:8px;height:8px;background:black;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;position:absolute;content:'';top:50%;left:50%;margin-top:-4px;margin-left:-4px}.marvel-device.htc-one .sensor{display:block;position:absolute;top:29px;left:60px;background:#3c3d3d;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;width:8px;height:8px;z-index:3}.marvel-device.htc-one .sensor:after{display:block;content:'';position:absolute;top:0px;right:12px;background:#3c3d3d;-moz-border-radius:100%;-webkit-border-radius:100%;border-radius:100%;width:8px;height:8px;z-index:3}.marvel-device.htc-one.landscape{padding:25px 72px 25px 100px;height:320px;width:568px}.marvel-device.htc-one.landscape .top-bar{height:calc(100% - 4px);width:635px;left:calc(100% - 685px);top:2px}.marvel-device.htc-one.landscape .speaker{width:16px;height:216px;left:calc(100% - 38px);top:50%;margin-left:0px;margin-top:-108px}.marvel-device.htc-one.landscape .speaker:after{width:16px;height:216px;left:calc(100% - 692px);top:50%;margin-left:0;margin-top:-108px}.marvel-device.htc-one.landscape .camera{right:18px;top:calc(100% - 38px)}.marvel-device.htc-one.landscape .sensor{left:calc(100% - 29px);top:60px}.marvel-device.htc-one.landscape .sensor :after{right:0;top:-12px}.marvel-device.ipad{width:576px;height:768px;padding:90px 25px;background:#242324;-webkit-border-radius:44px;border-radius:44px}.marvel-device.ipad:before{width:calc(100% - 8px);height:calc(100% - 8px);position:absolute;content:'';display:block;top:4px;left:4px;-webkit-border-radius:40px;border-radius:40px;background:#1e1e1e}.marvel-device.ipad .camera{background:#3c3d3d;width:10px;height:10px;position:absolute;top:44px;left:50%;margin-left:-5px;-webkit-border-radius:100%;border-radius:100%}.marvel-device.ipad .top-bar,.marvel-device.ipad .bottom-bar{display:none}.marvel-device.ipad .home{background:#242324;-webkit-border-radius:36px;border-radius:36px;width:50px;height:50px;position:absolute;left:50%;margin-left:-25px;bottom:22px}.marvel-device.ipad .home:after{width:15px;height:15px;margin-top:-8px;margin-left:-8px;border:1px solid rgba(255,255,255,0.1);-webkit-border-radius:4px;border-radius:4px;position:absolute;display:block;content:'';top:50%;left:50%}.marvel-device.ipad.landscape{height:576px;width:768px;padding:25px 90px}.marvel-device.ipad.landscape .camera{left:calc(100% - 44px);top:50%;margin-left:0;margin-top:-5px}.marvel-device.ipad.landscape .home{top:50%;left:22px;margin-left:0;margin-top:-25px}.marvel-device.ipad.silver{background:#bcbcbc}.marvel-device.ipad.silver:before{background:#fcfcfc}.marvel-device.ipad.silver .home{background:#fcfcfc;-webkit-box-shadow:inset 0 0 0 1px #bcbcbc;box-shadow:inset 0 0 0 1px #bcbcbc}.marvel-device.ipad.silver .home:after{border:1px solid rgba(0,0,0,0.2)}
-</style>
-    <style>
-        .marvel-device {
-            margin-right: 15px;
-        }
-    </style>
-    <template>
-        <div class="marvel-device iphone5c blue">
-            <div class="top-bar"></div>
-            <div class="sleep"></div>
-            <div class="volume"></div>
-            <div class="camera"></div>
-            <div class="sensor"></div>
-            <div class="speaker"></div>
-            <div class="screen">
-
-            </div>
-            <div class="home"></div>
-            <div class="bottom-bar"></div>
-        </div>
-    </template>
-    <script>
-        Polymer({
-            is: "iphone-5c",
-            properties: {
-                items: {
-                    type: Array,
-                    notify: true,
-                }
-            }
-        });
-    </script>
-</dom-module><dom-module id="ripple-wrapper" assetpath="ripple-wrapper/">
+<dom-module id="ripple-wrapper" assetpath="ripple-wrapper/">
     <style is="custom-style">
         :host {
             display: block;

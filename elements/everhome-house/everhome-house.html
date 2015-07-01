@@ -1,0 +1,204 @@
+<dom-module id="everhome-house">
+    <style is="custom-style">
+        #rollladen_kueche_2_2, #rollladen_kueche_2_1 {
+            width: 37px;
+            transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            -webkit-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            -moz-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+        }
+
+        #rollladen_kueche_2_2.active, #rollladen_kueche_2_1.active {
+            width: 37px;
+            height: 77px;
+        }
+
+        #lichtkegel_wohnzimmer_1_1.active, #lichtkegel_flur_1_1.active, #lichtkegel_arbeitszimmer_1_1.active, #lichtkegel_kueche_1_1.active, #lichtkegel_kinderzimmer_1_1.active, #lichtkegel_garage_1_1.active{
+            opacity: 0.2;
+        }
+
+        #lichtkegel_wohnzimmer_1_1, #lichtkegel_flur_1_1, #lichtkegel_arbeitszimmer_1_1, #lichtkegel_kueche_1_1, #lichtkegel_kinderzimmer_1_1, #lichtkegel_garage_1_1 {
+            transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            -webkit-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            -moz-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            opacity: 0;
+        }
+
+        #lampe_wohnzimmer_1_1, #lampe_flur_1_1, #lampe_arbeitszimmer_1_1_1_, #lampe_kueche_1_1, #lampe_kinderzimmer_1_1, #lampe_garage_1_1  {
+            transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            -webkit-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            -moz-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            fill: #DBDBDB;
+        }
+
+        #lampe_wohnzimmer_1_1.active, #lampe_flur_1_1.active, #lampe_arbeitszimmer_1_1_1_.active, #lampe_kueche_1_1.active, #lampe_kinderzimmer_1_1.active {
+            fill: #ffb400;
+        }
+
+		#lampe_garage_1_1.active{
+			fill:#fffcde;
+		}
+
+        #schatten_wohnzimmer_1_, #schatten_flur, #schatten_arbeitszimmer, #schatten_kueche, #schatten_kinderzimmer, #schatten_garage {
+            transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            -webkit-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            -moz-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+            opacity: 0.25;
+        }
+
+        #garagentor {
+            transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+        }
+
+        #garagentor.active {
+            y: -535.5px;
+            transform: rotate(90deg);
+            x: 417px;
+        }
+
+        #schatten_wohnzimmer_1_.active, #schatten_flur.active, #schatten_arbeitszimmer.active, #schatten_kueche.active, #schatten_kinderzimmer.active, #schatten_garage.active {
+            opacity: 0;
+        }
+
+		#markise_garten_1 > *{
+			transition: all 4000ms cubic-bezier(0.175, 0.885, 0.320, 1);
+			-webkit-transition: all 4000ms cubic-bezier(0.175, 0.885, 0.320, 1);
+			-moz-transition: all 4000ms cubic-bezier(0.175, 0.885, 0.320, 1);
+		}
+
+		#markise_garten_1.active > #markise_garten_1_1{
+			/*x: 593.5;
+			y: 439.7;*/
+			x: 925.5;
+			y: 410.7;
+		}
+		#markise_garten_1.active > #markise_garten_1_2{
+			/*x: 594.1;
+			y: 442.6;*/
+			x: 594.1;
+			y: 413.6;
+		}
+		#markise_garten_1.active > #markise_garten_1_3{
+		  x: 592;
+		}
+    </style>
+    <template>
+        <div class="layout vertical">
+            <div>
+                <paper-button raised on-click="wohnzimmer_ein">Ein</paper-button>
+                <paper-button raised on-click="wohnzimmer_aus">Aus</paper-button>
+            </div>
+            <div>
+                <paper-button raised on-click="flur_ein">Ein</paper-button>
+                <paper-button raised on-click="flur_aus">Aus</paper-button>
+            </div>
+            <div>
+                <paper-button raised on-click="arbeitszimmer_ein">Ein</paper-button>
+                <paper-button raised on-click="arbeitszimmer_aus">Aus</paper-button>
+            </div>
+            <div>
+                <paper-button raised on-click="kueche_ein">Ein</paper-button>
+                <paper-button raised on-click="kueche_aus">Aus</paper-button>
+            </div>
+            <div>
+                <paper-button raised on-click="kinderzimmer_ein">Ein</paper-button>
+                <paper-button raised on-click="kinderzimmer_aus">Aus</paper-button>
+            </div>
+			<div>
+				<paper-button raised on-click="markise_raus">Raus</paper-button>
+				<paper-button raised on-click="markise_rein">Rein</paper-button>
+			</div>
+			<div>
+				<paper-button raised on-click="garage_ein">Ein</paper-button>
+				<paper-button raised on-click="garage_aus">Aus</paper-button>
+			</div>
+        </div>
+        <div id="container">
+			<img src="house.svg"/>
+		</div>
+    </template>
+    <script>
+        Polymer({
+            is: "everhome-house",
+            wohnzimmer_ein: function () {
+                $("#lichtkegel_wohnzimmer_1_1").attr("class", "style-scope everhome-house active");
+                $("#lampe_wohnzimmer_1_1").attr("class", "style-scope everhome-house active");
+                $("#schatten_wohnzimmer_1_").attr("class", "style-scope everhome-house active");
+            },
+            wohnzimmer_aus: function () {
+                $("#lichtkegel_wohnzimmer_1_1").attr("class", "style-scope everhome-house");
+                $("#lampe_wohnzimmer_1_1").attr("class", "style-scope everhome-house");
+                $("#schatten_wohnzimmer_1_").attr("class", "style-scope everhome-house");
+            }, flur_ein: function () {
+                $("#lichtkegel_flur_1_1").attr("class", "style-scope everhome-house active");
+                $("#lampe_flur_1_1").attr("class", "style-scope everhome-house active");
+                $("#schatten_flur").attr("class", "style-scope everhome-house active");
+            },
+            flur_aus: function () {
+                $("#lichtkegel_flur_1_1").attr("class", "style-scope everhome-house");
+                $("#lampe_flur_1_1").attr("class", "style-scope everhome-house");
+                $("#schatten_flur").attr("class", "style-scope everhome-house");
+            }, arbeitszimmer_ein: function () {
+                $("#lichtkegel_arbeitszimmer_1_1").attr("class", "style-scope everhome-house active");
+                $("#lampe_arbeitszimmer_1_1_1_").attr("class", "style-scope everhome-house active");
+                $("#schatten_arbeitszimmer").attr("class", "style-scope everhome-house active");
+            },
+            arbeitszimmer_aus: function () {
+                $("#lichtkegel_arbeitszimmer_1_1").attr("class", "style-scope everhome-house");
+                $("#lampe_arbeitszimmer_1_1_1_").attr("class", "style-scope everhome-house");
+                $("#schatten_arbeitszimmer").attr("class", "style-scope everhome-house");
+            },
+            kueche_ein: function () {
+                $("#lichtkegel_kueche_1_1").attr("class", "style-scope everhome-house active");
+                $("#lampe_kueche_1_1").attr("class", "style-scope everhome-house active");
+                $("#schatten_kueche").attr("class", "style-scope everhome-house active");
+            },
+            kueche_aus: function () {
+                $("#lichtkegel_kueche_1_1").attr("class", "style-scope everhome-house");
+                $("#lampe_kueche_1_1").attr("class", "style-scope everhome-house");
+                $("#schatten_kueche").attr("class", "style-scope everhome-house");
+            },
+            kinderzimmer_ein: function () {
+                $("#lichtkegel_kinderzimmer_1_1").attr("class", "style-scope everhome-house active");
+                $("#lampe_kinderzimmer_1_1").attr("class", "style-scope everhome-house active");
+                $("#schatten_kinderzimmer").attr("class", "style-scope everhome-house active");
+            },
+            kinderzimmer_aus: function () {
+                $("#lichtkegel_kinderzimmer_1_1").attr("class", "style-scope everhome-house");
+                $("#lampe_kinderzimmer_1_1").attr("class", "style-scope everhome-house");
+                $("#schatten_kinderzimmer").attr("class", "style-scope everhome-house");
+            },
+			garage_ein: function () {
+				$("#lichtkegel_garage_1_1").attr("class", "style-scope everhome-house active");
+				$("#lampe_garage_1_1").attr("class", "style-scope everhome-house active");
+				$("#schatten_garage").attr("class", "style-scope everhome-house active");
+			},
+			garage_aus: function () {
+				$("#lichtkegel_garage_1_1").attr("class", "style-scope everhome-house");
+				$("#lampe_garage_1_1").attr("class", "style-scope everhome-house");
+				$("#schatten_garage").attr("class", "style-scope everhome-house");
+			},
+			markise_rein: function () {
+				$("#markise_garten_1").attr("class", "style-scope everhome-house");
+			},
+			markise_raus: function () {
+				$("#markise_garten_1").attr("class", "style-scope everhome-house active");
+			},
+			ready : function(){
+				/*var svg = $("#container").svg();
+				console.log(svg);
+                $('#svgintro').svg({onLoad: drawIntro});
+                function drawIntro(svg) {
+                    console.log("load");
+                    svg.circle(75, 75, 50,
+                            {fill: 'none', stroke: 'red', strokeWidth: 3});
+                    var g = svg.group({stroke: 'black', strokeWidth: 2});
+                    svg.line(g, 15, 75, 135, 75);
+                    svg.line(g, 75, 15, 75, 135);
+                }*/
+				/*$("#cloudbox_kreis", svg.root()).bind('mouseenter', function() {
+					alert('path hovered');
+				});*/
+			}
+        });
+    </script>
+</dom-module>

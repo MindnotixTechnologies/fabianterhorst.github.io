@@ -1,7 +1,4 @@
 <dom-module id="everhome-house">
-	<script src="../../scripts/jquery-1.11.3.min.js"></script>
-	<script src="../../scripts/jquery.svg.min.js"></script>
-	<script src="../../scripts/jquery.svgdom.min.js"></script>
     <style is="custom-style">
         #rollladen_kueche_2_2, #rollladen_kueche_2_1 {
             width: 37px;
@@ -15,15 +12,15 @@
             height: 77px;
         }
 
+        #lichtkegel_wohnzimmer_1_1.active, #lichtkegel_flur_1_1.active, #lichtkegel_arbeitszimmer_1_1.active, #lichtkegel_kueche_1_1.active, #lichtkegel_kinderzimmer_1_1.active, #lichtkegel_garage_1_1.active{
+            opacity: 0.2;
+        }
+
         #lichtkegel_wohnzimmer_1_1, #lichtkegel_flur_1_1, #lichtkegel_arbeitszimmer_1_1, #lichtkegel_kueche_1_1, #lichtkegel_kinderzimmer_1_1, #lichtkegel_garage_1_1 {
             transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             -webkit-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             -moz-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
             opacity: 0;
-        }
-
-        #lichtkegel_wohnzimmer_1_1.active, #lichtkegel_flur_1_1.active, #lichtkegel_arbeitszimmer_1_1.active, #lichtkegel_kueche_1_1.active, #lichtkegel_kinderzimmer_1_1.active, #lichtkegel_garage_1_1.active{
-            opacity: 0.2;
         }
 
         #lampe_wohnzimmer_1_1, #lampe_flur_1_1, #lampe_arbeitszimmer_1_1_1_, #lampe_kueche_1_1, #lampe_kinderzimmer_1_1, #lampe_garage_1_1  {
@@ -4533,7 +4530,7 @@ s5gLVVnkM10g4xjXNxwFIwBAAIAAAAEAAgAEAAgA/PBnANsAqaukrnV5AAAAAElFTkSuQmCC" transf
                 $("#schatten_flur").attr("class", "style-scope everhome-house active");
             },
             flur_aus: function () {
-                $("#lichtkegel_flur_1").attr("class", "style-scope everhome-house");
+                $("#lichtkegel_flur_1_1").attr("class", "style-scope everhome-house");
                 $("#lampe_flur_1_1").attr("class", "style-scope everhome-house");
                 $("#schatten_flur").attr("class", "style-scope everhome-house");
             }, arbeitszimmer_ein: function () {

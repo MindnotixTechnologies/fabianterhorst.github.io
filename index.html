@@ -26,18 +26,9 @@
     <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
     <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
 
-    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" media="screen" href="fonts/lato.css"/>
 
-    <!--<link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,400italic,500,500italic,700,700italic|Roboto:400,400italic,500,500italic,700,700italic">
--->
-    <!--<link rel="stylesheet" type="text/css" media="screen" href="fonts/Lato-Light.css"/>
-
-    <link rel="stylesheet" type="text/css" media="screen" href="fonts/Lato-Bold.css"/>
-
-    <link rel="stylesheet" type="text/css" media="screen" href="fonts/Lato-LightItalic.css"/>
-
-    <link rel="stylesheet" type="text/css" media="screen" href="fonts/Lato-Regular.css"/>-->
+    <link rel="stylesheet" type="text/css" media="screen" href="fonts/roboto.css"/>
 
     <!-- Tile icon for Win8 (144x144) -->
     <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
@@ -131,7 +122,8 @@
             <!-- Main Toolbar -->
             <paper-toolbar id="mainToolbar">
                 <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
-                <span class="flex"></span>
+                <div class="title"><everhome-title toolbar></everhome-title></div>
+                <!--<span class="flex"></span>-->
 
                 <!-- Toolbar icons -->
                 <!--<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>-->
@@ -161,7 +153,7 @@
                     </div>
                     <paper-ripple></paper-ripple>
                 </paper-item>
-                <paper-item label="fabian.terhorst@gmail.com" onclick="document.getElementById('help-dialog').toggle()">
+                <paper-item class="toolbar-item" onclick="document.getElementById('help-dialog').toggle()">
                     <div class="label" fit>
                         Hilfe
                     </div>
@@ -242,7 +234,7 @@
 
                 <!-- Application sub title -->
                 <div class="bottom title flex-none" style="flex:none;-ms-flex: none;-webkit-flex: none;">
-                    <everhome-title toolbar></everhome-title>
+
                 </div>
 
             </paper-toolbar>

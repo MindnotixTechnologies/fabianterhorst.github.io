@@ -159,6 +159,10 @@ paper-dialog > paper-input {
     display: none;
 }
 
+#drawer{
+    display: none;
+}
+
 @media (max-width: 1300px) {
     #paperToggle {
         display: block !important;
@@ -171,6 +175,10 @@ paper-dialog > paper-input {
 
     .toolbar-item {
         display: none !important;
+    }
+
+    #drawer{
+        display: block !important;
     }
 }
 

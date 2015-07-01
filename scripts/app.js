@@ -153,9 +153,10 @@
         var drawerPanel = document.querySelector('#paperDrawerPanel');
         drawerPanel.forceNarrow = true;
 
-        Polymer.import( ['everhome-house/everhome-house.html'], function() {
-            // called when our import is fully loaded
-            // including any assets like CSS.
+        app.importHref('../elements/everhome-house/everhome-house.html', function(e) {
+            // e.target.import is the import document.
+        }, function(e) {
+            // loading error
         });
 
     });

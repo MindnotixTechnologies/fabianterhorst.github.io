@@ -4,6 +4,10 @@
     box-sizing: inherit;
 }
 
+html {
+    font-size: 16px;
+}
+
 body {
     background: #fafafa;
     /*font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
@@ -18,7 +22,6 @@ body {
 paper-item > .label {
     display: block;
     padding: 0;
-    font-size: inherit;
     font-weight: inherit;
     line-height: inherit;
     color: #333;

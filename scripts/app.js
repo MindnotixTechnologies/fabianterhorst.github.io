@@ -128,6 +128,26 @@
         }
     }
 
+    app.openDialog = function(e){
+        var button = $(e.target).parent();
+        //var dialog = $("#" + button.attr("target"));
+        //dialog.offset().x = button.offset().x;
+        //console.log(dialog.offset().x);
+        console.log(button.offset());
+        //console.log(button.offset().x);
+        //dialog.style.left = button.offset().left;
+        //dialog.css( "left", button.offset().left );
+        console.log(button.attr("target"));
+        var dialog = document.querySelector("#" + button.attr("target"));
+        console.log(dialog);
+        //dialog.style.left = button.offset().left;
+        //dialog.css( "left", button.offset().left );
+        console.log(button.width()/2);
+        console.log(button.offset().left - (button.width()/2));
+        dialog.style.left = (button.offset().left - ((button.width()/2) + 16)) + "px";
+        dialog.toggle();
+    };
+
     // See https://github.com/Polymer/polymer/issues/1381
     window.addEventListener('WebComponentsReady', function () {
         var drawerPanel = document.querySelector('#paperDrawerPanel');

@@ -42,6 +42,12 @@
             margin-right: 16px;
             border-radius: 100%;
         }
+
+        paper-button {
+            -webkit-transition: all 250ms cubic-bezier(0, 0, 0, 0);
+            transition: all 250ms cubic-bezier(0, 0, 0, 0);
+            -moz-transition: all 250ms cubic-bezier(0, 0, 0, 0);
+        }
     </style>
     <template>
         <paper-material id="card" elevation="1" class="layout vertical" on-mouseover="onHovered"
@@ -66,16 +72,15 @@
                             <iron-icon icon="{{item.icon}}"></iron-icon>
                         </paper-button>
                     </template>
-                    <mat-menu-button id="menuButton" hidden$="{{!menu}}"
-                                     target$="{{menuClassName(deviceid,groupid,sceneid)}}"></mat-menu-button>
+                    <!--<mat-menu-button id="menuButton" hidden$="{{!menu}}"
+                                     target$="{{menuClassName(deviceid,groupid,sceneid)}}"></mat-menu-button>-->
                     <!--todo:// menubutton target deviceid hinterhängen das gleiche bei demoDefault-->
-                    <mat-menu id$="{{menuClassName(deviceid,groupid,sceneid)}}">
+                    <!--<mat-menu id$="{{menuClassName(deviceid,groupid,sceneid)}}">
                         <div class="layout horizontal">
                             <paper-input label="in Sekunden ein"></paper-input>
                             <paper-icon-button class="btn-success flex self-center" icon="ai:on"></paper-icon-button>
                         </div>
-                        <!--<mat-option label="Option 1"></mat-option>-->
-                    </mat-menu>
+                    </mat-menu>-->
                 </div>
         </paper-material>
     </template>
@@ -85,7 +90,7 @@
             properties: {
                 buttons: {
                     type: Array,
-                    notify: true,
+                    notify: true
                 },
                 menu: Boolean,
                 name: String,
@@ -123,7 +128,7 @@
                     this.$.name.style.marginBottom = "16px";
                 }
                 if (typeof this.menu === "undefined") {
-                    this.$.menuButton.style.display = "none";
+                    //this.$.menuButton.style.display = "none";
                 }
             },
             menuClassName: function (deviceid, groupid, sceneid) {

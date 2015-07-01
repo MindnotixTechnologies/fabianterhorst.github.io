@@ -15,6 +15,27 @@ body {
     line-height: 1;
 }
 
+paper-item > .label {
+    display: block;
+    padding: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    color: #333;
+    text-align: inherit;
+    white-space: inherit;
+    vertical-align: inherit;
+    border-radius: inherit;
+}
+
+.toolbar-tools.paper-toolbar > .title, .toolbar-tools.paper-toolbar [select=".middle"] > .title, .toolbar-tools.paper-toolbar [select=".bottom"] > .title {
+    margin-left: 10px !important;
+}
+
+.toolbar-tools.paper-toolbar paper-icon-button[icon=menu] {
+    margin-right: 0px !important;
+}
+
 .color.white {
     color: #FFFFFF;
 }
@@ -88,7 +109,7 @@ paper-item.active {
     background-image: url(../images/cloud_start_footer.svg);
     background-color: #FFFFFF;
     background-position: top;
-    background-size: 101%;
+    background-size: cover;
     background-repeat: no-repeat;
 }
 
@@ -99,14 +120,14 @@ paper-item.active {
     right: 16px;
 }
 
-#account-dialog{
+#account-dialog {
     background-color: white;
     position: fixed;
     top: 40px;
     right: 16px;
 }
 
-#help-dialog{
+#help-dialog {
     background-color: white;
     position: fixed;
     top: 40px;
@@ -148,4 +169,9 @@ paper-dialog > paper-input {
     .toolbar-item {
         display: none !important;
     }
+}
+
+#logo{
+    height: 50px !important;
+    width: 50px !important;
 }

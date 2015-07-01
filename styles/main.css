@@ -69,7 +69,7 @@ paper-item.active {
 }
 
 .description-content {
-    background-image: url(../images/cloud_end_top.png), url(../images/background_lamp.jpg);
+    background-image: url(../images/cloud_end_top.svg), url(../images/background_lamp.jpg);
     background-position: top, left; /*left top, right bottom*/
     background-repeat: no-repeat;
     background-size: contain, cover;
@@ -97,6 +97,19 @@ paper-item.active {
     position: fixed;
     top: 40px;
     right: 16px;
+}
+
+#account-dialog{
+    background-color: white;
+    position: fixed;
+    top: 40px;
+    right: 16px;
+}
+
+#help-dialog{
+    background-color: white;
+    position: fixed;
+    top: 40px;
 }
 
 #topBar > paper-item {

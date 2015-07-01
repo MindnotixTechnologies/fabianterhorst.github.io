@@ -153,7 +153,7 @@
         var drawerPanel = document.querySelector('#paperDrawerPanel');
         drawerPanel.forceNarrow = true;
 
-        app.importHref('../elements/everhome-house/everhome-house.html', function(e) {
+        app.importHref('elements/everhome-house/everhome-house.html', function(e) {
             // e.target.import is the import document.
         }, function(e) {
             // loading error

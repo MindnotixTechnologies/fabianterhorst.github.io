@@ -44,6 +44,10 @@
 
     <link rel="stylesheet" href="styles/bootstrap.min.css">
 
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild-->
+
     <!-- build:css styles/app-theme.css -->
     <!--<link rel="stylesheet" href="styles/app-theme.css">-->
     <!-- endbuild-->
@@ -55,10 +59,6 @@
     <!-- will be replaced with elements/elements.vulcanized.html -->
     <link rel="import" href="elements/vulcanize.html">
     <!-- endreplace-->
-
-    <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild-->
 
     <style is="custom-style">
         body {
@@ -161,11 +161,17 @@
                     </div>
                     <paper-ripple></paper-ripple>
                 </paper-item>
-                <mat-menu-label-button class="toolbar-item" target="hilfeMenu" label="Hilfe"
-                                       color="white"></mat-menu-label-button>
+                <paper-item label="fabian.terhorst@gmail.com" onclick="document.getElementById('help-dialog').toggle()">
+                    <div class="label" fit>
+                        Hilfe
+                    </div>
+                    <paper-ripple></paper-ripple>
+                </paper-item>
+                <!--<mat-menu-label-button class="toolbar-item" target="hilfeMenu" label="Hilfe"
+                                       color="white"></mat-menu-label-button>-->
                 <!-- </div>
              </div>-->
-                <mat-menu id="hilfeMenu">
+                <!--<mat-menu id="hilfeMenu">
                     <paper-item href="#">
                         <div class="label" fit>
                             <iron-icon icon="home"></iron-icon>
@@ -174,7 +180,7 @@
                         <paper-ripple></paper-ripple>
                     </paper-item>
                     <mat-option label="Abmelden"></mat-option>
-                </mat-menu>
+                </mat-menu>-->
                 <paper-button class="login btn-success" onclick="document.getElementById('login-dialog').toggle()"
                               raised>
                     Anmelden
@@ -191,13 +197,31 @@
                         <paper-button dialog-confirm autofocus>Anmelden</paper-button>
                     </div>
                 </paper-dialog>
-                <!--<paper-item label="Anmelden" data-route="contact" href="#">
+                <paper-item label="fabian.terhorst@gmail.com" onclick="document.getElementById('account-dialog').toggle()">
                   <div class="label" fit>
-
+                      fabian.terhorst@gmail.com
                   </div>
                   <paper-ripple></paper-ripple>
-                </paper-item>-->
-                <mat-menu-label-button class="toolbar-item" target="accountMenu" label="fabian.terhorst@gmail.com"
+                </paper-item>
+                <paper-dialog elevation="1" id="account-dialog" entry-animation="slide-down-animation"
+                              exit-animation="fade-out-animation">
+                    <paper-item>
+                        <div class="label" fit>
+                            Abmelden
+                        </div>
+                        <paper-ripple></paper-ripple>
+                    </paper-item>
+                </paper-dialog>
+                <paper-dialog elevation="1" id="help-dialog" entry-animation="slide-down-animation"
+                              exit-animation="fade-out-animation">
+                    <paper-item>
+                        <div class="label" fit>
+                            test
+                        </div>
+                        <paper-ripple></paper-ripple>
+                    </paper-item>
+                </paper-dialog>
+                <!--<mat-menu-label-button class="toolbar-item" target="accountMenu" label="fabian.terhorst@gmail.com"
                                        color="white"></mat-menu-label-button>
                 <mat-menu id="accountMenu">
                     <paper-item href="#">
@@ -208,7 +232,7 @@
                         <paper-ripple></paper-ripple>
                     </paper-item>
                     <mat-option label="Abmelden"></mat-option>
-                </mat-menu>
+                </mat-menu>-->
 
 
                 <!-- Application name -->
@@ -302,7 +326,7 @@
                                                 </div>
                                                 <div class="col-md-6 no-padding">
                                                     <everhome-device menu name="Rolladen" groupid=1
-                                                                     buttons='[{"icon": "mdi:chevron-up"}, {"icon": "mdi:chevron-down"}]'
+                                                                     buttons='[{"icon": "expand-less"}, {"icon": "expand-more"}]'
                                                                      class="flex-6"></everhome-device>
                                                 </div>
                                             </div>

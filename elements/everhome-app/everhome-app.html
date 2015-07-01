@@ -3,11 +3,12 @@
     <link rel="import" href="../../styles/app-theme.html">
     <style>
         :host {
-            font-family: "LatoLight", Georgia;
+            font-family: "Lato", Georgia;
+            font-weight: 300;
         }
 
         paper-button {
-            font-family: "Lato", Georgia;
+            font-weight: normal;
         }
 
         h3 {
@@ -80,12 +81,12 @@
             <div class="main-card-click layout horizontal">
                 <paper-button class="flex" on-click="goLink" link="https://itunes.apple.com/de/app/id934744174"><span
                         class="main-card-button-text">Play Store</span>
-                    <iron-icon class="main-card-arrow" icon="mdi:google-play"></iron-icon>
+                    <iron-icon class="main-card-arrow" icon="eh:google-play"></iron-icon>
                 </paper-button>
                 <paper-button class="flex" on-click="goLink"
                               link="play.google.com/store/apps/details?id=de.everhome.cloudboxprod"><span
                         class="main-card-button-text">App Store</span>
-                    <iron-icon class="main-card-arrow" icon="mdi:apple"></iron-icon>
+                    <iron-icon class="main-card-arrow" icon="eh:apple"></iron-icon>
                 </paper-button>
             </div>
         </paper-material>

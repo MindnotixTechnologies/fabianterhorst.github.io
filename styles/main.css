@@ -62,7 +62,7 @@ paper-item.active {
 }
 
 .main-content {
-    background-image: url(../images/cloud_start.png);
+    background-image: url(../images/cloud_start_top.svg);
     background-position: bottom; /*left top, right bottom*/
     background-repeat: no-repeat;
     background-size: contain;

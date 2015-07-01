@@ -1,5 +1,5 @@
 <!doctype html>
-<span lang="">
+<html lang="">
 
 <head>
     <meta charset="utf-8">
@@ -17,7 +17,7 @@
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Polymer Starter Kit">
+    <meta name="application-name" content="everHome">
     <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
 
     <!-- Add to homescreen for Safari on iOS -->
@@ -228,10 +228,12 @@
                 <div class="everhome-background">
                     <div class="main-content">
                         <div class="container">
-                            <div class="col-md-12">
-                                <everhome-house >
-                                </everhome-house>
+                            <!--<div class="col-md-2 no-padding">
                                 <nexus-5></nexus-5>
+                            </div>-->
+                            <div class="col-md-12 no-padding">
+                                <everhome-house>
+                                </everhome-house>
                             </div>
                         </div>
                     </div>
@@ -254,13 +256,13 @@
                             <div class="col-md-4 no-padding">
                                 <everhome-fab id="descriptionfab1" title="GERÄTE" icon="dns" state="active"
                                               on-click="selectDescriptionPage1"></everhome-fab>
-                                <everhome-fab id="descriptionfab2" title="GRUPPEN" icon="mdi:view-column"
+                                <everhome-fab id="descriptionfab2" title="GRUPPEN" icon="view-column"
                                               state="inactive" on-click="selectDescriptionPage2"></everhome-fab>
-                                <everhome-fab id="descriptionfab3" title="SZENEN" icon="mdi:calendar-multiple"
+                                <everhome-fab id="descriptionfab3" title="SZENEN" icon="eh:calendar-multiple"
                                               state="inactive" on-click="selectDescriptionPage3"></everhome-fab>
-                                <everhome-fab id="descriptionfab4" title="RÄUME" icon="mdi:view-quilt" state="inactive"
+                                <everhome-fab id="descriptionfab4" title="RÄUME" icon="view-quilt" state="inactive"
                                               on-click="selectDescriptionPage4"></everhome-fab>
-                                <everhome-fab id="descriptionfab5" title="KARTEN" icon="mdi:map" state="inactive"
+                                <everhome-fab id="descriptionfab5" title="KARTEN" icon="eh:map" state="inactive"
                                               on-click="selectDescriptionPage5"></everhome-fab>
                             </div>
                             <div class="col-md-8 no-padding">
@@ -438,7 +440,7 @@
                             <div class="col-md-6 no-padding">
                                 <everhome-test nowidth="true" notitle
                                                content="Die everHome CloudBox verbindet ihre Sensoren und Aktoren in Ihrem Haus mit dem everHome Server über das Internet und das 433 MHz, 868 MHZ bzw. 2.4 GHz Funknetz in Ihrem Heim, um Ihre Geräte im everHome Portal steuern zu können. Die everHome CloudBox wird hierzu einfach über das Ethernet-Kabel mit Ihrem vorhandenen Router verbunden. So macht die everHome CloudBox alle Ihre Geräte Internet-fähig und über den everHome Server steuerbar. Und das ganz ohne komplizierte Konfiguration und Verkabelung. Auch lassen sich bei grösseren Häusern mehrere everHome CloudBox LAN Gateways einsetzen, um alle Sensoren und Aktoren zu erreichen. Auch können Sie alternativ einen WLAN Repeater mit Ethernet Port (RJ45 Anschluss) nutzen, um die CloudBox über WLAN mit Ihrem Heimnetzwerk zu verbinden."
-                                               buttons='[{"title": "everHome CloudBox kaufen","icon": "mdi:cart"}]'></everhome-test>
+                                               buttons='[{"title": "everHome CloudBox kaufen","icon": "eh:cart"}]'></everhome-test>
                             </div>
                             <div class="col-md-6 no-padding">
                                 <h1 class="light">Die
@@ -479,7 +481,7 @@
                             <everhome-test class="col-md-6 no-padding" nowidth="true"
                                            toptitle="Besuchen Sie unseren Showroom" smalltoptitle="true"
                                            content="Lassen Sie sich alle Funktionen des everHome Portals, der everHome App und der everHome CloudBox in unserem Showroom in Coesfeld im Münsterland demonstrieren. Eine Terminvereinbarung ist erforderlich. Nutzen Sie hierzu unser Kontaktformular."
-                                           buttons='[{"title": "Zum Kontaktformular","icon": "mdi:send"}]'></everhome-test>
+                                           buttons='[{"title": "Zum Kontaktformular","icon": "eh:send"}]'></everhome-test>
                             <!--desktop-only--><img class=" col-md-6 no-padding hidden-sm hidden-xs"
                                                     src="images/showroom.png"/>
                         </div>
@@ -489,7 +491,7 @@
                             <everhome-test class="col-md-6 no-padding" nowidth="true" everhomestart="true"
                                            toptitle="Community und Forum" smalltoptitle="true"
                                            content="Besuchen Sie unsere everHome Google+ Community, unsere Facebook Seite und unser everHome Forum und teilen Sie uns und anderen Ihre Wünsche und Kommentare zu everHome mit."
-                                           buttons='[{"title": "Zu Google+ Community","icon": "mdi:google-plus-box"},{"title": "Zur Facebook Seite","icon": "mdi:facebook-box"},{"title": "Zum everHome Forum","icon": "mdi:forum"}]'></everhome-test>
+                                           buttons='[{"title": "Zu Google+ Community","icon": "eh:google-plus-box"},{"title": "Zur Facebook Seite","icon": "eh:facebook-box"},{"title": "Zum everHome Forum","icon": "eh:forum"}]'></everhome-test>
                         </div>
                     </div>
                 </div>
@@ -498,42 +500,42 @@
                         <div class="layout horizontal center-justified wrap">
                             <paper-item label="Kunden-Support" data-route="contact" href="/contact">
                                 <div class="label" fit>
-                                    <iron-icon icon="mdi:forum"></iron-icon>
+                                    <iron-icon icon="eh:forum"></iron-icon>
                                     Kunden-Support
                                 </div>
                                 <paper-ripple></paper-ripple>
                             </paper-item>
                             <paper-item label="Impressum" data-route="contact" href="/contact">
                                 <div class="label" fit>
-                                    <iron-icon icon="mdi:information"></iron-icon>
+                                    <iron-icon icon="eh:information"></iron-icon>
                                     Impressum
                                 </div>
                                 <paper-ripple></paper-ripple>
                             </paper-item>
                             <paper-item label="AGB" data-route="contact" href="/contact">
                                 <div class="label" fit>
-                                    <iron-icon icon="mdi:file-document-box"></iron-icon>
+                                    <iron-icon icon="eh:file-document-box"></iron-icon>
                                     AGB
                                 </div>
                                 <paper-ripple></paper-ripple>
                             </paper-item>
                             <paper-item label="Widerrufsbelehrung" data-route="contact" href="/contact">
                                 <div class="label" fit>
-                                    <iron-icon icon="mdi:undo"></iron-icon>
+                                    <iron-icon icon="undo"></iron-icon>
                                     Widerrufsbelehrung
                                 </div>
                                 <paper-ripple></paper-ripple>
                             </paper-item>
                             <paper-item label="Versandkosten" data-route="contact" href="/contact">
                                 <div class="label" fit>
-                                    <iron-icon icon="mdi:truck"></iron-icon>
+                                    <iron-icon icon="eh:truck"></iron-icon>
                                     Versandkosten
                                 </div>
                                 <paper-ripple></paper-ripple>
                             </paper-item>
                             <paper-item label="Zahlungsarten" data-route="contact" href="/contact">
                                 <div class="label" fit>
-                                    <iron-icon icon="mdi:credit-card"></iron-icon>
+                                    <iron-icon icon="eh:credit-card"></iron-icon>
                                     Zahlungsarten
                                 </div>
                                 <paper-ripple></paper-ripple>
@@ -560,8 +562,8 @@
 <!-- build:js scripts/jquery-1.11.3.min.js -->
 <script src="scripts/jquery-1.11.3.min.js"></script>
 <!-- endbuild-->
-<script src="scripts/jquery.svg.min.js"></script>
-<script src="scripts/jquery.svgdom.min.js"></script>
+<!--<script src="scripts/jquery.svg.min.js"></script>
+<script src="scripts/jquery.svgdom.min.js"></script>-->
 </body>
 
-    </html>
+</html>
